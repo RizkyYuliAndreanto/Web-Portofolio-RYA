@@ -132,12 +132,11 @@ onUnmounted(() => {
           </button>
 
           <!-- Image — full width, landscape ratio -->
-          <div
-            class="modal-item relative w-full aspect-[16/8] max-h-[280px] bg-[#080b14] overflow-hidden">
+          <div class="modal-item relative w-full bg-[#080b14] overflow-hidden">
             <img
               :src="project?.image"
               :alt="project?.title"
-              class="w-full h-full object-cover object-top" />
+              class="w-full h-auto max-h-[280px] object-contain object-center" />
             <div
               class="absolute inset-0 bg-gradient-to-t from-[#0f1424] via-transparent to-transparent"></div>
             <!-- Number overlay -->

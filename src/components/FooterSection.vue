@@ -2,10 +2,22 @@
 import { Github, Linkedin, Instagram, Mail } from "lucide-vue-next";
 
 const socials = [
-  { icon: Github, href: "#", label: "GitHub" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Mail, href: "#", label: "Email" },
+  {
+    icon: Github,
+    href: "https://github.com/RizkyYuliAndreanto",
+    label: "GitHub",
+  },
+  {
+    icon: Linkedin,
+    href: "https://www.linkedin.com/in/rizky-yuli-andreanto/",
+    label: "LinkedIn",
+  },
+  {
+    icon: Instagram,
+    href: "https://www.instagram.com/eryry07",
+    label: "Instagram",
+  },
+  { icon: Mail, href: "mailto:rizkyandreanto123@gmail.com", label: "Email" },
 ];
 </script>
 
@@ -18,6 +30,8 @@ const socials = [
           :key="social.label"
           :href="social.href"
           :aria-label="social.label"
+          target="_blank"
+          rel="noopener noreferrer"
           class="w-10 h-10 rounded-lg bg-surface/80 border border-white/10 flex items-center justify-center text-text-secondary hover:text-accent hover:border-accent/30 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] transition-all duration-300">
           <component :is="social.icon" class="w-5 h-5" />
         </a>

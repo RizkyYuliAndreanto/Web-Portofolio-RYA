@@ -9,6 +9,7 @@ import {
   ChevronRight,
 } from "lucide-vue-next";
 import ProjectModal from "./ProjectModal.vue";
+import projectImage from "../assets/Project-foto.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,73 +21,103 @@ const currentIndex = ref(0);
 const projects = [
   {
     id: 1,
-    title: "AI Chat Platform",
+    title: "Clyrova.id AI Suite",
     description:
-      "Real-time AI-powered communication with NLP capabilities and streaming responses",
-    tech: ["Vue", "Python", "FastAPI", "OpenAI"],
-    image: "/placeholder-project.svg",
-    github: "#",
+      "Pipeline kecerdasan buatan untuk background removal presisi tinggi dan image upscaling, terintegrasi ke ekosistem layanan Clyr0va.id untuk optimasi kualitas aset visual secara otomatis.",
+    tech: ["Python", "FastAPI", "AI/ML", "OpenCV"],
+    image: projectImage,
+    github: "https://github.com/RizkyYuliAndreanto",
     demo: "#",
     featured: true,
-    architecture: "Microservices with event-driven communication",
-    challenges: "Handling real-time streaming responses",
-    solution: "Implemented SSE with backpressure handling",
+    architecture: "AI Pipeline with REST API integration",
+    challenges:
+      "Presisi tinggi pada background removal untuk berbagai jenis gambar",
+    solution: "Custom deep learning model dengan post-processing refinement",
   },
   {
     id: 2,
-    title: "E-Commerce Engine",
+    title: "Magetan Tourism Portal",
     description:
-      "Scalable marketplace platform with advanced inventory management and real-time sync",
-    tech: ["Vue", "Node.js", "PostgreSQL", "Redis"],
-    image: "/placeholder-project.svg",
-    github: "#",
+      "Platform pariwisata terintegrasi full-stack bekerja sama dengan Dinas Kebudayaan dan Pariwisata Magetan untuk mempromosikan destinasi wisata daerah melalui antarmuka web interaktif.",
+    tech: ["Vue.js", "Express.js", "Node.js", "MySQL"],
+    image: projectImage,
+    github: "https://github.com/RizkyYuliAndreanto",
     demo: "#",
     featured: true,
-    architecture: "Monolithic modular with CQRS",
-    challenges: "High-traffic inventory management",
-    solution: "Redis-based distributed locking",
+    architecture: "Full-stack MVC with Vue.js SPA",
+    challenges: "Menyajikan data wisata secara interaktif dan menarik",
+    solution: "Interactive map integration dengan dynamic content management",
   },
   {
     id: 3,
-    title: "DevOps Dashboard",
+    title: "Dosen Tracker",
     description:
-      "Infrastructure monitoring & CI/CD visualization for large scale enterprise systems",
-    tech: ["React", "Go", "Docker", "K8s"],
-    image: "/placeholder-project.svg",
-    github: "#",
+      "Sistem pelacakan kehadiran akademik berbasis Computer Vision real-time di edge device dengan YOLOv8, ArcFace, dan deteksi anti-spoofing dalam arsitektur microservices.",
+    tech: ["Python", "FastAPI", "React", "YOLOv8"],
+    image: projectImage,
+    github: "https://github.com/RizkyYuliAndreanto",
     demo: "#",
-    featured: false,
-    architecture: "Event-sourced microservices",
-    challenges: "Real-time metrics aggregation",
-    solution: "Time-series DB with streaming pipeline",
+    featured: true,
+    architecture: "Microservices with edge computing",
+    challenges:
+      "Real-time face recognition dengan anti-spoofing di edge device",
+    solution: "Optimized inference pipeline dengan model quantization",
   },
   {
     id: 4,
-    title: "ML Pipeline Framework",
+    title: "Infografis Desa",
     description:
-      "End-to-end machine learning orchestration and automated deployment workflows",
-    tech: ["Python", "TensorFlow", "Airflow", "AWS"],
-    image: "/placeholder-project.svg",
-    github: "#",
+      "Portal web infografis untuk digitalisasi profil dan potensi daerah beberapa desa di Kabupaten Madiun, menyajikan data statistik dan informasi pelayanan masyarakat secara modern dan transparan.",
+    tech: ["Vue.js", "Laravel", "PostgreSQL", "Chart.js"],
+    image: projectImage,
+    github: "https://github.com/RizkyYuliAndreanto",
     demo: "#",
-    featured: true,
-    architecture: "DAG-based pipeline orchestration",
-    challenges: "Model versioning and reproducibility",
-    solution: "Custom artifact store with lineage tracking",
+    featured: false,
+    architecture: "Monolithic Laravel with Vue.js frontend",
+    challenges: "Visualisasi data kompleks yang mudah dipahami masyarakat",
+    solution: "Interactive infographic dashboard dengan real-time data binding",
   },
   {
     id: 5,
-    title: "Real-time Analytics",
+    title: "Auto Content Creator",
     description:
-      "Stream processing analytics platform for processing millions of events per second",
-    tech: ["Kafka", "Spark", "ClickHouse", "Vue"],
-    image: "/placeholder-project.svg",
-    github: "#",
+      "Perangkat lunak pemrosesan video otomatis untuk YouTube Shorts dan TikTok dengan smart clipping, TTS, generator subtitle, dan penyusunan skrip pintar bertenaga AI.",
+    tech: ["Python", "FFmpeg", "OpenAI", "TTS"],
+    image: projectImage,
+    github: "https://github.com/RizkyYuliAndreanto",
+    demo: "#",
+    featured: true,
+    architecture: "Pipeline-based automation engine",
+    challenges: "Koordinasi multi-step video processing secara efisien",
+    solution: "DAG-based task orchestration dengan parallel processing",
+  },
+  {
+    id: 6,
+    title: "Manajemen Surat Instansi",
+    description:
+      "Aplikasi birokrasi digital berbasis Laravel dan Blade Template untuk alur pengajuan dokumen dan surat resmi ke instansi, dengan fokus pada efisiensi operasional.",
+    tech: ["Laravel", "Blade", "MySQL", "Bootstrap"],
+    image: projectImage,
+    github: "https://github.com/RizkyYuliAndreanto",
     demo: "#",
     featured: false,
-    architecture: "Lambda architecture",
-    challenges: "Sub-second query latency at scale",
-    solution: "Materialized views with incremental updates",
+    architecture: "MVC Laravel with role-based access",
+    challenges: "Alur approval multi-level yang kompleks",
+    solution: "State machine pattern untuk document workflow management",
+  },
+  {
+    id: 7,
+    title: "E-Commerce UMKM",
+    description:
+      "Infrastruktur pasar digital yang dirancang khusus untuk memfasilitasi pelaku UMKM dalam mendigitalisasi etalase produk, mengelola transaksi, dan memperluas jangkauan pasar online.",
+    tech: ["Vue.js", "Node.js", "PostgreSQL", "Redis"],
+    image: projectImage,
+    github: "https://github.com/RizkyYuliAndreanto",
+    demo: "#",
+    featured: true,
+    architecture: "Microservices with event-driven communication",
+    challenges: "Skalabilitas untuk multi-vendor marketplace",
+    solution: "CQRS pattern dengan Redis caching untuk high-traffic handling",
   },
 ];
 
@@ -264,39 +295,6 @@ onUnmounted(() => {
 function splitChars(text) {
   return text.split("");
 }
-
-function handleCardHover(e, index) {
-  if (currentIndex.value !== index) return;
-  const card = e.currentTarget;
-  const rect = card.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  const centerX = rect.width / 2;
-  const centerY = rect.height / 2;
-  const rotateY = ((x - centerX) / centerX) * 8;
-  const rotateX = ((centerY - y) / centerY) * 8;
-
-  gsap.to(card, {
-    rotateX: rotateX,
-    rotateY: rotateY,
-    scale: 1.03,
-    duration: 0.3,
-    ease: "power2.out",
-    overwrite: "auto",
-  });
-}
-
-function handleCardLeave(e, index) {
-  if (currentIndex.value !== index) return;
-  gsap.to(e.currentTarget, {
-    rotateX: 0,
-    rotateY: 0,
-    scale: 1,
-    duration: 0.5,
-    ease: "elastic.out(1, 0.5)",
-    overwrite: "auto",
-  });
-}
 </script>
 
 <template>
@@ -355,8 +353,6 @@ function handleCardLeave(e, index) {
             @click="
               currentIndex === index ? openProject(project) : goToProject(index)
             "
-            @mousemove="handleCardHover($event, index)"
-            @mouseleave="handleCardLeave($event, index)"
             class="project-card absolute top-1/2 left-1/2 w-[280px] sm:w-[350px] lg:w-[420px] h-[360px] sm:h-[420px] lg:h-[480px] cursor-pointer transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)]"
             :style="getCardTransform(index)"
             style="transform-style: preserve-3d">
@@ -369,67 +365,76 @@ function handleCardLeave(e, index) {
                   : 'shadow-[0_10px_30px_rgba(0,0,0,0.5)]'
               ">
               <div
-                class="w-full h-full bg-[#12182B] border rounded-xl p-6 sm:p-8 flex flex-col justify-between"
+                class="w-full h-full bg-[#12182B] border rounded-xl flex flex-col"
                 :class="
                   currentIndex === index ? 'border-accent/30' : 'border-white/5'
                 ">
-                <!-- Top -->
-                <div class="flex justify-between items-start">
+                <!-- Image area (top half) -->
+                <div
+                  class="relative flex-1 min-h-0 overflow-hidden rounded-t-xl">
+                  <img
+                    :src="project.image"
+                    :alt="project.title"
+                    class="w-full h-full object-cover object-center transition-opacity duration-500"
+                    :class="
+                      currentIndex === index ? 'opacity-100' : 'opacity-40'
+                    " />
+                  <!-- Number overlay -->
                   <span
-                    class="text-4xl sm:text-5xl lg:text-6xl font-black font-oswald transition-colors duration-500"
+                    class="absolute top-3 left-4 text-3xl sm:text-4xl font-black font-oswald transition-colors duration-500"
                     :class="
                       currentIndex === index
-                        ? 'text-accent/40'
+                        ? 'text-accent/60'
                         : 'text-white/15'
                     ">
                     0{{ index + 1 }}
                   </span>
+                  <!-- Action buttons -->
                   <div
-                    class="flex gap-3"
+                    class="absolute top-3 right-4 flex gap-2 transition-opacity duration-500"
                     :class="
                       currentIndex === index ? 'opacity-100' : 'opacity-0'
-                    "
-                    style="transition: opacity 0.5s">
+                    ">
                     <a
                       :href="project.github"
                       @click.stop
-                      class="text-text-secondary hover:text-white transition-colors">
-                      <Github class="w-5 h-5" />
+                      class="text-white/70 hover:text-white transition-colors">
+                      <Github class="w-4 h-4" />
                     </a>
                     <a
                       :href="project.demo"
                       @click.stop
-                      class="text-text-secondary hover:text-white transition-colors">
-                      <ExternalLink class="w-5 h-5" />
+                      class="text-white/70 hover:text-white transition-colors">
+                      <ExternalLink class="w-4 h-4" />
                     </a>
                   </div>
                 </div>
 
-                <!-- Bottom content -->
-                <div>
+                <!-- Info area (bottom) -->
+                <div class="p-4 sm:p-5">
                   <h3
-                    class="text-2xl sm:text-3xl lg:text-4xl font-bold font-oswald uppercase tracking-wider mb-3 leading-[0.9] transition-colors duration-500"
+                    class="text-xl sm:text-2xl lg:text-3xl font-bold font-oswald uppercase tracking-wider mb-2 leading-[0.9] transition-colors duration-500"
                     :class="
                       currentIndex === index ? 'text-white' : 'text-white/30'
                     ">
                     {{ project.title }}
                   </h3>
                   <p
-                    class="text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.15em] leading-relaxed mb-5 font-oswald max-w-sm transition-opacity duration-500"
+                    class="text-[9px] sm:text-[10px] text-text-secondary uppercase tracking-[0.12em] leading-relaxed mb-3 font-oswald max-w-sm transition-opacity duration-500"
                     :class="
                       currentIndex === index ? 'opacity-100' : 'opacity-0'
                     ">
                     {{ project.description }}
                   </p>
                   <div
-                    class="flex flex-wrap gap-2 transition-opacity duration-500"
+                    class="flex flex-wrap gap-1.5 transition-opacity duration-500"
                     :class="
                       currentIndex === index ? 'opacity-100' : 'opacity-0'
                     ">
                     <span
                       v-for="tech in project.tech"
                       :key="tech"
-                      class="px-2.5 py-1 text-[9px] font-oswald tracking-widest uppercase border border-white/10 rounded text-text-secondary">
+                      class="px-2 py-0.5 text-[8px] sm:text-[9px] font-oswald tracking-widest uppercase border border-white/10 rounded text-text-secondary">
                       {{ tech }}
                     </span>
                   </div>

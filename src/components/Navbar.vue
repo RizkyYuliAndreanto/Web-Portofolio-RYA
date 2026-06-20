@@ -71,7 +71,7 @@ onUnmounted(() => window.removeEventListener("scroll", handleScroll));
 
       <!-- Brand -->
       <a href="#" class="nav-brand group relative z-10 flex items-center gap-2">
-        <span class="text-3xl font-black font-oswald tracking-widest text-text">RYA<span class="text-accent">.</span></span>
+        <span class="text-3xl font-black font-oswald tracking-widest text-text">RIZKY YULI ANDREANTO<span class="text-accent">.</span></span>
       </a>
 
       <!-- Desktop Links -->
