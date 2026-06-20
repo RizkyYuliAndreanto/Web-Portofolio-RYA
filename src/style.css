@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #050816;
+  --color-surface: #0f172a;
+  --color-primary: #2563eb;
+  --color-accent: #3b82f6;
+  --color-highlight: #60a5fa;
+  --color-text: #ffffff;
+  --color-text-secondary: #94a3b8;
+  --font-oswald: 'Oswald', sans-serif;
+}
+
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
