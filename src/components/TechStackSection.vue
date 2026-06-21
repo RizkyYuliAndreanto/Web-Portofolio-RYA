@@ -332,10 +332,10 @@ onUnmounted(() => {
       <!-- 3D Monitor Container -->
       <div
         ref="monitorRef"
-        class="relative w-full max-w-[1000px] rounded-xl sm:rounded-2xl border-[3px] sm:border-[8px] border-[#1A1A1A] bg-[#0A0D18] shadow-[0_20px_60px_rgba(0,0,0,0.8),inset_0_0_80px_rgba(0,0,0,0.8)] overflow-hidden"
+        class="relative w-full max-w-[900px] rounded-xl sm:rounded-2xl border-[3px] sm:border-[8px] border-[#1A1A1A] bg-[#0A0D18] shadow-[0_20px_60px_rgba(0,0,0,0.8),inset_0_0_80px_rgba(0,0,0,0.8)] overflow-hidden"
         style="
-          transform: perspective(2000px) rotateX(0deg) rotateY(-15deg)
-            rotateZ(1deg);
+          transform: perspective(2000px) rotateX(0deg) rotateY(-8deg)
+            rotateZ(0.5deg);
           transform-style: preserve-3d;
         ">
         <!-- Crack overlay (appears on impact) -->

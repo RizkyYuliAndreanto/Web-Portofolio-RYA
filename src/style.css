@@ -8,7 +8,13 @@
   --color-highlight: #60a5fa;
   --color-text: #ffffff;
   --color-text-secondary: #94a3b8;
-  --font-oswald: 'Oswald', sans-serif;
+  --font-oswald: "Oswald", sans-serif;
+}
+
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
 }
 
 @keyframes marquee-left {

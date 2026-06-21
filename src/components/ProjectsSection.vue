@@ -194,6 +194,15 @@ function getCardTransform(index) {
     scale = 0.5;
   }
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  if (isMobile) {
+    translateX = normalizedDiff * 140;
+    rotateY = normalizedDiff * 25;
+    if (Math.abs(normalizedDiff) > 1) {
+      opacity = 0;
+    }
+  }
+
   return {
     transform: `translate(-50%, -50%) translateX(${translateX}%) translateY(${translateY}%) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
     opacity,

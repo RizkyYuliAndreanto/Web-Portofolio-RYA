@@ -188,7 +188,8 @@ onUnmounted(() => {
               </div>
 
               <!-- Details inline -->
-              <div class="flex-1 grid grid-cols-3 gap-2 md:gap-3">
+              <div
+                class="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3">
                 <div
                   class="p-2.5 md:p-3 rounded-lg bg-white/[0.03] border border-white/5">
                   <h4
