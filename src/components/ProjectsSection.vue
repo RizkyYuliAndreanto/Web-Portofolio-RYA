@@ -70,8 +70,8 @@ const projects = [
     id: 3,
     title: "Dosen Tracker",
     description:
-      "Sistem pelacakan kehadiran akademik berbasis Computer Vision real-time di edge device dengan YOLOv8, ArcFace, dan deteksi anti-spoofing dalam arsitektur microservices.",
-    tech: ["Python", "FastAPI", "React", "YOLOv8"],
+      "Sistem pelacakan kehadiran akademik berbasis Computer Vision real-time di edge device dengan YOLOv26, ArcFace, dan deteksi anti-spoofing dalam arsitektur microservices.",
+    tech: ["Python", "FastAPI", "React", "YOLOv26"],
     image: projectImage,
     github: "https://github.com/RizkyYuliAndreanto",
     demo: "#",
