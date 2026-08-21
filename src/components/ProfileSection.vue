@@ -1,19 +1,56 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, computed, onMounted, onUnmounted, onBeforeUpdate } from "vue";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ParallaxStage from "./ParallaxStage.vue";
+import { useParallax } from "../utils/useParallax.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const sectionRef = ref(null);
+
+// v2 02-profile layers — overlay vignette dinonaktifkan (global .px-section sudah handle fallback)
+const pxLayers = [
+  { file: "/parallax-v2/02-profile/profile-l1-backdrop.jpg", mobile: "/parallax-v2/02-profile/profile-l1-backdrop.png", speed: 0.03, scale: 1.02 },
+  { file: "/parallax-v2/02-profile/profile-l2-far.png",        mobile: "/parallax-v2/02-profile/profile-l2-far.png",        speed: 0.10, scale: 1.03 },
+  { file: "/parallax-v2/02-profile/profile-l3-mid.png",        mobile: "/parallax-v2/02-profile/profile-l3-mid.png",        speed: 0.20, scale: 1.05 },
+  { file: "/parallax-v2/02-profile/profile-l4-near.png",       mobile: "/parallax-v2/02-profile/profile-l4-near.png",       speed: 0.34, scale: 1.08 },
+  { file: "/parallax-v2/02-profile/profile-l5-foreground.png", mobile: "/parallax-v2/02-profile/profile-l5-foreground.png", speed: 0.55, scale: 1.12 },
+  { file: "/parallax-v2/shared/overlay-glow-blue.png",          speed: 0.04, blend: "is-overlay" },
+  // overlay-vignette-navy dihapus — menyebabkan halaman terlalu gelap
+  { file: "/parallax-v2/shared/overlay-grain.png",              speed: 0,    blend: "is-grain"   },
+  { file: "/parallax-v2/shared/overlay-fade-top.png",           speed: 0,    blend: "is-grade"   },
+  { file: "/parallax-v2/shared/overlay-fade-bottom.png",        speed: 0,    blend: "is-grade"   },
+];
+
+useParallax(sectionRef, { scrub: 2, travelMul: 45, zoomMul: 0.16 });
+
 const bgTextRef = ref(null);
 const accentStripRef = ref(null);
-const photoContainerRef = ref(null);
-const leftColRef = ref(null);
-const rightColRef = ref(null);
-const stat1Ref = ref(null);
-const stat2Ref = ref(null);
-const badgesRef = ref(null);
+
+// Array refs - pakai let biasa, bukan ref()
+let photoContainerEls = [];
+let leftColEls = [];
+let rightColEls = [];
+let stat1Els = [];
+let stat2Els = [];
+let badgesEls = [];
+
+onBeforeUpdate(() => {
+  photoContainerEls = [];
+  leftColEls = [];
+  rightColEls = [];
+  stat1Els = [];
+  stat2Els = [];
+  badgesEls = [];
+});
+
+function pushRef(bucket, el) {
+  if (el && !bucket.includes(el)) bucket.push(el);
+}
+
+// Get visible elements (desktop or mobile)
+const getVisible = (arr) => arr.find(el => el.offsetParent !== null) || arr[0];
 
 const yearsCount = ref(0);
 const projectsCount = ref(0);
@@ -28,15 +65,17 @@ onMounted(() => {
 
   ctx = gsap.context(() => {
     // Role text cycling with 3D flip
+    const bigBgTextElement = bgTextRef.value?.querySelector(".big-bg-text");
     roleInterval = setInterval(() => {
-      gsap.to(".big-bg-text", {
+      if (!bigBgTextElement) return;
+      gsap.to(bigBgTextElement, {
         opacity: 0,
         duration: 0.4,
         rotationX: 45,
         onComplete: () => {
           currentRoleIndex.value = (currentRoleIndex.value + 1) % roles.length;
           gsap.fromTo(
-            ".big-bg-text",
+            bigBgTextElement,
             { rotationX: -30 },
             {
               opacity: 1,
@@ -73,7 +112,7 @@ onMounted(() => {
     // === ENTRANCE ANIMATIONS ===
 
     // Photo entrance - scale up from center
-    gsap.from(photoContainerRef.value, {
+    gsap.from(getVisible(photoContainerEls), {
       scale: 0.8,
       opacity: 0,
       duration: 1.2,
@@ -82,7 +121,7 @@ onMounted(() => {
     });
 
     // Left column - slide from left
-    gsap.from(leftColRef.value, {
+    gsap.from(getVisible(leftColEls), {
       x: -80,
       opacity: 0,
       duration: 1,
@@ -91,7 +130,7 @@ onMounted(() => {
     });
 
     // Right column - slide from right
-    gsap.from(rightColRef.value, {
+    gsap.from(getVisible(rightColEls), {
       x: 80,
       opacity: 0,
       duration: 1,
@@ -100,7 +139,7 @@ onMounted(() => {
     });
 
     // Stat circles - pop in with 3D rotation
-    gsap.from(stat1Ref.value, {
+    gsap.from(getVisible(stat1Els), {
       scale: 0,
       rotation: -180,
       opacity: 0,
@@ -109,7 +148,7 @@ onMounted(() => {
       scrollTrigger: { trigger: sectionRef.value, start: "top 50%" },
     });
 
-    gsap.from(stat2Ref.value, {
+    gsap.from(getVisible(stat2Els), {
       scale: 0,
       rotation: 180,
       opacity: 0,
@@ -120,7 +159,7 @@ onMounted(() => {
     });
 
     // Badges slide up
-    gsap.from(badgesRef.value, {
+    gsap.from(getVisible(badgesEls), {
       y: 30,
       opacity: 0,
       duration: 0.8,
@@ -158,7 +197,7 @@ onMounted(() => {
     });
 
     // Photo - bergerak medium, 3D tilt effect
-    gsap.to(photoContainerRef.value, {
+    gsap.to(getVisible(photoContainerEls), {
       yPercent: -12,
       rotationX: 3,
       rotationY: -2,
@@ -172,7 +211,7 @@ onMounted(() => {
     });
 
     // Left column - bergerak agak cepat ke atas
-    gsap.to(leftColRef.value, {
+    gsap.to(getVisible(leftColEls), {
       yPercent: -18,
       ease: "none",
       scrollTrigger: {
@@ -184,7 +223,7 @@ onMounted(() => {
     });
 
     // Right column - bergerak lebih lambat dari left (asymmetric depth)
-    gsap.to(rightColRef.value, {
+    gsap.to(getVisible(rightColEls), {
       yPercent: -8,
       ease: "none",
       scrollTrigger: {
@@ -196,7 +235,7 @@ onMounted(() => {
     });
 
     // Stat circles - subtle 3D rotation saat scroll
-    gsap.to(stat1Ref.value, {
+    gsap.to(getVisible(stat1Els), {
       rotationY: 15,
       rotationX: -5,
       yPercent: -10,
@@ -209,7 +248,7 @@ onMounted(() => {
       },
     });
 
-    gsap.to(stat2Ref.value, {
+    gsap.to(getVisible(stat2Els), {
       rotationY: -15,
       rotationX: 5,
       yPercent: -14,
@@ -223,7 +262,7 @@ onMounted(() => {
     });
 
     // Badges - micro parallax
-    gsap.to(badgesRef.value, {
+    gsap.to(getVisible(badgesEls), {
       yPercent: -6,
       ease: "none",
       scrollTrigger: {
@@ -246,8 +285,10 @@ onUnmounted(() => {
   <section
     id="about"
     ref="sectionRef"
-    class="relative py-24 min-h-[90vh] bg-[#0A0D18] overflow-hidden flex items-center justify-center"
-    style="perspective: 1000px">
+    class="px-section relative py-24 min-h-screen flex items-center">
+
+    <!-- v2 Parallax Stage -->
+    <ParallaxStage :layers="pxLayers" />
     <!-- Vertical Accent Strip -->
     <div
       ref="accentStripRef"
@@ -296,119 +337,130 @@ onUnmounted(() => {
 
     <!-- Center Content Container -->
     <div
-      class="relative z-10 w-full max-w-[90rem] mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-8 lg:gap-12 items-center mt-12 lg:mt-24"
+      class="relative z-10 w-full max-w-7xl mx-auto px-6 mt-12 lg:mt-24"
       style="transform-style: preserve-3d">
-      <!-- Left Column: Description -->
-      <div
-        ref="leftColRef"
-        class="order-2 lg:order-1 flex flex-col justify-center lg:items-end text-center lg:text-right w-full z-20 pt-8 lg:pt-32"
-        style="transform-style: preserve-3d">
-        <p
-          class="text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.2em] leading-relaxed mb-12 lg:border-r-2 border-accent/50 lg:pr-4 text-center lg:text-right inline-block mx-auto lg:mx-0 max-w-[280px] font-oswald">
-          AS A DIGITAL DEVELOPER, I FOCUS ON PRODUCING TOP-NOTCH AND IMPACTFUL
-          DIGITAL EXPERIENCES.
-        </p>
-        <p
-          class="text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.2em] leading-relaxed lg:border-r-2 border-accent/50 lg:pr-4 text-center lg:text-right inline-block mx-auto lg:mx-0 max-w-[280px] font-oswald">
-          RIZKY'S BACKEND ARCHITECTURE & AI EXPERTISE DELIVERED.
-        </p>
 
-        <!-- Let's talk button -->
-        <a
-          href="#contact"
-          class="mt-12 mx-auto lg:ml-auto lg:mr-0 flex items-center gap-4 text-white uppercase font-oswald tracking-widest text-xs sm:text-sm border border-white/20 py-3 px-6 hover:bg-white/5 transition-colors">
-          <span>Let's talk</span>
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </a>
+      <!-- Desktop: 3-column layout -->
+      <div class="hidden lg:grid lg:grid-cols-[1fr_420px_1fr] gap-10 items-center" style="transform-style: preserve-3d">
+        <!-- Left Column: Description -->
+        <div
+          :ref="el => pushRef(leftColEls, el)"
+          class="flex flex-col justify-center items-end text-right z-20"
+          style="transform-style: preserve-3d">
+          <p
+            class="text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.2em] leading-relaxed mb-8 border-r-2 border-accent/50 pr-6 max-w-[280px] font-oswald">
+            AS A DIGITAL DEVELOPER, I FOCUS ON PRODUCING TOP-NOTCH AND IMPACTFUL
+            DIGITAL EXPERIENCES.
+          </p>
+          <p
+            class="text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.2em] leading-relaxed border-r-2 border-accent/50 pr-6 max-w-[280px] font-oswald">
+            RIZKY'S BACKEND ARCHITECTURE & AI EXPERTISE DELIVERED.
+          </p>
+          <a
+            href="#contact"
+            class="mt-10 ml-auto flex items-center gap-4 text-white uppercase font-oswald tracking-widest text-xs sm:text-sm border border-white/20 py-3 px-6 hover:bg-white/5 transition-colors">
+            <span>Let's talk</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Center Column: Photo -->
+        <div
+          :ref="el => pushRef(photoContainerEls, el)"
+          class="flex justify-center relative z-10"
+          style="transform-style: preserve-3d">
+          <div class="relative w-full h-auto flex justify-center items-end">
+            <img
+              src="../assets/HERO-NO-BG.png"
+              alt="Rizky Yuli Andreanto"
+              class="w-full h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] relative z-10 -mb-16" />
+          </div>
+        </div>
+
+        <!-- Right Column: Stats & Description -->
+        <div
+          :ref="el => pushRef(rightColEls, el)"
+          class="flex flex-col justify-center items-start gap-6 text-left z-20"
+          style="transform-style: preserve-3d">
+          <div class="flex flex-col gap-5">
+            <div class="flex items-center gap-5 group">
+              <div
+                :ref="el => pushRef(stat1Els, el)"
+                class="flex-shrink-0 flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#E5E0D8] text-[#12182B] border-[6px] border-background z-20 shadow-2xl transition-transform duration-300 group-hover:scale-105"
+                style="transform-style: preserve-3d">
+                <span class="text-3xl md:text-4xl font-black font-oswald tracking-tighter leading-none pt-1">0{{ Math.round(yearsCount) }}</span>
+              </div>
+              <p class="text-[10px] sm:text-xs tracking-widest text-text-secondary uppercase font-bold leading-relaxed">Years of<br />Experience</p>
+            </div>
+            <div class="flex items-center gap-5 group">
+              <div
+                :ref="el => pushRef(stat2Els, el)"
+                class="flex-shrink-0 flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#E5E0D8] text-[#12182B] border-[6px] border-background z-20 shadow-2xl transition-transform duration-300 group-hover:scale-105"
+                style="transform-style: preserve-3d">
+                <span class="text-2xl md:text-3xl font-black font-oswald tracking-tighter leading-none pt-1">{{ Math.round(projectsCount) }}+</span>
+              </div>
+              <p class="text-[10px] sm:text-xs tracking-widest text-text-secondary uppercase font-bold leading-relaxed">Projects<br />Completed</p>
+            </div>
+          </div>
+          <p class="text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.2em] leading-relaxed mt-4 border-l-2 border-accent/50 pl-4 max-w-[280px] font-oswald">
+            A CUTTING-EDGE DIGITAL PLATFORM DESIGNED TO REVOLUTIONIZE THE WAY
+            PEOPLE INTERACT WITH TECHNOLOGY.
+            <br /><br />
+            EXCEPTIONAL BACKEND ARCHITECTURE AND AI EXPERIENCE.
+          </p>
+          <div :ref="el => pushRef(badgesEls, el)" class="flex gap-3 mt-2">
+            <span class="px-4 py-1.5 rounded-full border border-white/20 text-[9px] font-oswald tracking-widest uppercase text-white/70">BACKEND ENGINEER</span>
+            <span class="px-4 py-1.5 rounded-full border border-white/20 text-[9px] font-oswald tracking-widest uppercase text-white/70">2026</span>
+          </div>
+        </div>
       </div>
 
-      <!-- Center Column: Photo -->
-      <div
-        ref="photoContainerRef"
-        class="order-1 lg:order-2 flex justify-center relative z-10"
-        style="transform-style: preserve-3d">
-        <div
-          class="relative w-[300px] sm:w-[400px] lg:w-[450px] xl:w-[500px] h-auto flex justify-center items-end">
+      <!-- Mobile: stacked layout -->
+      <div class="lg:hidden flex flex-col items-center gap-10">
+        <div :ref="el => pushRef(photoContainerEls, el)" class="flex justify-center relative z-10 w-[280px] sm:w-[350px]">
           <img
             src="../assets/HERO-NO-BG.png"
             alt="Rizky Yuli Andreanto"
-            class="w-full h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] relative z-10 -mb-12 lg:-mb-24" />
+            class="w-full h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] relative z-10" />
         </div>
-      </div>
-
-      <!-- Right Column: Stats & Description -->
-      <div
-        ref="rightColRef"
-        class="order-3 flex flex-col justify-center items-center lg:items-start lg:pl-4 xl:pl-8 gap-8 text-center lg:text-left z-20 pt-8 lg:pt-32"
-        style="transform-style: preserve-3d">
-        <!-- Stat 1: Years Experience -->
-        <div
-          class="flex flex-col lg:flex-row items-center lg:items-center gap-6 group">
-          <div
-            ref="stat1Ref"
-            class="flex-shrink-0 flex items-center justify-center w-28 h-28 md:w-36 md:h-36 rounded-full bg-[#E5E0D8] text-[#12182B] border-[8px] border-background lg:-ml-12 xl:-ml-20 z-20 shadow-2xl transition-transform duration-300 group-hover:scale-105"
-            style="transform-style: preserve-3d">
-            <span
-              class="text-5xl md:text-6xl font-black font-oswald tracking-tighter leading-none pt-1"
-              >0{{ Math.round(yearsCount) }}</span
-            >
-          </div>
-          <div class="max-w-[120px] text-center lg:text-left">
-            <p
-              class="text-[10px] sm:text-xs tracking-widest text-text-secondary uppercase font-bold leading-relaxed">
-              Years of<br />Experience
-            </p>
-          </div>
+        <div :ref="el => pushRef(leftColEls, el)" class="flex flex-col items-center text-center gap-6">
+          <p class="text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.2em] leading-relaxed max-w-[280px] font-oswald">
+            AS A DIGITAL DEVELOPER, I FOCUS ON PRODUCING TOP-NOTCH AND IMPACTFUL DIGITAL EXPERIENCES.
+          </p>
+          <p class="text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.2em] leading-relaxed max-w-[280px] font-oswald">
+            RIZKY'S BACKEND ARCHITECTURE & AI EXPERTISE DELIVERED.
+          </p>
+          <a href="#contact" class="flex items-center gap-4 text-white uppercase font-oswald tracking-widest text-xs sm:text-sm border border-white/20 py-3 px-6 hover:bg-white/5 transition-colors">
+            <span>Let's talk</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+          </a>
         </div>
-
-        <!-- Stat 2: Projects -->
-        <div
-          class="flex flex-col lg:flex-row items-center lg:items-center gap-6 group">
-          <div
-            ref="stat2Ref"
-            class="flex-shrink-0 flex items-center justify-center w-28 h-28 md:w-36 md:h-36 rounded-full bg-[#E5E0D8] text-[#12182B] border-[8px] border-background lg:-ml-12 xl:-ml-20 z-20 shadow-2xl transition-transform duration-300 group-hover:scale-105"
-            style="transform-style: preserve-3d">
-            <span
-              class="text-4xl md:text-5xl font-black font-oswald tracking-tighter leading-none pt-1"
-              >{{ Math.round(projectsCount) }}+</span
-            >
+        <div :ref="el => pushRef(rightColEls, el)" class="flex flex-col items-center gap-6">
+          <div class="flex flex-col gap-5">
+            <div class="flex items-center gap-5">
+              <div :ref="el => pushRef(stat1Els, el)" class="flex-shrink-0 flex items-center justify-center w-20 h-20 rounded-full bg-[#E5E0D8] text-[#12182B] border-[6px] border-background z-20 shadow-2xl">
+                <span class="text-3xl font-black font-oswald tracking-tighter leading-none pt-1">0{{ Math.round(yearsCount) }}</span>
+              </div>
+              <p class="text-[10px] sm:text-xs tracking-widest text-text-secondary uppercase font-bold leading-relaxed">Years of<br />Experience</p>
+            </div>
+            <div class="flex items-center gap-5">
+              <div :ref="el => pushRef(stat2Els, el)" class="flex-shrink-0 flex items-center justify-center w-20 h-20 rounded-full bg-[#E5E0D8] text-[#12182B] border-[6px] border-background z-20 shadow-2xl">
+                <span class="text-2xl font-black font-oswald tracking-tighter leading-none pt-1">{{ Math.round(projectsCount) }}+</span>
+              </div>
+              <p class="text-[10px] sm:text-xs tracking-widest text-text-secondary uppercase font-bold leading-relaxed">Projects<br />Completed</p>
+            </div>
           </div>
-          <div class="max-w-[120px] text-center lg:text-left">
-            <p
-              class="text-[10px] sm:text-xs tracking-widest text-text-secondary uppercase font-bold leading-relaxed">
-              Projects<br />Completed
-            </p>
+          <p class="text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.2em] leading-relaxed max-w-[280px] text-center font-oswald">
+            A CUTTING-EDGE DIGITAL PLATFORM DESIGNED TO REVOLUTIONIZE THE WAY PEOPLE INTERACT WITH TECHNOLOGY.
+            <br /><br />
+            EXCEPTIONAL BACKEND ARCHITECTURE AND AI EXPERIENCE.
+          </p>
+          <div :ref="el => pushRef(badgesEls, el)" class="flex gap-3">
+            <span class="px-4 py-1.5 rounded-full border border-white/20 text-[9px] font-oswald tracking-widest uppercase text-white/70">BACKEND ENGINEER</span>
+            <span class="px-4 py-1.5 rounded-full border border-white/20 text-[9px] font-oswald tracking-widest uppercase text-white/70">2026</span>
           </div>
-        </div>
-
-        <p
-          class="text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.2em] leading-relaxed mt-6 lg:border-l-2 border-accent/50 lg:pl-4 text-center lg:text-left inline-block mx-auto lg:mx-0 max-w-[280px] font-oswald">
-          A CUTTING-EDGE DIGITAL PLATFORM DESIGNED TO REVOLUTIONIZE THE WAY
-          PEOPLE INTERACT WITH TECHNOLOGY.
-          <br /><br />
-          EXCEPTIONAL BACKEND ARCHITECTURE AND AI EXPERIENCE.
-        </p>
-
-        <!-- Badges -->
-        <div
-          ref="badgesRef"
-          class="flex gap-4 mt-2 justify-center lg:justify-start w-full">
-          <span
-            class="px-4 py-1.5 rounded-full border border-white/20 text-[9px] font-oswald tracking-widest uppercase text-white/70"
-            >BACKEND ENGINEER</span
-          >
-          <span
-            class="px-4 py-1.5 rounded-full border border-white/20 text-[9px] font-oswald tracking-widest uppercase text-white/70"
-            >2026</span
-          >
         </div>
       </div>
     </div>

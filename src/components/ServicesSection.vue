@@ -2,12 +2,30 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ParallaxStage from "./ParallaxStage.vue";
+import { useParallax } from "../utils/useParallax.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const sectionRef = ref(null);
 const headerRef = ref(null);
 const headerDescRef = ref(null);
+
+// v2 03-services layers — vignette navy dihapus untuk mengurangi kegelapan
+const pxLayers = [
+  { file: "/parallax-v2/03-services/services-l1-backdrop.jpg", mobile: "/parallax-v2/03-services/services-l1-backdrop.png", speed: 0.03, scale: 1.02 },
+  { file: "/parallax-v2/03-services/services-l2-far.png",        mobile: "/parallax-v2/03-services/services-l2-far.png",        speed: 0.10, scale: 1.03 },
+  { file: "/parallax-v2/03-services/services-l3-mid.png",        mobile: "/parallax-v2/03-services/services-l3-mid.png",        speed: 0.20, scale: 1.05 },
+  { file: "/parallax-v2/03-services/services-l4-near.png",       mobile: "/parallax-v2/03-services/services-l4-near.png",       speed: 0.34, scale: 1.08 },
+  { file: "/parallax-v2/03-services/services-l5-foreground.png", mobile: "/parallax-v2/03-services/services-l5-foreground.png", speed: 0.55, scale: 1.12 },
+  { file: "/parallax-v2/shared/overlay-grid-perspective.png", speed: 0.16, blend: "is-overlay" },
+  // overlay-vignette-navy dihapus
+  { file: "/parallax-v2/shared/overlay-grain.png",             speed: 0,    blend: "is-grain"   },
+  { file: "/parallax-v2/shared/overlay-fade-top.png",          speed: 0,    blend: "is-grade"   },
+  { file: "/parallax-v2/shared/overlay-fade-bottom.png",       speed: 0,    blend: "is-grade"   },
+];
+
+useParallax(sectionRef, { scrub: 2, travelMul: 48, zoomMul: 0.17 });
 
 const services = [
   {
@@ -213,10 +231,14 @@ function splitChars(text) {
   <section
     id="services"
     ref="sectionRef"
-    class="py-24 md:py-32 bg-[#0A0D18] overflow-hidden"
+    class="px-section relative py-24 md:py-32"
     style="perspective: 1000px">
+
+    <!-- v2 Parallax Stage -->
+    <ParallaxStage :layers="pxLayers" />
+
     <div
-      class="max-w-[90rem] mx-auto px-6"
+      class="px-content relative max-w-[90rem] mx-auto px-6"
       style="transform-style: preserve-3d">
       <!-- Editorial Header -->
       <div

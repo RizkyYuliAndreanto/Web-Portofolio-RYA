@@ -1,0 +1,533 @@
+/* =====================================================================
+   foundry.css  -  VERSI PERBAIKAN (fix pack)
+   Perubahan vs versi kamu:
+   1. Setiap image-set() sekarang punya fallback url() 1x di baris
+      sebelumnya. Browser lama / Safari yang tidak mengerti image-set
+      di border-image akan memakai baris fallback, jadi rangka 3D TIDAK
+      pernah hilang lagi (kalau hilang, tampilannya jadi kartu datar).
+   2. .foundry diberi width:100% agar tidak menyusut saat dipakai di
+      dalam <div class="w-full flex justify-center">.
+   3. Proteksi terhadap Tailwind preflight (border-width:0 dan
+      background-image:none pada <button>).
+
+   PENTING - LETAK ASET
+   Semua url() di file ini memakai path absolut "/foundry/...", jadi
+   folder aset WAJIB berada di:
+       public/foundry/assets/ui/*.png
+       public/foundry/assets/fx/*.png
+       public/foundry/assets-2x/ui/*.png
+   Kalau kamu menaruhnya di tempat lain, cari-ganti "/foundry/" di
+   file ini dengan path kamu.
+   ===================================================================== */
+
+/* RYA Tech Stack Foundry - container UI kit
+   Palette locked to parallax pack v2 (Sky Foundry). */
+
+:root {
+	--ink-900: #0e1522;
+	--ink-800: #131c30;
+	--ink-700: #1b2540;
+	--cobalt: #2a5fe0;
+	--sky: #4e86c8;
+	--paper: #dce4f0;
+	--ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ---------------------------------------------------------------- scene */
+.foundry {
+	position: relative;
+	max-width: 1080px;
+	margin: 0 auto;
+	perspective: 1700px;
+}
+
+.foundry__panel {
+	position: relative;
+	transform-style: preserve-3d;
+	will-change: transform;
+}
+
+/* the 3D bezel, drawn as a 9-slice so it can stretch to ANY size
+   without ever distorting the corners */
+.foundry__frame {
+	position: absolute;
+	inset: -34px -34px -40px;
+	border-style: solid;
+	border-width: 98px 78px 107px;
+	border-color: transparent;
+	background: transparent;
+	border-image-source: image-set(
+		url("/foundry/assets/ui/panel-frame-wide.png") 1x,
+		url("/foundry/assets-2x/ui/panel-frame-wide.png") 2x
+	);
+	border-image-slice: 98 78 107 78;
+	border-image-repeat: stretch;
+	pointer-events: none;
+	z-index: 3;
+}
+
+.foundry__glass {
+	position: absolute;
+	inset: 0;
+	border-radius: 22px;
+	background:
+		linear-gradient(180deg, rgba(31, 44, 74, 0.92) 0%, rgba(17, 25, 42, 0.95) 100%);
+	box-shadow:
+		inset 0 1px 0 rgba(220, 228, 240, 0.09),
+		inset 0 -30px 60px rgba(8, 12, 20, 0.55);
+	z-index: 1;
+}
+
+.foundry__inner {
+	position: relative;
+	z-index: 2;
+	padding: 54px 58px 60px;
+}
+
+.foundry__bracket {
+	position: absolute;
+	width: 74px;
+	height: 56px;
+	z-index: 4;
+	background: image-set(
+		url("/foundry/assets/ui/corner-bracket.png") 1x,
+		url("/foundry/assets-2x/ui/corner-bracket.png") 2x
+	) center/contain no-repeat;
+	pointer-events: none;
+	opacity: 0.95;
+}
+
+.foundry__bracket--tl { top: -18px; left: -14px; }
+.foundry__bracket--tr { top: -18px; right: -14px; transform: scaleX(-1); }
+.foundry__bracket--bl { bottom: -22px; left: -14px; transform: scaleY(-1); }
+.foundry__bracket--br { bottom: -22px; right: -14px; transform: scale(-1); }
+
+/* ---------------------------------------------------------------- groups */
+.cat + .cat { margin-top: 30px; }
+
+/* header plate: 3-slice, vertical scale is uniform so nothing warps */
+.cat__plate {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 18px;
+	height: 64px;
+	border-style: solid;
+	border-width: 0 26px 0 44px;
+	border-color: transparent;
+	background: transparent;
+	border-image-source: image-set(
+		url("/foundry/assets/ui/header-plate.png") 1x,
+		url("/foundry/assets-2x/ui/header-plate.png") 2x
+	);
+	border-image-slice: 0 60 0 100 fill;
+	border-image-repeat: stretch;
+}
+
+.cat__title {
+	font: 700 13px/1.15 ui-monospace, SFMono-Regular, Menlo, monospace;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--paper);
+	margin: 0;
+}
+
+.cat__desc {
+	font-size: 11.5px;
+	line-height: 1.2;
+	color: #8fa2bd;
+	text-align: right;
+	max-width: 40ch;
+	margin: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.cat__rail {
+	height: 12px;
+	margin: 16px 0 20px;
+	border-style: solid;
+	border-width: 0 7px;
+	border-color: transparent;
+	background: transparent;
+	border-image-source: image-set(
+		url("/foundry/assets/ui/divider-rail.png") 1x,
+		url("/foundry/assets-2x/ui/divider-rail.png") 2x
+	);
+	border-image-slice: 0 40 0 40 fill;
+	border-image-repeat: stretch;
+	opacity: 0.85;
+}
+
+.grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px 16px;
+}
+
+/* ----------------------------------------------------------------- chips */
+.chip {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	height: 56px;
+	padding-right: 10px;
+	border-style: solid;
+	border-width: 0 16px 0 43px;
+	border-color: transparent;
+	background: transparent;
+	outline: none;
+	box-shadow: none;
+	border-image-source: image-set(
+		url("/foundry/assets/ui/slot-chip.png") 1x,
+		url("/foundry/assets-2x/ui/slot-chip.png") 2x
+	);
+	border-image-slice: 0 60 0 170 fill;
+	border-image-repeat: stretch;
+	font: 600 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: #cdd8ea;
+	cursor: pointer;
+	transition: transform 0.34s var(--ease), color 0.24s linear;
+	will-change: transform;
+}
+
+.chip__icon {
+	position: absolute;
+	left: -33px;
+	top: 50%;
+	width: 32px;
+	height: 32px;
+	margin-top: -16px;
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	font-size: 12px;
+	letter-spacing: 0;
+	color: #cfe0ff;
+	background: transparent;
+}
+
+.chip__icon img {
+	display: block;
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+	border-radius: 4px;
+}
+
+.chip__sheen {
+	position: absolute;
+	inset: -6px -40px;
+	background: url("/foundry/assets/fx/sheen-diagonal.png") center/cover no-repeat;
+	mix-blend-mode: screen;
+	opacity: 0;
+	transform: translateX(-60%);
+	pointer-events: none;
+}
+
+.chip:hover,
+.chip.is-active {
+	border-image-source: image-set(
+		url("/foundry/assets/ui/slot-chip-active.png") 1x,
+		url("/foundry/assets-2x/ui/slot-chip-active.png") 2x
+	);
+	border-image-slice: 0 60 0 130 fill;
+	border-width: 0 16px 0 33px;
+	border-color: transparent;
+	background: transparent;
+	color: #ffffff;
+	transform: translateY(-4px);
+}
+
+.chip:hover .chip__icon,
+.chip.is-active .chip__icon {
+	left: -24px;
+}
+
+.chip:hover .chip__sheen {
+	animation: sweep 0.85s var(--ease);
+}
+
+@keyframes sweep {
+	0% { opacity: 0; transform: translateX(-60%); }
+	35% { opacity: 0.85; }
+	100% { opacity: 0; transform: translateX(60%); }
+}
+
+/* ------------------------------------------------------------- core row */
+.core {
+	display: flex;
+	gap: 22px;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin: 4px 0 34px;
+}
+
+.core__cell {
+	position: relative;
+	width: 114px;
+	height: 114px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: image-set(
+		url("/foundry/assets/ui/hex-socket.png") 1x,
+		url("/foundry/assets-2x/ui/hex-socket.png") 2x
+	) center/contain no-repeat;
+	transition: transform 0.4s var(--ease);
+	will-change: transform;
+	padding-bottom: 2px;
+}
+
+.core__cell:hover { transform: translateY(-6px) scale(1.04); }
+
+.core__cell-img {
+	display: block;
+	width: 38px;
+	height: 38px;
+	object-fit: contain;
+	border-radius: 6px;
+	filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+}
+
+.core__cell-label {
+	font: 800 10px/1 ui-monospace, Menlo, monospace;
+	letter-spacing: 0.08em;
+	color: #dce4f0;
+	text-transform: uppercase;
+	margin-top: 4px;
+}
+
+
+.plinth-row {
+	display: flex;
+	gap: 16px;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-bottom: 8px;
+}
+
+.plinth {
+	width: 72px;
+	height: 72px;
+	display: grid;
+	place-items: center;
+	background: image-set(
+		url("/foundry/assets/ui/icon-plinth.png") 1x,
+		url("/foundry/assets-2x/ui/icon-plinth.png") 2x
+	) center/contain no-repeat;
+	font: 700 12px/1 ui-monospace, Menlo, monospace;
+	color: #c8d6ec;
+	transition: transform 0.4s var(--ease);
+}
+
+.plinth:hover { transform: translateY(-5px); }
+
+/* --------------------------------------------------------------- footing */
+.foundry__base {
+	position: relative;
+	height: 190px;
+	margin-top: -16px;
+	display: grid;
+	place-items: center;
+	perspective: 800px;
+}
+
+.foundry__ring {
+	position: absolute;
+	width: 460px;
+	height: 300px;
+	top: -34px;
+	background: image-set(
+		url("/foundry/assets/ui/orbit-ring.png") 1x,
+		url("/foundry/assets-2x/ui/orbit-ring.png") 2x
+	) center/contain no-repeat;
+	opacity: 0.75;
+	transform-style: preserve-3d;
+	will-change: transform;
+}
+
+.foundry__pedestal {
+	position: absolute;
+	bottom: 0;
+	width: 560px;
+	height: 200px;
+	background: image-set(
+		url("/foundry/assets/ui/pedestal.png") 1x,
+		url("/foundry/assets-2x/ui/pedestal.png") 2x
+	) center bottom/contain no-repeat;
+}
+
+.foundry__pedestal-glow {
+	position: absolute;
+	bottom: 10px;
+	left: 50%;
+	width: 400px;
+	height: 80px;
+	transform: translateX(-50%);
+	background: radial-gradient(ellipse at center, rgba(42, 95, 224, 0.4) 0%, rgba(42, 95, 224, 0) 70%);
+	filter: blur(20px);
+	pointer-events: none;
+	will-change: opacity;
+}
+
+.foundry__badge {
+	position: relative;
+	z-index: 2;
+	margin-bottom: 26px;
+	font: 600 12px/1 ui-monospace, Menlo, monospace;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: #a9bcd8;
+}
+
+/* ------------------------------------------------------------ responsive */
+@media (max-width: 900px) {
+	.foundry__inner { padding: 40px 34px 46px; }
+	.foundry__frame { border-width: 74px 58px 80px; inset: -26px -26px -30px; }
+	.cat__desc { display: none; }
+}
+
+@media (max-width: 600px) {
+	.foundry__inner { padding: 30px 22px 34px; }
+	.foundry__frame { border-width: 56px 44px 60px; inset: -20px; }
+	.foundry__bracket { display: none; }
+	.chip { height: 48px; border-width: 0 14px 0 37px; }
+	.chip .chip__icon { left: -26px; width: 28px; height: 28px; margin-top: -14px; }
+	.core__cell { width: 88px; height: 88px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.reveal { opacity: 1; transform: none; transition: none; }
+	.foundry__ring { animation: none; }
+	.foundry__pedestal-glow { animation: none; opacity: 0.5; }
+	.chip { transition: none; }
+}
+
+
+/* ===================== PATCH INTEGRASI (fix pack) ===================== */
+
+/* 1. Jangan menyusut di dalam flex container Tailwind
+      (<div class="w-full flex justify-center">) */
+.foundry {
+	width: 100%;
+	max-width: 1080px;
+	flex: 0 1 auto;
+}
+
+/* 2. Tailwind preflight menulis `border-width: 0` ke semua elemen dan
+      `background-image: none` ke <button>. Kalau urutan CSS-nya kalah,
+      semua border-image hilang -> tampilan jadi datar. Kunci ulang. */
+.foundry .foundry__frame { border-style: solid; border-width: 98px 78px 107px; }
+.foundry .cat__plate     { border-style: solid; border-width: 0 26px 0 44px; }
+.foundry .cat__rail      { border-style: solid; border-width: 0 7px; }
+.foundry .chip:not(.chip--square) { border-style: solid; border-width: 0 16px 0 43px; background-color: transparent; }
+.foundry .chip.is-active:not(.chip--square) { border-width: 0 16px 0 33px; }
+
+/* 3. Panel harus punya konteks 3D sendiri walau induknya flex */
+.foundry__panel { transform-style: preserve-3d; }
+
+/* 4. Kalau GSAP gagal jalan (mis. ScrollTrigger tidak pernah fire),
+      elemen tetap terlihat. Tambahkan class ini di <div class="foundry">
+      hanya bila kamu memakai versi tanpa animasi. */
+.foundry.is-static .foundry__panel,
+.foundry.is-static .chip,
+.foundry.is-static .cat__plate,
+.foundry.is-static .cat__rail,
+.foundry.is-static .core__cell {
+	opacity: 1 !important;
+	visibility: visible !important;
+	transform: none !important;
+}
+
+
+/* ===================== SHAPE VARIANTS ===================== */
+
+/* label wrapper — display:contents keeps normal chips unchanged */
+.chip__label { display: contents; }
+
+/* ----------------------------------------------------------------
+   SQUARE chip  (Tools & DevOps)
+   Uses icon-plinth.png (kotak) as background socket.
+   Content: icon centered in the hole + short abbreviation below.
+---------------------------------------------------------------- */
+.grid--square {
+	justify-content: center;
+	gap: 14px 14px;
+}
+
+.foundry .chip--square {
+	/* Reset 9-slice border-image */
+	border-image-source: none;
+	border-width: 0;
+	border-style: none;
+
+	background: url("/foundry/assets/ui/icon-plinth.png") center/contain no-repeat;
+	background-color: transparent;
+
+	/* Square dimensions matching plinth proportions */
+	width: 86px;
+	height: 86px;
+	padding: 0;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 3px;
+
+	transition: transform 0.3s var(--ease), filter 0.25s ease, color 0.2s linear;
+}
+
+.square__icon {
+	display: block;
+	width: 34px;
+	height: 34px;
+	object-fit: contain;
+	border-radius: 6px;
+	filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+	margin-top: 2px;
+}
+
+/* Label: short abbreviation below the icon */
+.foundry .chip--square .chip__label {
+	display: block;
+	font-size: 10px;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	text-align: center;
+	color: #a8c0e0;
+	z-index: 1;
+	position: relative;
+	line-height: 1;
+}
+
+.foundry .chip--square .chip__sheen { display: none; }
+
+/* Hover / active: lift + glow, keep plinth background */
+.foundry .chip--square:hover,
+.foundry .chip--square.is-active {
+	border-width: 0;
+	background: url("/foundry/assets/ui/icon-plinth.png") center/contain no-repeat;
+	background-color: transparent;
+	color: #fff;
+	transform: translateY(-5px) scale(1.06);
+	filter: brightness(1.2) drop-shadow(0 4px 14px rgba(42, 95, 224, 0.55));
+}
+
+.foundry .chip--square:hover .chip__label,
+.foundry .chip--square.is-active .chip__label { color: #fff; }
+
+/* Responsive */
+@media (max-width: 600px) {
+	.foundry .chip--square { width: 72px; height: 72px; }
+	.square__icon { width: 28px; height: 28px; }
+	.foundry .chip--square .chip__label { font-size: 9px; }
+}

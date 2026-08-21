@@ -1,0 +1,124 @@
+{
+  "name": "RYA Tech Stack Container - Sky Foundry UI",
+  "style": "2.5D sculpted cel-shaded, matches parallax pack v2",
+  "palette": [
+    "#0E1522",
+    "#131C30",
+    "#1B2540",
+    "#2A5FE0",
+    "#4E86C8",
+    "#DCE4F0"
+  ],
+  "ui": [
+    {
+      "name": "panel-frame-tall",
+      "file": "assets/ui/panel-frame-tall.png",
+      "file2x": "assets-2x/ui/panel-frame-tall.png",
+      "width": 343,
+      "height": 430,
+      "aspect": 0.7977
+    },
+    {
+      "name": "panel-frame-wide",
+      "file": "assets/ui/panel-frame-wide.png",
+      "file2x": "assets-2x/ui/panel-frame-wide.png",
+      "width": 662,
+      "height": 413,
+      "aspect": 1.6029
+    },
+    {
+      "name": "header-plate",
+      "file": "assets/ui/header-plate.png",
+      "file2x": "assets-2x/ui/header-plate.png",
+      "width": 644,
+      "height": 146,
+      "aspect": 4.411
+    },
+    {
+      "name": "slot-chip",
+      "file": "assets/ui/slot-chip.png",
+      "file2x": "assets-2x/ui/slot-chip.png",
+      "width": 432,
+      "height": 219,
+      "aspect": 1.9726
+    },
+    {
+      "name": "slot-chip-active",
+      "file": "assets/ui/slot-chip-active.png",
+      "file2x": "assets-2x/ui/slot-chip-active.png",
+      "width": 324,
+      "height": 210,
+      "aspect": 1.5429
+    },
+    {
+      "name": "icon-plinth",
+      "file": "assets/ui/icon-plinth.png",
+      "file2x": "assets-2x/ui/icon-plinth.png",
+      "width": 299,
+      "height": 302,
+      "aspect": 0.9901
+    },
+    {
+      "name": "hex-socket",
+      "file": "assets/ui/hex-socket.png",
+      "file2x": "assets-2x/ui/hex-socket.png",
+      "width": 321,
+      "height": 319,
+      "aspect": 1.0063
+    },
+    {
+      "name": "divider-rail",
+      "file": "assets/ui/divider-rail.png",
+      "file2x": "assets-2x/ui/divider-rail.png",
+      "width": 607,
+      "height": 73,
+      "aspect": 8.3151
+    },
+    {
+      "name": "corner-bracket",
+      "file": "assets/ui/corner-bracket.png",
+      "file2x": "assets-2x/ui/corner-bracket.png",
+      "width": 348,
+      "height": 264,
+      "aspect": 1.3182
+    },
+    {
+      "name": "orbit-ring",
+      "file": "assets/ui/orbit-ring.png",
+      "file2x": "assets-2x/ui/orbit-ring.png",
+      "width": 602,
+      "height": 389,
+      "aspect": 1.5476
+    },
+    {
+      "name": "pedestal",
+      "file": "assets/ui/pedestal.png",
+      "file2x": "assets-2x/ui/pedestal.png",
+      "width": 645,
+      "height": 386,
+      "aspect": 1.671
+    }
+  ],
+  "fx": [
+    {
+      "name": "sheen-diagonal",
+      "file": "assets/fx/sheen-diagonal.png",
+      "blend": "screen"
+    },
+    {
+      "name": "beam-soft",
+      "file": "assets/fx/beam-soft.png",
+      "blend": "screen"
+    },
+    {
+      "name": "glow-cobalt",
+      "file": "assets/fx/glow-cobalt.png",
+      "blend": "screen"
+    },
+    {
+      "name": "shadow-ellipse",
+      "file": "assets/fx/shadow-ellipse.png",
+      "blend": "multiply"
+    }
+  ]
+}

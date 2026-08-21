@@ -10,6 +10,8 @@ import {
 } from "lucide-vue-next";
 import ProjectModal from "./ProjectModal.vue";
 import projectImage from "../assets/Project-foto.png";
+import ParallaxStage from "./ParallaxStage.vue";
+import { useParallax } from "../utils/useParallax.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,6 +19,22 @@ const sectionRef = ref(null);
 const carouselRef = ref(null);
 const selectedProject = ref(null);
 const currentIndex = ref(0);
+
+// v2 04-projects layers
+const pxLayers = [
+  { file: "/parallax-v2/04-projects/projects-l1-backdrop.jpg", mobile: "/parallax-v2/04-projects/projects-l1-backdrop.png", speed: 0.03, scale: 1.02 },
+  { file: "/parallax-v2/04-projects/projects-l2-far.png",        mobile: "/parallax-v2/04-projects/projects-l2-far.png",        speed: 0.10, scale: 1.03 },
+  { file: "/parallax-v2/04-projects/projects-l3-mid.png",        mobile: "/parallax-v2/04-projects/projects-l3-mid.png",        speed: 0.20, scale: 1.05 },
+  { file: "/parallax-v2/04-projects/projects-l4-near.png",       mobile: "/parallax-v2/04-projects/projects-l4-near.png",       speed: 0.34, scale: 1.08 },
+  { file: "/parallax-v2/04-projects/projects-l5-foreground.png", mobile: "/parallax-v2/04-projects/projects-l5-foreground.png", speed: 0.55, scale: 1.12 },
+  { file: "/parallax-v2/shared/overlay-bokeh-soft.png",      speed: 0.26, blend: "is-overlay" },
+  { file: "/parallax-v2/shared/overlay-vignette-navy.png",   speed: 0,    blend: "is-grade"   },
+  { file: "/parallax-v2/shared/overlay-grain.png",            speed: 0,    blend: "is-grain"   },
+  { file: "/parallax-v2/shared/overlay-fade-top.png",         speed: 0,    blend: "is-grade"   },
+  { file: "/parallax-v2/shared/overlay-fade-bottom.png",      speed: 0,    blend: "is-grade"   },
+];
+
+useParallax(sectionRef, { scrub: 2, travelMul: 50, zoomMul: 0.18 });
 
 const projects = [
   {
@@ -310,8 +328,12 @@ function splitChars(text) {
   <section
     id="projects"
     ref="sectionRef"
-    class="py-24 md:py-32 bg-[#0A0D18] overflow-hidden relative min-h-screen">
-    <div class="max-w-[90rem] mx-auto px-6">
+    class="px-section relative py-24 md:py-32 min-h-screen">
+
+    <!-- v2 Parallax Stage -->
+    <ParallaxStage :layers="pxLayers" />
+
+    <div class="px-content relative max-w-[90rem] mx-auto px-6">
       <!-- Header -->
       <div
         class="project-header-text flex flex-col lg:flex-row lg:items-end justify-between mb-16 lg:mb-24 gap-8">

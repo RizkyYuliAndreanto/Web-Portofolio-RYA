@@ -1,0 +1,386 @@
+{
+  "name": "RYA Parallax Asset Pack",
+  "style": "2D/2.5D cel-shaded modern tech illustration",
+  "palette": {
+    "navy-900": "#101827",
+    "navy-800": "#16213E",
+    "slate-700": "#1E2A44",
+    "blue-500": "#2F6BFF",
+    "blue-300": "#5E9FE8",
+    "off-white": "#E9EEF6"
+  },
+  "baseSize": {
+    "width": 1920,
+    "height": 1080
+  },
+  "sections": [
+    {
+      "id": "01-hero",
+      "title": "Hero / AI Engineer",
+      "layers": [
+        {
+          "file": "assets/01-hero/hero-l1-backdrop.png",
+          "mobile": "assets-mobile/01-hero/hero-l1-backdrop.png",
+          "depth": 1,
+          "role": "backdrop",
+          "parallaxSpeed": 0.03,
+          "scale": 1.007,
+          "opaque": true
+        },
+        {
+          "file": "assets/01-hero/hero-l2-far.png",
+          "mobile": "assets-mobile/01-hero/hero-l2-far.png",
+          "depth": 2,
+          "role": "far",
+          "parallaxSpeed": 0.1,
+          "scale": 1.022,
+          "opaque": false
+        },
+        {
+          "file": "assets/01-hero/hero-l3-mid.png",
+          "mobile": "assets-mobile/01-hero/hero-l3-mid.png",
+          "depth": 3,
+          "role": "mid",
+          "parallaxSpeed": 0.2,
+          "scale": 1.044,
+          "opaque": false
+        },
+        {
+          "file": "assets/01-hero/hero-l4-near.png",
+          "mobile": "assets-mobile/01-hero/hero-l4-near.png",
+          "depth": 4,
+          "role": "near",
+          "parallaxSpeed": 0.34,
+          "scale": 1.075,
+          "opaque": false
+        },
+        {
+          "file": "assets/01-hero/hero-l5-foreground.png",
+          "mobile": "assets-mobile/01-hero/hero-l5-foreground.png",
+          "depth": 5,
+          "role": "foreground",
+          "parallaxSpeed": 0.55,
+          "scale": 1.121,
+          "opaque": false
+        }
+      ]
+    },
+    {
+      "id": "02-tech-stack",
+      "title": "Tech Stack",
+      "layers": [
+        {
+          "file": "assets/02-tech-stack/tech-l1-backdrop.png",
+          "mobile": "assets-mobile/02-tech-stack/tech-l1-backdrop.png",
+          "depth": 1,
+          "role": "backdrop",
+          "parallaxSpeed": 0.03,
+          "scale": 1.007,
+          "opaque": true
+        },
+        {
+          "file": "assets/02-tech-stack/tech-l2-far.png",
+          "mobile": "assets-mobile/02-tech-stack/tech-l2-far.png",
+          "depth": 2,
+          "role": "far",
+          "parallaxSpeed": 0.1,
+          "scale": 1.022,
+          "opaque": false
+        },
+        {
+          "file": "assets/02-tech-stack/tech-l3-mid.png",
+          "mobile": "assets-mobile/02-tech-stack/tech-l3-mid.png",
+          "depth": 3,
+          "role": "mid",
+          "parallaxSpeed": 0.2,
+          "scale": 1.044,
+          "opaque": false
+        },
+        {
+          "file": "assets/02-tech-stack/tech-l4-near.png",
+          "mobile": "assets-mobile/02-tech-stack/tech-l4-near.png",
+          "depth": 4,
+          "role": "near",
+          "parallaxSpeed": 0.34,
+          "scale": 1.075,
+          "opaque": false
+        },
+        {
+          "file": "assets/02-tech-stack/tech-l5-foreground.png",
+          "mobile": "assets-mobile/02-tech-stack/tech-l5-foreground.png",
+          "depth": 5,
+          "role": "foreground",
+          "parallaxSpeed": 0.55,
+          "scale": 1.121,
+          "opaque": false
+        }
+      ]
+    },
+    {
+      "id": "03-services",
+      "title": "Services & Expertise",
+      "layers": [
+        {
+          "file": "assets/03-services/services-l1-backdrop.png",
+          "mobile": "assets-mobile/03-services/services-l1-backdrop.png",
+          "depth": 1,
+          "role": "backdrop",
+          "parallaxSpeed": 0.03,
+          "scale": 1.007,
+          "opaque": true
+        },
+        {
+          "file": "assets/03-services/services-l2-far.png",
+          "mobile": "assets-mobile/03-services/services-l2-far.png",
+          "depth": 2,
+          "role": "far",
+          "parallaxSpeed": 0.1,
+          "scale": 1.022,
+          "opaque": false
+        },
+        {
+          "file": "assets/03-services/services-l3-mid.png",
+          "mobile": "assets-mobile/03-services/services-l3-mid.png",
+          "depth": 3,
+          "role": "mid",
+          "parallaxSpeed": 0.2,
+          "scale": 1.044,
+          "opaque": false
+        },
+        {
+          "file": "assets/03-services/services-l4-near.png",
+          "mobile": "assets-mobile/03-services/services-l4-near.png",
+          "depth": 4,
+          "role": "near",
+          "parallaxSpeed": 0.34,
+          "scale": 1.075,
+          "opaque": false
+        },
+        {
+          "file": "assets/03-services/services-l5-foreground.png",
+          "mobile": "assets-mobile/03-services/services-l5-foreground.png",
+          "depth": 5,
+          "role": "foreground",
+          "parallaxSpeed": 0.55,
+          "scale": 1.121,
+          "opaque": false
+        }
+      ]
+    },
+    {
+      "id": "04-projects",
+      "title": "Project Showcase",
+      "layers": [
+        {
+          "file": "assets/04-projects/projects-l1-backdrop.png",
+          "mobile": "assets-mobile/04-projects/projects-l1-backdrop.png",
+          "depth": 1,
+          "role": "backdrop",
+          "parallaxSpeed": 0.03,
+          "scale": 1.007,
+          "opaque": true
+        },
+        {
+          "file": "assets/04-projects/projects-l2-far.png",
+          "mobile": "assets-mobile/04-projects/projects-l2-far.png",
+          "depth": 2,
+          "role": "far",
+          "parallaxSpeed": 0.1,
+          "scale": 1.022,
+          "opaque": false
+        },
+        {
+          "file": "assets/04-projects/projects-l3-mid.png",
+          "mobile": "assets-mobile/04-projects/projects-l3-mid.png",
+          "depth": 3,
+          "role": "mid",
+          "parallaxSpeed": 0.2,
+          "scale": 1.044,
+          "opaque": false
+        },
+        {
+          "file": "assets/04-projects/projects-l4-near.png",
+          "mobile": "assets-mobile/04-projects/projects-l4-near.png",
+          "depth": 4,
+          "role": "near",
+          "parallaxSpeed": 0.34,
+          "scale": 1.075,
+          "opaque": false
+        },
+        {
+          "file": "assets/04-projects/projects-l5-foreground.png",
+          "mobile": "assets-mobile/04-projects/projects-l5-foreground.png",
+          "depth": 5,
+          "role": "foreground",
+          "parallaxSpeed": 0.55,
+          "scale": 1.121,
+          "opaque": false
+        }
+      ]
+    },
+    {
+      "id": "05-experience",
+      "title": "Experience / Timeline",
+      "layers": [
+        {
+          "file": "assets/05-experience/experience-l1-backdrop.png",
+          "mobile": "assets-mobile/05-experience/experience-l1-backdrop.png",
+          "depth": 1,
+          "role": "backdrop",
+          "parallaxSpeed": 0.03,
+          "scale": 1.007,
+          "opaque": true
+        },
+        {
+          "file": "assets/05-experience/experience-l2-far.png",
+          "mobile": "assets-mobile/05-experience/experience-l2-far.png",
+          "depth": 2,
+          "role": "far",
+          "parallaxSpeed": 0.1,
+          "scale": 1.022,
+          "opaque": false
+        },
+        {
+          "file": "assets/05-experience/experience-l3-mid.png",
+          "mobile": "assets-mobile/05-experience/experience-l3-mid.png",
+          "depth": 3,
+          "role": "mid",
+          "parallaxSpeed": 0.2,
+          "scale": 1.044,
+          "opaque": false
+        },
+        {
+          "file": "assets/05-experience/experience-l4-near.png",
+          "mobile": "assets-mobile/05-experience/experience-l4-near.png",
+          "depth": 4,
+          "role": "near",
+          "parallaxSpeed": 0.34,
+          "scale": 1.075,
+          "opaque": false
+        },
+        {
+          "file": "assets/05-experience/experience-l5-foreground.png",
+          "mobile": "assets-mobile/05-experience/experience-l5-foreground.png",
+          "depth": 5,
+          "role": "foreground",
+          "parallaxSpeed": 0.55,
+          "scale": 1.121,
+          "opaque": false
+        }
+      ]
+    },
+    {
+      "id": "06-contact",
+      "title": "Contact",
+      "layers": [
+        {
+          "file": "assets/06-contact/contact-l1-backdrop.png",
+          "mobile": "assets-mobile/06-contact/contact-l1-backdrop.png",
+          "depth": 1,
+          "role": "backdrop",
+          "parallaxSpeed": 0.03,
+          "scale": 1.007,
+          "opaque": true
+        },
+        {
+          "file": "assets/06-contact/contact-l2-far.png",
+          "mobile": "assets-mobile/06-contact/contact-l2-far.png",
+          "depth": 2,
+          "role": "far",
+          "parallaxSpeed": 0.1,
+          "scale": 1.022,
+          "opaque": false
+        },
+        {
+          "file": "assets/06-contact/contact-l3-mid.png",
+          "mobile": "assets-mobile/06-contact/contact-l3-mid.png",
+          "depth": 3,
+          "role": "mid",
+          "parallaxSpeed": 0.2,
+          "scale": 1.044,
+          "opaque": false
+        },
+        {
+          "file": "assets/06-contact/contact-l4-near.png",
+          "mobile": "assets-mobile/06-contact/contact-l4-near.png",
+          "depth": 4,
+          "role": "near",
+          "parallaxSpeed": 0.34,
+          "scale": 1.075,
+          "opaque": false
+        },
+        {
+          "file": "assets/06-contact/contact-l5-foreground.png",
+          "mobile": "assets-mobile/06-contact/contact-l5-foreground.png",
+          "depth": 5,
+          "role": "foreground",
+          "parallaxSpeed": 0.55,
+          "scale": 1.121,
+          "opaque": false
+        }
+      ]
+    }
+  ],
+  "sharedOverlays": [
+    {
+      "file": "assets/shared/overlay-dust-fine.png",
+      "role": "particles",
+      "parallaxSpeed": 0.42
+    },
+    {
+      "file": "assets/shared/overlay-dust-far.png",
+      "role": "particles",
+      "parallaxSpeed": 0.12
+    },
+    {
+      "file": "assets/shared/overlay-bokeh-soft.png",
+      "role": "particles",
+      "parallaxSpeed": 0.5
+    },
+    {
+      "file": "assets/shared/overlay-hex-confetti.png",
+      "role": "particles",
+      "parallaxSpeed": 0.46
+    },
+    {
+      "file": "assets/shared/overlay-hex-mesh.png",
+      "role": "pattern",
+      "parallaxSpeed": 0.07
+    },
+    {
+      "file": "assets/shared/overlay-grid-perspective.png",
+      "role": "pattern",
+      "parallaxSpeed": 0.16
+    },
+    {
+      "file": "assets/shared/overlay-light-rays.png",
+      "role": "light",
+      "parallaxSpeed": 0.05
+    },
+    {
+      "file": "assets/shared/overlay-glow-blue.png",
+      "role": "light",
+      "parallaxSpeed": 0.04
+    },
+    {
+      "file": "assets/shared/overlay-vignette-navy.png",
+      "role": "grade",
+      "parallaxSpeed": 0.0
+    },
+    {
+      "file": "assets/shared/overlay-fade-bottom.png",
+      "role": "blend",
+      "parallaxSpeed": 0.0
+    },
+    {
+      "file": "assets/shared/overlay-fade-top.png",
+      "role": "blend",
+      "parallaxSpeed": 0.0
+    },
+    {
+      "file": "assets/shared/overlay-grain.png",
+      "role": "grade",
+      "parallaxSpeed": 0.0
+    }
+  ]
+}

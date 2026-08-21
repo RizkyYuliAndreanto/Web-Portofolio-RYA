@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #050816;
-  --color-surface: #0f172a;
-  --color-primary: #2563eb;
-  --color-accent: #3b82f6;
-  --color-highlight: #60a5fa;
+  --color-background: #0E1522;
+  --color-surface: #131C30;
+  --color-primary: #2A5FE0;
+  --color-accent: #4E86C8;
+  --color-highlight: #DCE4F0;
   --color-text: #ffffff;
   --color-text-secondary: #94a3b8;
   --font-oswald: "Oswald", sans-serif;
@@ -15,22 +15,162 @@ html,
 body {
   overflow-x: hidden;
   width: 100%;
+  /* no scroll-behavior: smooth here — Lenis handles it */
 }
 
+/* ============================================================
+   PARALLAX SYSTEM — RYA v2 "Sky Foundry"
+   Matches PANDUAN-PERAKITAN.md §5 + §15
+   ============================================================ */
+
+/* Section wrapper: clips layers, isolates blend modes */
+.px-section {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+  background: #0E1522; /* navy-900 fallback while images load */
+}
+
+/* Section must be margin-free for seam stitching */
+.px-section + .px-section {
+  margin-top: 0;
+}
+
+/* Stage sits absolutely behind all content */
+.px-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Individual parallax layer */
+.px-layer {
+  position: absolute;
+  top: -8%;
+  left: -8%;
+  width: 116%;
+  height: 116%;
+  background-position: center 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  /* JANGAN set transform di CSS — GSAP butuh kontrol penuh atas transform */
+  will-change: transform;   /* GPU compositing tetap aktif */
+  backface-visibility: hidden;
+  transform-origin: center center;
+}
+
+/* Overlay blending modes — opacity dikurangi agar tidak terlalu gelap */
+.px-layer.is-overlay { mix-blend-mode: screen;     opacity: 0.5; }  /* was 0.7 */
+.px-layer.is-grade   { mix-blend-mode: normal;                   }
+.px-layer.is-grain   { mix-blend-mode: soft-light; opacity: 0.3; }  /* was 0.45 */
+
+/* Content sits above the stage */
+.px-content {
+  position: relative;
+  z-index: 10;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* text-shadow dinonaktifkan — tiap section handle kontrasnya sendiri */
+}
+
+/* Scrim helper: sangat ringan — hanya untuk section yang benar-benar butuh kontras teks.
+   Section individual dapat override atau tambah .px-content--scrim untuk scrim lebih kuat. */
+.px-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    100deg,
+    rgba(14, 21, 34, 0.35) 0%,
+    rgba(14, 21, 34, 0.12) 45%,
+    rgba(14, 21, 34, 0) 70%
+  );
+  pointer-events: none;
+}
+
+/* Scrim kuat: pakai class ini hanya di section yang benar-benar perlu kontras lebih */
+.px-content--strong-scrim::before {
+  background: linear-gradient(
+    100deg,
+    rgba(14, 21, 34, 0.72) 0%,
+    rgba(14, 21, 34, 0.38) 50%,
+    rgba(14, 21, 34, 0) 75%
+  );
+}
+
+/* ---- Responsive layer sizes ---- */
+@media (max-width: 1024px) {
+  .px-layer {
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+  }
+}
+
+@media (max-width: 720px) {
+  .px-layer {
+    top: -12%;
+    left: -12%;
+    width: 124%;
+    height: 124%;
+  }
+  /* v2 rule: max 2 overlays; hide non-essential overlays on mobile */
+  .px-layer.is-overlay:not(.keep-mobile) {
+    display: none;
+  }
+  /* Swap to mobile assets via custom property */
+  .px-layer[data-mobile] {
+    background-image: var(--bg-mobile) !important;
+  }
+}
+
+/* ---- Idle float animation (CSS translate, tidak konflik dengan JS transform) ----
+   Menggunakan 'translate' property (terpisah dari 'transform') sehingga GSAP
+   masih bisa mengontrol transform untuk scroll/mouse parallax tanpa konflik. */
+@keyframes floatY {
+  0%, 100% { translate: 0 0; }
+  50%       { translate: 0 -10px; }
+}
+.px-layer[data-idle="float"]      { animation: floatY 9s  ease-in-out infinite; }
+.px-layer[data-idle="float-slow"] { animation: floatY 14s ease-in-out infinite; }
+
+/* ---- Gear spin (Services / Experience sections) ---- */
+@keyframes spin { to { rotate: 360deg; } }
+.gear-a { animation: spin 46s linear infinite; }
+.gear-b { animation: spin 32s linear infinite reverse; }
+
+/* ---- Accessibility: respect reduced-motion preference ----
+   NOTE: CSS animation dan translate dimatikan, tapi transform parallax (GSAP)
+   dikendalikan oleh JS (forceMotion=true di useParallax).
+   Hanya idle float & gear spin yang dimatikan di sini. */
+@media (prefers-reduced-motion: reduce) {
+  .px-layer {
+    animation: none !important;
+    translate: none !important;
+    /* transform TIDAK diblokir — GSAP di useParallax yang tentukan */
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ============================================================
+   MARQUEE (Tech Stack section)
+   ============================================================ */
 @keyframes marquee-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 @keyframes marquee-right {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0);
-  }
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
 }
+

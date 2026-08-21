@@ -1,0 +1,68 @@
+:root{
+  --navy-900:#0E1522;
+  --navy-800:#131C30;
+  --navy-700:#1B2540;
+  --cobalt:#2A5FE0;
+  --blue-300:#4E86C8;
+  --ink-050:#DCE4F0;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--navy-900);color:var(--ink-050);
+  font-family:"Inter","Segoe UI",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+
+/* ---------- section shell ---------- */
+.px-section{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;isolation:isolate;
+}
+.px-stage{position:absolute;inset:0;z-index:0}
+.px-layer{
+  position:absolute;top:-8%;left:-8%;width:116%;height:116%;
+  background-repeat:no-repeat;background-position:center center;background-size:cover;
+  will-change:transform;transform:translate3d(0,0,0);
+  pointer-events:none;backface-visibility:hidden;
+}
+.px-layer.is-overlay{mix-blend-mode:screen}
+.px-layer.is-grade{mix-blend-mode:normal}
+.px-layer.is-grain{mix-blend-mode:soft-light;opacity:.5}
+
+/* ---------- content ---------- */
+.px-content{
+  position:relative;z-index:2;max-width:820px;padding:0 28px;text-align:center;
+}
+.eyebrow{
+  font-size:.74rem;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--blue-300);margin:0 0 14px;
+}
+.px-content h1{font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.05;margin:0 0 18px;font-weight:800}
+.px-content h2{font-size:clamp(1.8rem,4.4vw,3rem);line-height:1.1;margin:0 0 16px;font-weight:750}
+.lead{font-size:clamp(1rem,1.6vw,1.15rem);line-height:1.7;color:#B9C6DC;margin:0 auto;max-width:60ch}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:24px}
+.chip{
+  padding:8px 15px;border-radius:999px;font-size:.82rem;
+  background:rgba(42,95,224,.14);border:1px solid rgba(78,134,200,.34);color:#CBD8EC;
+}
+.badge{
+  display:inline-block;margin-top:26px;padding:12px 26px;border-radius:999px;
+  background:var(--cobalt);color:#fff;font-weight:650;text-decoration:none;
+  box-shadow:0 10px 30px rgba(42,95,224,.28);
+}
+
+/* ---------- nav ---------- */
+.px-nav{
+  position:fixed;top:0;left:0;right:0;z-index:40;
+  display:flex;gap:18px;justify-content:center;padding:14px;
+  background:linear-gradient(to bottom,rgba(14,21,34,.86),rgba(14,21,34,0));
+  font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.px-nav a{color:#A9B9D2;text-decoration:none}
+.px-nav a:hover{color:#fff}
+
+@media (max-width:900px){ .px-layer{top:-10%;left:-10%;width:120%;height:120%} }
+@media (max-width:600px){ .px-layer{top:-12%;left:-12%;width:124%;height:124%} }
+@media (prefers-reduced-motion:reduce){ .px-layer{transform:none!important} }

@@ -11,11 +11,28 @@ import {
 } from "lucide-vue-next";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ParallaxStage from "./ParallaxStage.vue";
+import { useParallax } from "../utils/useParallax.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const sectionRef = ref(null);
 const formRef = ref(null);
+
+// v2 07-contact layers — vignette navy dihapus
+const pxLayers = [
+  { file: "/parallax-v2/07-contact/contact-l1-backdrop.jpg", mobile: "/parallax-v2/07-contact/contact-l1-backdrop.png", speed: 0.03, scale: 1.02 },
+  { file: "/parallax-v2/07-contact/contact-l2-far.png",        mobile: "/parallax-v2/07-contact/contact-l2-far.png",        speed: 0.10, scale: 1.03 },
+  { file: "/parallax-v2/07-contact/contact-l3-mid.png",        mobile: "/parallax-v2/07-contact/contact-l3-mid.png",        speed: 0.20, scale: 1.05 },
+  { file: "/parallax-v2/07-contact/contact-l4-near.png",       mobile: "/parallax-v2/07-contact/contact-l4-near.png",       speed: 0.34, scale: 1.08 },
+  { file: "/parallax-v2/07-contact/contact-l5-foreground.png", mobile: "/parallax-v2/07-contact/contact-l5-foreground.png", speed: 0.55, scale: 1.12 },
+  { file: "/parallax-v2/shared/overlay-bokeh-soft.png",     speed: 0.26, blend: "is-overlay" },
+  // overlay-vignette-navy dihapus
+  { file: "/parallax-v2/shared/overlay-grain.png",           speed: 0,    blend: "is-grain"   },
+  { file: "/parallax-v2/shared/overlay-fade-top.png",        speed: 0,    blend: "is-grade"   },
+];
+
+useParallax(sectionRef, { scrub: 2, travelMul: 46, zoomMul: 0.16 });
 
 const form = reactive({
   name: "",
@@ -184,12 +201,18 @@ function splitChars(text) {
   <section
     id="contact"
     ref="sectionRef"
-    class="py-24 md:py-32 bg-[#0A0D18] overflow-hidden"
-    style="perspective: 1000px">
-    <div class="max-w-[90rem] mx-auto px-6">
-      <!-- Editorial Header -->
-      <div
-        class="flex flex-col lg:flex-row lg:items-end justify-between mb-16 lg:mb-20 gap-8">
+    class="px-section relative py-24 md:py-32 min-h-screen flex items-center">
+
+    <!-- v2 Parallax Stage -->
+    <ParallaxStage :layers="pxLayers" />
+
+    <!-- Dark overlay -->
+    <div class="absolute inset-0 bg-[#0a0f1a]/85 z-0 pointer-events-none"></div>
+
+    <div class="px-content relative z-10 w-full max-w-[90rem] mx-auto px-6">
+      <!-- Header Row: Title Left, Description Right -->
+      <div class="flex flex-col sm:flex-row sm:items-start justify-between mb-16 sm:mb-20 gap-8">
+        <!-- Left: Title -->
         <h2
           class="text-5xl md:text-7xl lg:text-[6rem] font-black font-oswald text-[#F2F2F2] uppercase tracking-tighter leading-[0.9]">
           <span class="block text-accent">
@@ -210,16 +233,17 @@ function splitChars(text) {
             >
           </span>
         </h2>
+        <!-- Right: Description -->
         <p
-          class="text-xs sm:text-sm text-text-secondary uppercase tracking-[0.2em] leading-relaxed max-w-sm font-oswald lg:pb-2 text-left lg:text-right">
+          class="text-xs sm:text-sm text-text-secondary uppercase tracking-[0.2em] leading-relaxed max-w-sm font-oswald sm:mt-4 text-left sm:text-right sm:ml-auto">
           HAVE A PROJECT IN MIND? LET'S BUILD SOMETHING GREAT TOGETHER.
         </p>
       </div>
 
-      <!-- Content: Info + Form side by side -->
-      <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-16">
+      <!-- Content: Info Left + Form Right -->
+      <div class="flex flex-col sm:flex-row gap-12 sm:gap-16 items-start">
         <!-- Left: Contact Info -->
-        <div class="contact-info flex flex-col justify-center gap-10">
+        <div class="contact-info flex flex-col justify-start gap-10 w-full sm:w-[40%] shrink-0">
           <!-- Contact details -->
           <div class="space-y-6">
             <a
@@ -278,7 +302,7 @@ function splitChars(text) {
 
           <!-- Decorative text -->
           <p
-            class="text-[10px] text-white/20 uppercase tracking-[0.3em] font-oswald leading-loose hidden lg:block">
+            class="text-[10px] text-white/20 uppercase tracking-[0.3em] font-oswald leading-loose hidden sm:block">
             AVAILABLE FOR FREELANCE<br />
             AND FULL-TIME OPPORTUNITIES.<br />
             LET'S CREATE SOMETHING AMAZING.
@@ -288,11 +312,11 @@ function splitChars(text) {
         <!-- Right: Form -->
         <div
           ref="formRef"
-          class="relative"
+          class="relative w-full sm:flex-1"
           style="transform-style: preserve-3d">
           <!-- Form card -->
           <div
-            class="relative bg-[#12182B] border border-white/10 rounded-2xl p-6 md:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+            class="relative bg-[#12182B]/95 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
             <!-- Glare -->
             <div
               class="absolute inset-0 z-10 pointer-events-none rounded-2xl bg-gradient-to-br from-white/[0.02] via-transparent to-transparent"></div>

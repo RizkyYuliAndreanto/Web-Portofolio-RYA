@@ -2,10 +2,28 @@
 import { ref, onMounted } from "vue";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ParallaxStage from "./ParallaxStage.vue";
+import { useParallax } from "../utils/useParallax.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const sectionRef = ref(null);
+
+// v2 06-experience layers
+const pxLayers = [
+  { file: "/parallax-v2/06-experience/experience-l1-backdrop.jpg", mobile: "/parallax-v2/06-experience/experience-l1-backdrop.png", speed: 0.03, scale: 1.02 },
+  { file: "/parallax-v2/06-experience/experience-l2-far.png",        mobile: "/parallax-v2/06-experience/experience-l2-far.png",        speed: 0.10, scale: 1.03 },
+  { file: "/parallax-v2/06-experience/experience-l3-mid.png",        mobile: "/parallax-v2/06-experience/experience-l3-mid.png",        speed: 0.20, scale: 1.05 },
+  { file: "/parallax-v2/06-experience/experience-l4-near.png",       mobile: "/parallax-v2/06-experience/experience-l4-near.png",       speed: 0.34, scale: 1.08 },
+  { file: "/parallax-v2/06-experience/experience-l5-foreground.png", mobile: "/parallax-v2/06-experience/experience-l5-foreground.png", speed: 0.55, scale: 1.12 },
+  { file: "/parallax-v2/shared/overlay-light-rays.png",  speed: 0.05, blend: "is-overlay" },
+  { file: "/parallax-v2/shared/overlay-vignette-navy.png", speed: 0, blend: "is-grade" },
+  { file: "/parallax-v2/shared/overlay-grain.png",          speed: 0, blend: "is-grain" },
+  { file: "/parallax-v2/shared/overlay-fade-top.png",        speed: 0, blend: "is-grade" },
+  { file: "/parallax-v2/shared/overlay-fade-bottom.png",     speed: 0, blend: "is-grade" },
+];
+
+useParallax(sectionRef, { scrub: 2, travelMul: 44, zoomMul: 0.15 });
 
 const experiences = [
   {
@@ -58,8 +76,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <section id="experience" ref="sectionRef" class="py-24 md:py-32 bg-[#0A0D18] overflow-hidden">
-    <div class="max-w-[100rem] mx-auto px-6">
+  <section id="experience" ref="sectionRef" class="px-section relative py-24 md:py-32">
+
+    <!-- v2 Parallax Stage -->
+    <ParallaxStage :layers="pxLayers" />
+
+    <div class="px-content relative max-w-[100rem] mx-auto px-6">
 
       <!-- Editorial Header -->
       <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-16 lg:mb-24 gap-8">
