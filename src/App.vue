@@ -72,9 +72,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   if (lenis) lenis.destroy();
-  if (rafId) cancelAnimationFrame(rafId);
   ScrollTrigger.killAll();
-  gsap.ticker.remove(() => {});
 });
 </script>
 

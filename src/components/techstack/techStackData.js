@@ -1,35 +1,35 @@
 // techStackData.js — Data with actual logo imports
-import jsLogo from "../../assets/js.jpg"
-import tsLogo from "../../assets/TS.jpg"
-import pythonLogo from "../../assets/Stickers sur le thème Python.jpg"
-import phpLogo from "../../assets/PHP.jpg"
-import goLogo from "../../assets/golang.jpg"
-import dartLogo from "../../assets/dart.jpg"
-import vueLogo from "../../assets/Vue js Logo.jpg"
-import reactLogo from "../../assets/react.jpg"
-import html5Logo from "../../assets/html5.jpg"
-import css3Logo from "../../assets/css3.jpg"
-import tailwindLogo from "../../assets/tailwind.jpg"
-import viteLogo from "../../assets/vite.jpg"
-import nodejsLogo from "../../assets/nodejs.jpg"
-import expressLogo from "../../assets/expressjs.jpg"
-import laravelLogo from "../../assets/laravel.jpg"
-import sequelizeLogo from "../../assets/Sequelize v6 _ Sequelize.jpg"
-import graphqlLogo from "../../assets/GraphQL Logo Vector Files.jpg"
-import mysqlLogo from "../../assets/mysql.jpg"
-import postgresLogo from "../../assets/PostgreSQL Logo.jpg"
-import dockerLogo from "../../assets/docker.jpg"
-import gitLogo from "../../assets/Git.jpg"
-import githubLogo from "../../assets/github.jpg"
-import fastApiLogo from "../../assets/new/FastApi.jpg"
-import firebaseLogo from "../../assets/new/firebase.jpg"
-import flaskLogo from "../../assets/new/flaskpython.jpg"
-import mongodbLogo from "../../assets/new/mongodb.jpg"
-import nextjsLogo from "../../assets/new/nextjs.jpg"
-import nuxtjsLogo from "../../assets/new/nuxtjs.jpg"
-import postmanLogo from "../../assets/new/postman.jpg"
-import sqliteLogo from "../../assets/new/sqlite.jpg"
-import vscodeLogo from "../../assets/new/vscode.jpg"
+import jsLogo from "../../assets/js.webp"
+import tsLogo from "../../assets/TS.webp"
+import pythonLogo from "../../assets/Stickers sur le thème Python.webp"
+import phpLogo from "../../assets/PHP.webp"
+import goLogo from "../../assets/golang.webp"
+import dartLogo from "../../assets/dart.webp"
+import vueLogo from "../../assets/Vue js Logo.webp"
+import reactLogo from "../../assets/react.webp"
+import html5Logo from "../../assets/html5.webp"
+import css3Logo from "../../assets/css3.webp"
+import tailwindLogo from "../../assets/tailwind.webp"
+import viteLogo from "../../assets/vite.webp"
+import nodejsLogo from "../../assets/nodejs.webp"
+import expressLogo from "../../assets/expressjs.webp"
+import laravelLogo from "../../assets/laravel.webp"
+import sequelizeLogo from "../../assets/Sequelize v6 _ Sequelize.webp"
+import graphqlLogo from "../../assets/GraphQL Logo Vector Files.webp"
+import mysqlLogo from "../../assets/mysql.webp"
+import postgresLogo from "../../assets/PostgreSQL Logo.webp"
+import dockerLogo from "../../assets/docker.webp"
+import gitLogo from "../../assets/Git.webp"
+import githubLogo from "../../assets/github.webp"
+import fastApiLogo from "../../assets/new/FastApi.webp"
+import firebaseLogo from "../../assets/new/firebase.webp"
+import flaskLogo from "../../assets/new/flaskpython.webp"
+import mongodbLogo from "../../assets/new/mongodb.webp"
+import nextjsLogo from "../../assets/new/nextjs.webp"
+import nuxtjsLogo from "../../assets/new/nuxtjs.webp"
+import postmanLogo from "../../assets/new/postman.webp"
+import sqliteLogo from "../../assets/new/sqlite.webp"
+import vscodeLogo from "../../assets/new/vscode.webp"
 
 export const categories = [
   {
@@ -64,7 +64,7 @@ export const categories = [
   },
   {
     id: "backend",
-    label: "Backend & API",
+    label: "Backend, API & Database",
     faceIndex: 2,
     color: "#68A063",
     items: [
@@ -75,19 +75,27 @@ export const categories = [
       { name: "Flask", short: "FL", color: "#ffffff", icon: flaskLogo },
       { name: "GraphQL", short: "GQ", color: "#E10098", icon: graphqlLogo },
       { name: "Sequelize", short: "SQ", color: "#52B0E7", icon: sequelizeLogo },
-    ],
-  },
-  {
-    id: "database",
-    label: "Database",
-    faceIndex: 3,
-    color: "#336791",
-    items: [
       { name: "PostgreSQL", short: "PG", color: "#336791", icon: postgresLogo },
       { name: "MySQL", short: "MY", color: "#4479A1", icon: mysqlLogo },
       { name: "MongoDB", short: "MG", color: "#47A248", icon: mongodbLogo },
       { name: "SQLite", short: "SL", color: "#003B57", icon: sqliteLogo },
       { name: "Firebase", short: "FB", color: "#FFCA28", icon: firebaseLogo },
+    ],
+  },
+  {
+    id: "ai",
+    label: "AI & Computer Vision",
+    faceIndex: 3,
+    color: "#00C2A8",
+    items: [
+      { name: "YOLO", short: "YOLO", color: "#00C2A8", icon: null },
+      { name: "ArcFace", short: "ARCFACE", color: "#4E86C8", icon: null },
+      { name: "MiniFASNetV2", short: "MINIFAS", color: "#8B7EC8", icon: null },
+      { name: "TensorFlow/Keras", short: "TENSORFLOW", color: "#FF8F00", icon: null },
+      { name: "OpenCV", short: "OPENCV", color: "#5C3EE8", icon: null },
+      { name: "LLM", short: "LLM", color: "#10A37F", icon: null },
+      { name: "go2rtc", short: "GO2RTC", color: "#E05263", icon: null },
+      { name: "ngrok", short: "NGROK", color: "#1F66E5", icon: null },
     ],
   },
   {

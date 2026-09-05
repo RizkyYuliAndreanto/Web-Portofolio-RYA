@@ -43,7 +43,7 @@ body {
 .fx-glow {
 	inset: -12% 20% auto 20%;
 	height: 70%;
-	background-image: url("../../assets/fx/glow-cobalt.png");
+	background-image: url("../../assets/fx/glow-cobalt.webp");
 	mix-blend-mode: screen;
 	opacity: 0.55;
 }
@@ -54,7 +54,7 @@ body {
 	width: 720px;
 	height: 720px;
 	transform: translateX(-50%);
-	background-image: url("../../assets/fx/beam-soft.png");
+	background-image: url("../../assets/fx/beam-soft.webp");
 	mix-blend-mode: screen;
 	opacity: 0.5;
 }
@@ -114,7 +114,7 @@ body {
 	inset: -34px -34px -40px;
 	border-style: solid;
 	border-width: 98px 78px 107px;
-	border-image-source: url("../../assets/ui/panel-frame-wide.png");
+	border-image-source: url("../../assets/ui/panel-frame-wide.webp");
 	border-image-slice: 98 78 107 78;
 	border-image-repeat: stretch;
 	pointer-events: none;
@@ -144,7 +144,7 @@ body {
 	width: 74px;
 	height: 56px;
 	z-index: 4;
-	background: url("../../assets/ui/corner-bracket.png") center/contain no-repeat;
+	background: url("../../assets/ui/corner-bracket.webp") center/contain no-repeat;
 	pointer-events: none;
 	opacity: 0.95;
 }
@@ -166,7 +166,7 @@ body {
 	height: 64px;
 	border-style: solid;
 	border-width: 0 26px 0 44px;
-	border-image-source: url("../../assets/ui/header-plate.png");
+	border-image-source: url("../../assets/ui/header-plate.webp");
 	border-image-slice: 0 60 0 100 fill;
 	border-image-repeat: stretch;
 }
@@ -196,7 +196,7 @@ body {
 	margin: 16px 0 20px;
 	border-style: solid;
 	border-width: 0 7px;
-	border-image-source: url("../../assets/ui/divider-rail.png");
+	border-image-source: url("../../assets/ui/divider-rail.webp");
 	border-image-slice: 0 40 0 40 fill;
 	border-image-repeat: stretch;
 	opacity: 0.85;
@@ -217,7 +217,7 @@ body {
 	padding-right: 10px;
 	border-style: solid;
 	border-width: 0 16px 0 43px;
-	border-image-source: url("../../assets/ui/slot-chip.png");
+	border-image-source: url("../../assets/ui/slot-chip.webp");
 	border-image-slice: 0 60 0 170 fill;
 	border-image-repeat: stretch;
 	font: 600 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -249,7 +249,7 @@ body {
 .chip__sheen {
 	position: absolute;
 	inset: -6px -40px;
-	background: url("../../assets/fx/sheen-diagonal.png") center/cover no-repeat;
+	background: url("../../assets/fx/sheen-diagonal.webp") center/cover no-repeat;
 	mix-blend-mode: screen;
 	opacity: 0;
 	transform: translateX(-60%);
@@ -258,7 +258,7 @@ body {
 
 .chip:hover,
 .chip.is-active {
-	border-image-source: url("../../assets/ui/slot-chip-active.png");
+	border-image-source: url("../../assets/ui/slot-chip-active.webp");
 	border-image-slice: 0 60 0 130 fill;
 	border-width: 0 16px 0 33px;
 	color: #ffffff;
@@ -290,7 +290,7 @@ body {
 	height: 108px;
 	display: grid;
 	place-items: center;
-	background: url("../../assets/ui/hex-socket.png") center/contain no-repeat;
+	background: url("../../assets/ui/hex-socket.webp") center/contain no-repeat;
 	transition: transform 0.4s var(--ease);
 	will-change: transform;
 }
@@ -317,7 +317,7 @@ body {
 	height: 72px;
 	display: grid;
 	place-items: center;
-	background: url("../../assets/ui/icon-plinth.png") center/contain no-repeat;
+	background: url("../../assets/ui/icon-plinth.webp") center/contain no-repeat;
 	font: 700 12px/1 ui-monospace, Menlo, monospace;
 	color: #c8d6ec;
 	transition: transform 0.4s var(--ease);
@@ -339,7 +339,7 @@ body {
 	width: 460px;
 	height: 300px;
 	top: -34px;
-	background: url("../../assets/ui/orbit-ring.png") center/contain no-repeat;
+	background: url("../../assets/ui/orbit-ring.webp") center/contain no-repeat;
 	opacity: 0.75;
 	animation: hover-float 9s ease-in-out infinite;
 }
@@ -349,7 +349,7 @@ body {
 	bottom: 0;
 	width: 560px;
 	height: 200px;
-	background: url("../../assets/ui/pedestal.png") center bottom/contain no-repeat;
+	background: url("../../assets/ui/pedestal.webp") center bottom/contain no-repeat;
 }
 
 .foundry__badge {

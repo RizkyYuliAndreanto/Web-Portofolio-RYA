@@ -8,7 +8,7 @@
       @click="$emit('select-category', cat.faceIndex)"
       tabindex="0"
       @keydown.enter="$emit('select-category', cat.faceIndex)">
-      <div class="hud-category__indicator" :style="{ '--cat-color': cat.accent }"></div>
+      <div class="hud-category__indicator" :style="{ '--cat-color': cat.color }"></div>
       <div class="hud-category__info">
         <span class="hud-category__label">{{ cat.label }}</span>
         <span class="hud-category__count">{{ cat.items.length }} tools</span>

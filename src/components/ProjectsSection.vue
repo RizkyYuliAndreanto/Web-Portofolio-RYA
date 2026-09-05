@@ -9,7 +9,7 @@ import {
   ChevronRight,
 } from "lucide-vue-next";
 import ProjectModal from "./ProjectModal.vue";
-import projectImage from "../assets/Project-foto.png";
+import projectImage from "../assets/Project-foto.webp";
 import ParallaxStage from "./ParallaxStage.vue";
 import { useParallax } from "../utils/useParallax.js";
 
@@ -22,26 +22,76 @@ const currentIndex = ref(0);
 
 // v2 04-projects layers
 const pxLayers = [
-  { file: "/parallax-v2/04-projects/projects-l1-backdrop.jpg", mobile: "/parallax-v2/04-projects/projects-l1-backdrop.png", speed: 0.03, scale: 1.02 },
-  { file: "/parallax-v2/04-projects/projects-l2-far.png",        mobile: "/parallax-v2/04-projects/projects-l2-far.png",        speed: 0.10, scale: 1.03 },
-  { file: "/parallax-v2/04-projects/projects-l3-mid.png",        mobile: "/parallax-v2/04-projects/projects-l3-mid.png",        speed: 0.20, scale: 1.05 },
-  { file: "/parallax-v2/04-projects/projects-l4-near.png",       mobile: "/parallax-v2/04-projects/projects-l4-near.png",       speed: 0.34, scale: 1.08 },
-  { file: "/parallax-v2/04-projects/projects-l5-foreground.png", mobile: "/parallax-v2/04-projects/projects-l5-foreground.png", speed: 0.55, scale: 1.12 },
-  { file: "/parallax-v2/shared/overlay-bokeh-soft.png",      speed: 0.26, blend: "is-overlay" },
-  { file: "/parallax-v2/shared/overlay-vignette-navy.png",   speed: 0,    blend: "is-grade"   },
-  { file: "/parallax-v2/shared/overlay-grain.png",            speed: 0,    blend: "is-grain"   },
-  { file: "/parallax-v2/shared/overlay-fade-top.png",         speed: 0,    blend: "is-grade"   },
-  { file: "/parallax-v2/shared/overlay-fade-bottom.png",      speed: 0,    blend: "is-grade"   },
+  { file: "/parallax-v2/04-projects/projects-l1-backdrop.webp", mobile: "/parallax/assets-mobile/04-projects/projects-l1-backdrop.webp", speed: 0.03, scale: 1.02 },
+  { file: "/parallax-v2/04-projects/projects-l2-far.webp",        mobile: "/parallax/assets-mobile/04-projects/projects-l2-far.webp",        speed: 0.10, scale: 1.03 },
+  { file: "/parallax-v2/04-projects/projects-l3-mid.webp",        mobile: "/parallax/assets-mobile/04-projects/projects-l3-mid.webp",        speed: 0.20, scale: 1.05 },
+  { file: "/parallax-v2/04-projects/projects-l4-near.webp",       mobile: "/parallax/assets-mobile/04-projects/projects-l4-near.webp",       speed: 0.34, scale: 1.08 },
+  { file: "/parallax-v2/04-projects/projects-l5-foreground.webp", mobile: "/parallax/assets-mobile/04-projects/projects-l5-foreground.webp", speed: 0.55, scale: 1.12 },
+  { file: "/parallax-v2/shared/overlay-bokeh-soft.webp",      speed: 0.26, blend: "is-overlay" },
+  { file: "/parallax-v2/shared/overlay-vignette-navy.webp",   speed: 0,    blend: "is-grade"   },
+  { file: "/parallax-v2/shared/overlay-grain.webp",            speed: 0,    blend: "is-grain"   },
+  { file: "/parallax-v2/shared/overlay-fade-top.webp",         speed: 0,    blend: "is-grade"   },
+  { file: "/parallax-v2/shared/overlay-fade-bottom.webp",      speed: 0,    blend: "is-grade"   },
 ];
 
 useParallax(sectionRef, { scrub: 2, travelMul: 50, zoomMul: 0.18 });
 
 const projects = [
   {
+    id: 8,
+    title: "AcademiSync",
+    description:
+      "Real-time thesis supervision platform that recreates sitting next to your supervisor: 1-on-1 WebRTC video call, server-driven PDF sync, live annotations, and session management. Server-authoritative architecture — client is never trusted for identity, role, or permissions.",
+    tech: ["Go", "React", "TypeScript", "PostgreSQL", "MinIO", "WebRTC"],
+    image: projectImage,
+    github: "https://github.com/RizkyYuliAndreanto",
+    demo: "#",
+    featured: true,
+    architecture:
+      "Go/Gin API + WebSocket signaling, React+TS+Konva frontend, PostgreSQL, MinIO private bucket, coturn TURN server",
+    challenges:
+      "PDF sync and live annotation must look identical on every screen while surviving NAT traversal",
+    solution:
+      "Server-authoritative page sync with normalized annotation coordinates, P2P DTLS/SRTP media with coturn TURN, JWT via HttpOnly cookie",
+  },
+  {
+    id: 9,
+    title: "Grandchatter Workspace",
+    description:
+      "Indonesian TTS & voice cloning studio — text-to-speech Bahasa Indonesia with zero-shot voice cloning. Runs on free Kaggle GPU or fully local on your laptop (model downloaded once, works offline).",
+    tech: ["Python", "PyTorch", "Gradio", "Kaggle", "TTS", "LLM"],
+    image: projectImage,
+    github: "https://github.com/RizkyYuliAndreanto",
+    demo: "#",
+    featured: true,
+    architecture:
+      "Gradio UI + Kaggle notebook launcher, chunked TTS pipeline (normalizer → chunker → TTS → DSP merge), 4 tunnel modes, crash-safe batch with resume",
+    challenges:
+      "Producing 10–30 minute voice-overs on hardware without a real GPU",
+    solution:
+      "Offload inference to free Kaggle GPU (P100/T4) controlled via browser, anti-repetition chunking, resume-by-hash batch, 57 unit tests",
+  },
+  {
     id: 1,
+    title: "Lecturer Tracker",
+    description:
+      "Thesis project: real-time edge-AI academic attendance system with face recognition, multi-camera streaming, and Telegram notifications, built as microservices with per-faculty embedded lecturer data.",
+    tech: ["Python", "FastAPI", "React", "OpenCV", "YOLOv26", "ArcFace", "go2rtc", "SQLite"],
+    image: projectImage,
+    github: "https://github.com/RizkyYuliAndreanto",
+    demo: "#",
+    featured: true,
+    architecture: "Edge-AI microservices with multi-camera streaming",
+    challenges:
+      "Real-time face recognition with anti-spoofing on resource-constrained edge devices",
+    solution:
+      "89% face detection (YOLOv26), 99% recognition (ArcFace), MiniFASNetV2 anti-spoofing — demonstrated on campus, ready for formal handover",
+  },
+  {
+    id: 2,
     title: "Clyrova.id AI Suite",
     description:
-      "Pipeline kecerdasan buatan untuk background removal presisi tinggi dan image upscaling, terintegrasi ke ekosistem layanan Clyr0va.id untuk optimasi kualitas aset visual secara otomatis.",
+      "AI-powered pipeline for high-precision background removal and image upscaling, integrated into the Clyr0va.id service ecosystem for automated visual asset quality optimization.",
     tech: ["Python", "FastAPI", "AI/ML", "OpenCV"],
     image: projectImage,
     github: "https://github.com/RizkyYuliAndreanto",
@@ -49,93 +99,78 @@ const projects = [
     featured: true,
     architecture: "AI Pipeline with REST API integration",
     challenges:
-      "Presisi tinggi pada background removal untuk berbagai jenis gambar",
-    solution: "Custom deep learning model dengan post-processing refinement",
+      "High-precision background removal across diverse image types",
+    solution: "Custom deep learning model with post-processing refinement",
   },
   {
-    id: 2,
+    id: 3,
+    title: "Auto Content Creator",
+    description:
+      "Independently developed and deployed fork of a YouTube clipping project — extended smart-clipping features and added TTS, subtitle generation, and AI-assisted script drafting for YouTube Shorts and TikTok. Runs a locally installed Llama model so the script workflow stays fully local.",
+    tech: ["Python", "FFmpeg", "OpenAI", "TTS", "Llama"],
+    image: projectImage,
+    github: "https://github.com/RizkyYuliAndreanto",
+    demo: "#",
+    featured: true,
+    architecture: "Pipeline-based automation engine",
+    challenges: "Efficient multi-step video processing coordination",
+    solution: "DAG-based task orchestration with parallel processing",
+  },
+  {
+    id: 4,
     title: "Magetan Tourism Portal",
     description:
-      "Platform pariwisata terintegrasi full-stack bekerja sama dengan Dinas Kebudayaan dan Pariwisata Magetan untuk mempromosikan destinasi wisata daerah melalui antarmuka web interaktif.",
+      "Full-stack integrated tourism platform built in collaboration with the Magetan Culture and Tourism Office to promote regional destinations through an interactive web interface.",
     tech: ["Vue.js", "Express.js", "Node.js", "MySQL"],
     image: projectImage,
     github: "https://github.com/RizkyYuliAndreanto",
     demo: "#",
     featured: true,
     architecture: "Full-stack MVC with Vue.js SPA",
-    challenges: "Menyajikan data wisata secara interaktif dan menarik",
-    solution: "Interactive map integration dengan dynamic content management",
+    challenges: "Presenting tourism data interactively and engagingly",
+    solution: "Interactive map integration with dynamic content management",
   },
   {
-    id: 3,
-    title: "Dosen Tracker",
+    id: 5,
+    title: "Village Infographics",
     description:
-      "Sistem pelacakan kehadiran akademik berbasis Computer Vision real-time di edge device dengan YOLOv26, ArcFace, dan deteksi anti-spoofing dalam arsitektur microservices.",
-    tech: ["Python", "FastAPI", "React", "YOLOv26"],
-    image: projectImage,
-    github: "https://github.com/RizkyYuliAndreanto",
-    demo: "#",
-    featured: true,
-    architecture: "Microservices with edge computing",
-    challenges:
-      "Real-time face recognition dengan anti-spoofing di edge device",
-    solution: "Optimized inference pipeline dengan model quantization",
-  },
-  {
-    id: 4,
-    title: "Infografis Desa",
-    description:
-      "Portal web infografis untuk digitalisasi profil dan potensi daerah beberapa desa di Kabupaten Madiun, menyajikan data statistik dan informasi pelayanan masyarakat secara modern dan transparan.",
+      "Web infographic portal for digitizing village profiles and local potential across several villages in Madiun Regency — independently designed, built, and deployed end-to-end (requirements, UI, backend, testing, production release) through my own studio, Ernesty Digital Labs, using full-stack Laravel.",
     tech: ["Vue.js", "Laravel", "PostgreSQL", "Chart.js"],
     image: projectImage,
     github: "https://github.com/RizkyYuliAndreanto",
     demo: "#",
     featured: false,
     architecture: "Monolithic Laravel with Vue.js frontend",
-    challenges: "Visualisasi data kompleks yang mudah dipahami masyarakat",
-    solution: "Interactive infographic dashboard dengan real-time data binding",
-  },
-  {
-    id: 5,
-    title: "Auto Content Creator",
-    description:
-      "Perangkat lunak pemrosesan video otomatis untuk YouTube Shorts dan TikTok dengan smart clipping, TTS, generator subtitle, dan penyusunan skrip pintar bertenaga AI.",
-    tech: ["Python", "FFmpeg", "OpenAI", "TTS"],
-    image: projectImage,
-    github: "https://github.com/RizkyYuliAndreanto",
-    demo: "#",
-    featured: true,
-    architecture: "Pipeline-based automation engine",
-    challenges: "Koordinasi multi-step video processing secara efisien",
-    solution: "DAG-based task orchestration dengan parallel processing",
+    challenges: "Making complex data understandable to the general public",
+    solution: "Interactive infographic dashboard with real-time data binding",
   },
   {
     id: 6,
-    title: "Manajemen Surat Instansi",
+    title: "Institutional Mail Management",
     description:
-      "Aplikasi birokrasi digital berbasis Laravel dan Blade Template untuk alur pengajuan dokumen dan surat resmi ke instansi, dengan fokus pada efisiensi operasional.",
+      "Digital bureaucracy application built with Laravel and Blade templates for official document and letter submission workflows, focused on operational efficiency.",
     tech: ["Laravel", "Blade", "MySQL", "Bootstrap"],
     image: projectImage,
     github: "https://github.com/RizkyYuliAndreanto",
     demo: "#",
     featured: false,
     architecture: "MVC Laravel with role-based access",
-    challenges: "Alur approval multi-level yang kompleks",
-    solution: "State machine pattern untuk document workflow management",
+    challenges: "Complex multi-level approval workflows",
+    solution: "State machine pattern for document workflow management",
   },
   {
     id: 7,
-    title: "E-Commerce UMKM",
+    title: "SME E-Commerce",
     description:
-      "Infrastruktur pasar digital yang dirancang khusus untuk memfasilitasi pelaku UMKM dalam mendigitalisasi etalase produk, mengelola transaksi, dan memperluas jangkauan pasar online.",
+      "Digital marketplace infrastructure designed to help small businesses digitize their product catalogs, manage transactions, and expand their online market reach.",
     tech: ["Vue.js", "Node.js", "PostgreSQL", "Redis"],
     image: projectImage,
     github: "https://github.com/RizkyYuliAndreanto",
     demo: "#",
     featured: true,
     architecture: "Microservices with event-driven communication",
-    challenges: "Skalabilitas untuk multi-vendor marketplace",
-    solution: "CQRS pattern dengan Redis caching untuk high-traffic handling",
+    challenges: "Scalability for a multi-vendor marketplace",
+    solution: "CQRS pattern with Redis caching for high-traffic handling",
   },
 ];
 
@@ -242,8 +277,9 @@ onMounted(() => {
       stagger: 0.025,
       ease: "bounce.out",
       scrollTrigger: {
-        trigger: sectionRef.value,
-        start: "top 70%",
+        trigger: ".project-header-text",
+        start: "top 85%",
+        once: true,
       },
     });
 
@@ -253,8 +289,9 @@ onMounted(() => {
       duration: 1,
       ease: "power3.out",
       scrollTrigger: {
-        trigger: sectionRef.value,
-        start: "top 65%",
+        trigger: ".project-header-desc",
+        start: "top 85%",
+        once: true,
       },
     });
 
@@ -266,8 +303,9 @@ onMounted(() => {
       duration: 1.5,
       ease: "power4.out",
       scrollTrigger: {
-        trigger: sectionRef.value,
-        start: "top 55%",
+        trigger: carouselRef.value,
+        start: "top 85%",
+        once: true,
       },
     });
 
@@ -280,11 +318,12 @@ onMounted(() => {
         scale: 0.3,
         opacity: 0,
         duration: 1.4,
-        delay: i * 0.12,
+        delay: i * 0.1,
         ease: "power4.out",
         scrollTrigger: {
-          trigger: sectionRef.value,
-          start: "top 50%",
+          trigger: carouselRef.value,
+          start: "top 85%",
+          once: true,
         },
       });
     });

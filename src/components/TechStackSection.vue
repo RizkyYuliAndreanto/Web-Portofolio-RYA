@@ -24,15 +24,15 @@ const isCoreReady = ref(false)
 
 // Parallax layers
 const pxLayers = [
-  { file: "/parallax-v2/05-tech-stack/tech-l1-backdrop.jpg", mobile: "/parallax-v2/05-tech-stack/tech-l1-backdrop.png", speed: 0.03, scale: 1.02 },
-  { file: "/parallax-v2/05-tech-stack/tech-l2-far.png", mobile: "/parallax-v2/05-tech-stack/tech-l2-far.png", speed: 0.10, scale: 1.03 },
-  { file: "/parallax-v2/05-tech-stack/tech-l3-mid.png", mobile: "/parallax-v2/05-tech-stack/tech-l3-mid.png", speed: 0.20, scale: 1.05 },
-  { file: "/parallax-v2/05-tech-stack/tech-l4-near.png", mobile: "/parallax-v2/05-tech-stack/tech-l4-near.png", speed: 0.34, scale: 1.08 },
-  { file: "/parallax-v2/05-tech-stack/tech-l5-foreground.png", mobile: "/parallax-v2/05-tech-stack/tech-l5-foreground.png", speed: 0.55, scale: 1.12 },
-  { file: "/parallax-v2/shared/overlay-hex-mesh.png", speed: 0.07, blend: "is-overlay" },
-  { file: "/parallax-v2/shared/overlay-grain.png", speed: 0, blend: "is-grain" },
-  { file: "/parallax-v2/shared/overlay-fade-top.png", speed: 0, blend: "is-grade" },
-  { file: "/parallax-v2/shared/overlay-fade-bottom.png", speed: 0, blend: "is-grade" },
+  { file: "/parallax-v2/05-tech-stack/tech-l1-backdrop.webp", mobile: "/parallax/assets-mobile/02-tech-stack/tech-l1-backdrop.webp", speed: 0.03, scale: 1.02 },
+  { file: "/parallax-v2/05-tech-stack/tech-l2-far.webp", mobile: "/parallax/assets-mobile/02-tech-stack/tech-l2-far.webp", speed: 0.10, scale: 1.03 },
+  { file: "/parallax-v2/05-tech-stack/tech-l3-mid.webp", mobile: "/parallax/assets-mobile/02-tech-stack/tech-l3-mid.webp", speed: 0.20, scale: 1.05 },
+  { file: "/parallax-v2/05-tech-stack/tech-l4-near.webp", mobile: "/parallax/assets-mobile/02-tech-stack/tech-l4-near.webp", speed: 0.34, scale: 1.08 },
+  { file: "/parallax-v2/05-tech-stack/tech-l5-foreground.webp", mobile: "/parallax/assets-mobile/02-tech-stack/tech-l5-foreground.webp", speed: 0.55, scale: 1.12 },
+  { file: "/parallax-v2/shared/overlay-hex-mesh.webp", speed: 0.07, blend: "is-overlay" },
+  { file: "/parallax-v2/shared/overlay-grain.webp", speed: 0, blend: "is-grain" },
+  { file: "/parallax-v2/shared/overlay-fade-top.webp", speed: 0, blend: "is-grade" },
+  { file: "/parallax-v2/shared/overlay-fade-bottom.webp", speed: 0, blend: "is-grade" },
 ]
 
 useParallax(sectionRef, { scrub: 2, travelMul: 46, zoomMul: 0.16 })
@@ -76,17 +76,25 @@ onMounted(() => {
       scale: 0.94,
       duration: 1,
       ease: "power3.out",
-      scrollTrigger: { trigger: sectionRef.value, start: "top 85%", once: true },
+      scrollTrigger: {
+        trigger: headerRef.value,
+        start: "top 85%",
+        once: true,
+      },
     })
 
     // Canvas entrance
     gsap.from(canvasRef.value, {
       scale: 0.6,
       opacity: 0,
-      rotation: 720,
+      rotation: 360,
       duration: 1.4,
       ease: "power2.out",
-      scrollTrigger: { trigger: sectionRef.value, start: "top 80%", once: true },
+      scrollTrigger: {
+        trigger: canvasRef.value,
+        start: "top 85%",
+        once: true,
+      },
     })
 
     // HUD left
@@ -95,7 +103,11 @@ onMounted(() => {
       opacity: 0,
       duration: 0.8,
       ease: "power3.out",
-      scrollTrigger: { trigger: sectionRef.value, start: "top 75%", once: true },
+      scrollTrigger: {
+        trigger: hudLeftRef.value,
+        start: "top 85%",
+        once: true,
+      },
     })
 
     // Hint
@@ -104,7 +116,11 @@ onMounted(() => {
       opacity: 0,
       duration: 0.6,
       ease: "power3.out",
-      scrollTrigger: { trigger: sectionRef.value, start: "top 70%", once: true },
+      scrollTrigger: {
+        trigger: hintRef.value,
+        start: "top 90%",
+        once: true,
+      },
     })
   }, sectionRef.value)
 

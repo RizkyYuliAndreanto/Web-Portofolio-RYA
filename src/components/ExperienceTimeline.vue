@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ParallaxStage from "./ParallaxStage.vue";
@@ -8,70 +8,86 @@ import { useParallax } from "../utils/useParallax.js";
 gsap.registerPlugin(ScrollTrigger);
 
 const sectionRef = ref(null);
+let ctx = null;
 
 // v2 06-experience layers
 const pxLayers = [
-  { file: "/parallax-v2/06-experience/experience-l1-backdrop.jpg", mobile: "/parallax-v2/06-experience/experience-l1-backdrop.png", speed: 0.03, scale: 1.02 },
-  { file: "/parallax-v2/06-experience/experience-l2-far.png",        mobile: "/parallax-v2/06-experience/experience-l2-far.png",        speed: 0.10, scale: 1.03 },
-  { file: "/parallax-v2/06-experience/experience-l3-mid.png",        mobile: "/parallax-v2/06-experience/experience-l3-mid.png",        speed: 0.20, scale: 1.05 },
-  { file: "/parallax-v2/06-experience/experience-l4-near.png",       mobile: "/parallax-v2/06-experience/experience-l4-near.png",       speed: 0.34, scale: 1.08 },
-  { file: "/parallax-v2/06-experience/experience-l5-foreground.png", mobile: "/parallax-v2/06-experience/experience-l5-foreground.png", speed: 0.55, scale: 1.12 },
-  { file: "/parallax-v2/shared/overlay-light-rays.png",  speed: 0.05, blend: "is-overlay" },
-  { file: "/parallax-v2/shared/overlay-vignette-navy.png", speed: 0, blend: "is-grade" },
-  { file: "/parallax-v2/shared/overlay-grain.png",          speed: 0, blend: "is-grain" },
-  { file: "/parallax-v2/shared/overlay-fade-top.png",        speed: 0, blend: "is-grade" },
-  { file: "/parallax-v2/shared/overlay-fade-bottom.png",     speed: 0, blend: "is-grade" },
+  { file: "/parallax-v2/06-experience/experience-l1-backdrop.webp", mobile: "/parallax/assets-mobile/05-experience/experience-l1-backdrop.webp", speed: 0.03, scale: 1.02 },
+  { file: "/parallax-v2/06-experience/experience-l2-far.webp",        mobile: "/parallax/assets-mobile/05-experience/experience-l2-far.webp",        speed: 0.10, scale: 1.03 },
+  { file: "/parallax-v2/06-experience/experience-l3-mid.webp",        mobile: "/parallax/assets-mobile/05-experience/experience-l3-mid.webp",        speed: 0.20, scale: 1.05 },
+  { file: "/parallax-v2/06-experience/experience-l4-near.webp",       mobile: "/parallax/assets-mobile/05-experience/experience-l4-near.webp",       speed: 0.34, scale: 1.08 },
+  { file: "/parallax-v2/06-experience/experience-l5-foreground.webp", mobile: "/parallax/assets-mobile/05-experience/experience-l5-foreground.webp", speed: 0.55, scale: 1.12 },
+  { file: "/parallax-v2/shared/overlay-light-rays.webp",  speed: 0.05, blend: "is-overlay" },
+  { file: "/parallax-v2/shared/overlay-vignette-navy.webp", speed: 0, blend: "is-grade" },
+  { file: "/parallax-v2/shared/overlay-grain.webp",          speed: 0, blend: "is-grain" },
+  { file: "/parallax-v2/shared/overlay-fade-top.webp",        speed: 0, blend: "is-grade" },
+  { file: "/parallax-v2/shared/overlay-fade-bottom.webp",     speed: 0, blend: "is-grade" },
 ];
 
 useParallax(sectionRef, { scrub: 2, travelMul: 44, zoomMul: 0.15 });
 
 const experiences = [
   {
-    title: "Software & AI Engineer",
-    company: "Clyrova.id",
-    period: "2025 — PRESENT",
+    title: "Founder & Software Engineer",
+    company: "Ernesty Digital Labs",
+    period: "OCT 2025 — PRESENT",
     description:
-      "End-to-End Software and AI-Driven Solutions. Helping businesses design, build, and scale high-quality software that is fast, secure, and targeted to their needs.",
+      "Independently designed, built, and deployed infographic websites for several villages in Madiun using full-stack Laravel — from requirements, UI, backend, testing, to production release. Providing end-to-end solutions through my own studio so village stakeholders have a single accountable party for their entire digital information platform.",
   },
   {
-    title: "Fullstack Developer Intern",
-    company: "Dinas Pariwisata Magetan",
-    period: "2025 (3 MONTHS)",
+    title: "Co-Founder & AI Engineer",
+    company: "Clyrova.ID",
+    period: "JAN 2025 — PRESENT",
     description:
-      "Designed and developed the 'Magetan Tourism' website, a scalable digital platform to showcase local tourism and improve public engagement through modern web technologies.",
+      "Developing and integrating high-precision AI pipelines for background removal and image upscaling to improve the quality of visual assets used by the Clyrova.ID team. Replaced reliance on paid SaaS tools with an internal, company-controlled workflow that keeps asset processing inside the internal ecosystem.",
+  },
+  {
+    title: "Full-Stack Developer — Intern",
+    company: "Dinas Kebudayaan dan Pariwisata Kabupaten Magetan",
+    period: "JUL 2025 — SEP 2025",
+    description:
+      "Independently designed and built the new Magetan Tourism platform using Express.js and Vue.js, modernizing the old WordPress-based website. Completed and handed over the full source code and architecture; production deployment pending administrative processing by the local government.",
   },
 ];
 
 onMounted(() => {
   if (!sectionRef.value) return;
 
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: sectionRef.value,
-      start: "top 65%",
-    }
-  });
+  ctx = gsap.context(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.value,
+        start: "top 80%",
+        once: true,
+      },
+    });
 
-  tl.from(".exp-header-text", {
-    y: 50,
-    opacity: 0,
-    duration: 1,
-    ease: "power4.out"
-  })
-  .from(".exp-divider", {
-    scaleX: 0,
-    transformOrigin: "left",
-    duration: 1.2,
-    stagger: 0.2,
-    ease: "power4.out"
-  }, "-=0.5")
-  .from(".exp-item-content", {
-    y: 30,
-    opacity: 0,
-    stagger: 0.15,
-    duration: 0.8,
-    ease: "power3.out"
-  }, "-=1");
+    tl.from(".exp-header-text", {
+      y: 40,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.1,
+      ease: "power3.out",
+    })
+    .from(".exp-divider", {
+      scaleX: 0,
+      transformOrigin: "left",
+      duration: 0.8,
+      stagger: 0.15,
+      ease: "power3.out",
+    }, "-=0.4")
+    .from(".exp-item-content", {
+      y: 30,
+      opacity: 0,
+      stagger: 0.1,
+      duration: 0.7,
+      ease: "power3.out",
+    }, "-=0.6");
+  }, sectionRef.value);
+});
+
+onUnmounted(() => {
+  if (ctx) ctx.revert();
 });
 </script>
 
@@ -98,7 +114,7 @@ onMounted(() => {
       <div class="flex flex-col w-full border-t border-white/10 mt-12">
 
         <div
-          v-for="(exp, index) in experiences"
+          v-for="exp in experiences"
           :key="exp.company"
           class="group relative flex flex-col lg:flex-row py-12 lg:py-16 border-b border-white/10 hover:bg-white/[0.02] transition-colors duration-500">
 

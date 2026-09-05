@@ -13,16 +13,16 @@ const headerDescRef = ref(null);
 
 // v2 03-services layers — vignette navy dihapus untuk mengurangi kegelapan
 const pxLayers = [
-  { file: "/parallax-v2/03-services/services-l1-backdrop.jpg", mobile: "/parallax-v2/03-services/services-l1-backdrop.png", speed: 0.03, scale: 1.02 },
-  { file: "/parallax-v2/03-services/services-l2-far.png",        mobile: "/parallax-v2/03-services/services-l2-far.png",        speed: 0.10, scale: 1.03 },
-  { file: "/parallax-v2/03-services/services-l3-mid.png",        mobile: "/parallax-v2/03-services/services-l3-mid.png",        speed: 0.20, scale: 1.05 },
-  { file: "/parallax-v2/03-services/services-l4-near.png",       mobile: "/parallax-v2/03-services/services-l4-near.png",       speed: 0.34, scale: 1.08 },
-  { file: "/parallax-v2/03-services/services-l5-foreground.png", mobile: "/parallax-v2/03-services/services-l5-foreground.png", speed: 0.55, scale: 1.12 },
-  { file: "/parallax-v2/shared/overlay-grid-perspective.png", speed: 0.16, blend: "is-overlay" },
+  { file: "/parallax-v2/03-services/services-l1-backdrop.webp", mobile: "/parallax/assets-mobile/03-services/services-l1-backdrop.webp", speed: 0.03, scale: 1.02 },
+  { file: "/parallax-v2/03-services/services-l2-far.webp",        mobile: "/parallax/assets-mobile/03-services/services-l2-far.webp",        speed: 0.10, scale: 1.03 },
+  { file: "/parallax-v2/03-services/services-l3-mid.webp",        mobile: "/parallax/assets-mobile/03-services/services-l3-mid.webp",        speed: 0.20, scale: 1.05 },
+  { file: "/parallax-v2/03-services/services-l4-near.webp",       mobile: "/parallax/assets-mobile/03-services/services-l4-near.webp",       speed: 0.34, scale: 1.08 },
+  { file: "/parallax-v2/03-services/services-l5-foreground.webp", mobile: "/parallax/assets-mobile/03-services/services-l5-foreground.webp", speed: 0.55, scale: 1.12 },
+  { file: "/parallax-v2/shared/overlay-grid-perspective.webp", speed: 0.16, blend: "is-overlay" },
   // overlay-vignette-navy dihapus
-  { file: "/parallax-v2/shared/overlay-grain.png",             speed: 0,    blend: "is-grain"   },
-  { file: "/parallax-v2/shared/overlay-fade-top.png",          speed: 0,    blend: "is-grade"   },
-  { file: "/parallax-v2/shared/overlay-fade-bottom.png",       speed: 0,    blend: "is-grade"   },
+  { file: "/parallax-v2/shared/overlay-grain.webp",             speed: 0,    blend: "is-grain"   },
+  { file: "/parallax-v2/shared/overlay-fade-top.webp",          speed: 0,    blend: "is-grade"   },
+  { file: "/parallax-v2/shared/overlay-fade-bottom.webp",       speed: 0,    blend: "is-grade"   },
 ];
 
 useParallax(sectionRef, { scrub: 2, travelMul: 48, zoomMul: 0.17 });
@@ -60,19 +60,16 @@ onMounted(() => {
   if (!sectionRef.value) return;
 
   ctx = gsap.context(() => {
-    // Header — characters fall from above one by one
-    const headerChars = gsap.utils.toArray(".header-char");
-    gsap.from(headerChars, {
-      y: -200,
+    // Header entrance
+    gsap.from(headerRef.value, {
+      y: 40,
       opacity: 0,
-      rotation: () => gsap.utils.random(-90, 90),
-      scale: () => gsap.utils.random(0.3, 2),
-      duration: 0.8,
-      stagger: 0.03,
-      ease: "bounce.out",
+      duration: 1,
+      ease: "power3.out",
       scrollTrigger: {
-        trigger: sectionRef.value,
-        start: "top 70%",
+        trigger: headerRef.value,
+        start: "top 85%",
+        once: true,
       },
     });
 
@@ -82,12 +79,13 @@ onMounted(() => {
       duration: 1,
       ease: "power3.out",
       scrollTrigger: {
-        trigger: sectionRef.value,
-        start: "top 65%",
+        trigger: headerDescRef.value,
+        start: "top 85%",
+        once: true,
       },
     });
 
-    // === CRASH ANIMATION FOR EACH SERVICE ITEM ===
+    // === ANIMATION FOR EACH SERVICE ITEM ===
     const items = gsap.utils.toArray(".service-item");
 
     items.forEach((item, i) => {
@@ -96,93 +94,45 @@ onMounted(() => {
       const title = item.querySelector(".service-title");
       const desc = item.querySelector(".service-desc");
       const line = item.querySelector(".service-line");
-      const chars = item.querySelectorAll(".scatter-char");
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: item,
-          start: "top 82%",
+          start: "top 85%",
+          once: true,
         },
       });
 
-      // 1. Item CRASHES in from far left/right — fast, hits hard
       tl.from(item, {
-        x: fromLeft ? -window.innerWidth * 0.7 : window.innerWidth * 0.7,
-        rotation: fromLeft ? -8 : 8,
+        x: fromLeft ? -50 : 50,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out",
+      })
+      .from(num, {
+        scale: 0.5,
+        opacity: 0,
+        duration: 0.5,
+        ease: "back.out(1.5)",
+      }, "-=0.5")
+      .from(title, {
+        y: 20,
         opacity: 0,
         duration: 0.6,
-        ease: "power4.in",
-      });
-
-      // 2. IMPACT — item bounces back slightly and shakes
-      tl.to(item, {
-        x: fromLeft ? 30 : -30,
-        rotation: fromLeft ? 2 : -2,
-        duration: 0.1,
-        ease: "power1.out",
-      });
-
-      // 3. Characters SCATTER on impact
-      tl.to(
-        chars,
-        {
-          x: () => gsap.utils.random(-30, 30),
-          y: () => gsap.utils.random(-20, 20),
-          rotation: () => gsap.utils.random(-25, 25),
-          opacity: 0.6,
-          duration: 0.2,
-          ease: "power2.out",
-        },
-        "-=0.08",
-      );
-
-      // 4. Item settles to final position
-      tl.to(item, {
-        x: 0,
-        rotation: 0,
-        duration: 0.4,
-        ease: "elastic.out(1, 0.5)",
-      });
-
-      // 5. Characters snap back into place
-      tl.to(
-        chars,
-        {
-          x: 0,
-          y: 0,
-          rotation: 0,
-          opacity: 1,
-          duration: 0.5,
-          ease: "elastic.out(1, 0.4)",
-          stagger: 0.01,
-        },
-        "-=0.3",
-      );
-
-      // 6. Number pops with scale bounce on settle
-      tl.from(
-        num,
-        {
-          scale: 2.5,
-          opacity: 0,
-          rotation: fromLeft ? -180 : 180,
-          duration: 0.6,
-          ease: "back.out(2)",
-        },
-        "-=0.6",
-      );
-
-      // 7. Line draws in from impact side
-      tl.from(
-        line,
-        {
-          scaleX: 0,
-          transformOrigin: fromLeft ? "left" : "right",
-          duration: 0.6,
-          ease: "power4.out",
-        },
-        "-=0.4",
-      );
+        ease: "power3.out",
+      }, "-=0.4")
+      .from(desc, {
+        y: 15,
+        opacity: 0,
+        duration: 0.6,
+        ease: "power3.out",
+      }, "-=0.4")
+      .from(line, {
+        scaleX: 0,
+        transformOrigin: "left",
+        duration: 0.8,
+        ease: "power4.out",
+      }, "-=0.5");
     });
 
     // === SCROLL PARALLAX ===
@@ -220,11 +170,6 @@ onMounted(() => {
 onUnmounted(() => {
   if (ctx) ctx.revert();
 });
-
-// Helper to split text into individual characters for scatter effect
-function splitChars(text) {
-  return text.split("");
-}
 </script>
 
 <template>
@@ -246,23 +191,8 @@ function splitChars(text) {
         <h2
           ref="headerRef"
           class="text-5xl md:text-7xl lg:text-[6rem] font-black font-oswald text-[#F2F2F2] uppercase tracking-tighter leading-[0.9]">
-          <span class="block text-accent">
-            <span
-              v-for="(char, ci) in splitChars('SERVICES &')"
-              :key="'s' + ci"
-              class="header-char inline-block"
-              :style="char === ' ' ? 'width: 0.25em' : ''"
-              >{{ char === " " ? "\u00A0" : char }}</span
-            >
-          </span>
-          <span class="block">
-            <span
-              v-for="(char, ci) in splitChars('EXPERTISE.')"
-              :key="'e' + ci"
-              class="header-char inline-block"
-              >{{ char }}</span
-            >
-          </span>
+          <span class="block text-accent">SERVICES &</span>
+          <span class="block">EXPERTISE.</span>
         </h2>
         <p
           ref="headerDescRef"
@@ -294,30 +224,19 @@ function splitChars(text) {
             >
           </div>
 
-          <!-- Title (split into characters for scatter) -->
+          <!-- Title -->
           <div class="relative w-full lg:w-[40%]">
             <h3
               class="service-title text-2xl lg:text-4xl font-bold font-oswald text-[#F2F2F2] tracking-wider uppercase group-hover:translate-x-4 transition-transform duration-500">
-              <span
-                v-for="(char, ci) in splitChars(service.title)"
-                :key="ci"
-                class="scatter-char inline-block"
-                :style="char === ' ' ? 'width: 0.3em' : ''"
-                >{{ char === " " ? "\u00A0" : char }}</span
-              >
+              {{ service.title }}
             </h3>
           </div>
 
-          <!-- Description (split into words for scatter) -->
+          <!-- Description -->
           <div class="relative w-full lg:w-[45%]">
             <p
               class="service-desc text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.15em] leading-loose font-oswald">
-              <span
-                v-for="(word, wi) in service.description.split(' ')"
-                :key="wi"
-                class="scatter-char inline-block mr-[0.3em]"
-                >{{ word }}</span
-              >
+              {{ service.description }}
             </p>
           </div>
 

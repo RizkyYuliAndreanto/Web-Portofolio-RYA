@@ -21,15 +21,15 @@ const formRef = ref(null);
 
 // v2 07-contact layers — vignette navy dihapus
 const pxLayers = [
-  { file: "/parallax-v2/07-contact/contact-l1-backdrop.jpg", mobile: "/parallax-v2/07-contact/contact-l1-backdrop.png", speed: 0.03, scale: 1.02 },
-  { file: "/parallax-v2/07-contact/contact-l2-far.png",        mobile: "/parallax-v2/07-contact/contact-l2-far.png",        speed: 0.10, scale: 1.03 },
-  { file: "/parallax-v2/07-contact/contact-l3-mid.png",        mobile: "/parallax-v2/07-contact/contact-l3-mid.png",        speed: 0.20, scale: 1.05 },
-  { file: "/parallax-v2/07-contact/contact-l4-near.png",       mobile: "/parallax-v2/07-contact/contact-l4-near.png",       speed: 0.34, scale: 1.08 },
-  { file: "/parallax-v2/07-contact/contact-l5-foreground.png", mobile: "/parallax-v2/07-contact/contact-l5-foreground.png", speed: 0.55, scale: 1.12 },
-  { file: "/parallax-v2/shared/overlay-bokeh-soft.png",     speed: 0.26, blend: "is-overlay" },
+  { file: "/parallax-v2/07-contact/contact-l1-backdrop.webp", mobile: "/parallax/assets-mobile/06-contact/contact-l1-backdrop.webp", speed: 0.03, scale: 1.02 },
+  { file: "/parallax-v2/07-contact/contact-l2-far.webp",        mobile: "/parallax/assets-mobile/06-contact/contact-l2-far.webp",        speed: 0.10, scale: 1.03 },
+  { file: "/parallax-v2/07-contact/contact-l3-mid.webp",        mobile: "/parallax/assets-mobile/06-contact/contact-l3-mid.webp",        speed: 0.20, scale: 1.05 },
+  { file: "/parallax-v2/07-contact/contact-l4-near.webp",       mobile: "/parallax/assets-mobile/06-contact/contact-l4-near.webp",       speed: 0.34, scale: 1.08 },
+  { file: "/parallax-v2/07-contact/contact-l5-foreground.webp", mobile: "/parallax/assets-mobile/06-contact/contact-l5-foreground.webp", speed: 0.55, scale: 1.12 },
+  { file: "/parallax-v2/shared/overlay-bokeh-soft.webp",     speed: 0.26, blend: "is-overlay" },
   // overlay-vignette-navy dihapus
-  { file: "/parallax-v2/shared/overlay-grain.png",           speed: 0,    blend: "is-grain"   },
-  { file: "/parallax-v2/shared/overlay-fade-top.png",        speed: 0,    blend: "is-grade"   },
+  { file: "/parallax-v2/shared/overlay-grain.webp",           speed: 0,    blend: "is-grain"   },
+  { file: "/parallax-v2/shared/overlay-fade-top.webp",        speed: 0,    blend: "is-grade"   },
 ];
 
 useParallax(sectionRef, { scrub: 2, travelMul: 46, zoomMul: 0.16 });
@@ -129,8 +129,9 @@ onMounted(() => {
       stagger: 0.03,
       ease: "bounce.out",
       scrollTrigger: {
-        trigger: sectionRef.value,
-        start: "top 70%",
+        trigger: ".contact-header-char",
+        start: "top 85%",
+        once: true,
       },
     });
 
@@ -141,8 +142,9 @@ onMounted(() => {
       duration: 1,
       ease: "power4.out",
       scrollTrigger: {
-        trigger: sectionRef.value,
-        start: "top 60%",
+        trigger: ".contact-info",
+        start: "top 85%",
+        once: true,
       },
     });
 
@@ -154,8 +156,9 @@ onMounted(() => {
       duration: 1,
       ease: "power4.out",
       scrollTrigger: {
-        trigger: sectionRef.value,
-        start: "top 60%",
+        trigger: formRef.value,
+        start: "top 85%",
+        once: true,
       },
     });
 
@@ -168,8 +171,9 @@ onMounted(() => {
       stagger: 0.1,
       ease: "back.out(2)",
       scrollTrigger: {
-        trigger: sectionRef.value,
-        start: "top 50%",
+        trigger: ".social-icon",
+        start: "top 85%",
+        once: true,
       },
     });
 
@@ -181,8 +185,9 @@ onMounted(() => {
       duration: 0.6,
       ease: "power3.out",
       scrollTrigger: {
-        trigger: sectionRef.value,
-        start: "top 50%",
+        trigger: formRef.value,
+        start: "top 85%",
+        once: true,
       },
     });
   }, sectionRef.value);
@@ -275,7 +280,7 @@ function splitChars(text) {
                   class="text-[10px] font-oswald uppercase tracking-widest text-white/40 mb-0.5">
                   Location
                 </p>
-                <p class="text-sm text-white/80 font-oswald">Indonesia</p>
+                <p class="text-sm text-white/80 font-oswald">Madiun, Indonesia</p>
               </div>
             </div>
           </div>

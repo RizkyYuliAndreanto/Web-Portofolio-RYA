@@ -11,16 +11,16 @@ const sectionRef = ref(null);
 
 // v2 02-profile layers — overlay vignette dinonaktifkan (global .px-section sudah handle fallback)
 const pxLayers = [
-  { file: "/parallax-v2/02-profile/profile-l1-backdrop.jpg", mobile: "/parallax-v2/02-profile/profile-l1-backdrop.png", speed: 0.03, scale: 1.02 },
-  { file: "/parallax-v2/02-profile/profile-l2-far.png",        mobile: "/parallax-v2/02-profile/profile-l2-far.png",        speed: 0.10, scale: 1.03 },
-  { file: "/parallax-v2/02-profile/profile-l3-mid.png",        mobile: "/parallax-v2/02-profile/profile-l3-mid.png",        speed: 0.20, scale: 1.05 },
-  { file: "/parallax-v2/02-profile/profile-l4-near.png",       mobile: "/parallax-v2/02-profile/profile-l4-near.png",       speed: 0.34, scale: 1.08 },
-  { file: "/parallax-v2/02-profile/profile-l5-foreground.png", mobile: "/parallax-v2/02-profile/profile-l5-foreground.png", speed: 0.55, scale: 1.12 },
-  { file: "/parallax-v2/shared/overlay-glow-blue.png",          speed: 0.04, blend: "is-overlay" },
+  { file: "/parallax-v2/02-profile/profile-l1-backdrop.webp", mobile: "/parallax-v2/02-profile/profile-l1-backdrop.webp", speed: 0.03, scale: 1.02 },
+  { file: "/parallax-v2/02-profile/profile-l2-far.webp",        mobile: "/parallax-v2/02-profile/profile-l2-far.webp",        speed: 0.10, scale: 1.03 },
+  { file: "/parallax-v2/02-profile/profile-l3-mid.webp",        mobile: "/parallax-v2/02-profile/profile-l3-mid.webp",        speed: 0.20, scale: 1.05 },
+  { file: "/parallax-v2/02-profile/profile-l4-near.webp",       mobile: "/parallax-v2/02-profile/profile-l4-near.webp",       speed: 0.34, scale: 1.08 },
+  { file: "/parallax-v2/02-profile/profile-l5-foreground.webp", mobile: "/parallax-v2/02-profile/profile-l5-foreground.webp", speed: 0.55, scale: 1.12 },
+  { file: "/parallax-v2/shared/overlay-glow-blue.webp",          speed: 0.04, blend: "is-overlay" },
   // overlay-vignette-navy dihapus — menyebabkan halaman terlalu gelap
-  { file: "/parallax-v2/shared/overlay-grain.png",              speed: 0,    blend: "is-grain"   },
-  { file: "/parallax-v2/shared/overlay-fade-top.png",           speed: 0,    blend: "is-grade"   },
-  { file: "/parallax-v2/shared/overlay-fade-bottom.png",        speed: 0,    blend: "is-grade"   },
+  { file: "/parallax-v2/shared/overlay-grain.webp",              speed: 0,    blend: "is-grain"   },
+  { file: "/parallax-v2/shared/overlay-fade-top.webp",           speed: 0,    blend: "is-grade"   },
+  { file: "/parallax-v2/shared/overlay-fade-bottom.webp",        speed: 0,    blend: "is-grade"   },
 ];
 
 useParallax(sectionRef, { scrub: 2, travelMul: 45, zoomMul: 0.16 });
@@ -55,7 +55,7 @@ const getVisible = (arr) => arr.find(el => el.offsetParent !== null) || arr[0];
 const yearsCount = ref(0);
 const projectsCount = ref(0);
 
-const roles = ["BACKEND ENGINEER", "AI ENGINEER"];
+const roles = ["SOFTWARE ENGINEER", "AI ENGINEER"];
 const currentRoleIndex = ref(0);
 let roleInterval = null;
 let ctx = null;
@@ -117,7 +117,11 @@ onMounted(() => {
       opacity: 0,
       duration: 1.2,
       ease: "power3.out",
-      scrollTrigger: { trigger: sectionRef.value, start: "top 65%" },
+      scrollTrigger: {
+        trigger: getVisible(photoContainerEls),
+        start: "top 85%",
+        once: true,
+      },
     });
 
     // Left column - slide from left
@@ -126,7 +130,11 @@ onMounted(() => {
       opacity: 0,
       duration: 1,
       ease: "power3.out",
-      scrollTrigger: { trigger: sectionRef.value, start: "top 60%" },
+      scrollTrigger: {
+        trigger: getVisible(leftColEls),
+        start: "top 85%",
+        once: true,
+      },
     });
 
     // Right column - slide from right
@@ -135,7 +143,11 @@ onMounted(() => {
       opacity: 0,
       duration: 1,
       ease: "power3.out",
-      scrollTrigger: { trigger: sectionRef.value, start: "top 60%" },
+      scrollTrigger: {
+        trigger: getVisible(rightColEls),
+        start: "top 85%",
+        once: true,
+      },
     });
 
     // Stat circles - pop in with 3D rotation
@@ -145,7 +157,11 @@ onMounted(() => {
       opacity: 0,
       duration: 1.2,
       ease: "back.out(1.7)",
-      scrollTrigger: { trigger: sectionRef.value, start: "top 50%" },
+      scrollTrigger: {
+        trigger: getVisible(stat1Els),
+        start: "top 85%",
+        once: true,
+      },
     });
 
     gsap.from(getVisible(stat2Els), {
@@ -155,7 +171,11 @@ onMounted(() => {
       duration: 1.2,
       delay: 0.2,
       ease: "back.out(1.7)",
-      scrollTrigger: { trigger: sectionRef.value, start: "top 50%" },
+      scrollTrigger: {
+        trigger: getVisible(stat2Els),
+        start: "top 85%",
+        once: true,
+      },
     });
 
     // Badges slide up
@@ -164,7 +184,11 @@ onMounted(() => {
       opacity: 0,
       duration: 0.8,
       ease: "power3.out",
-      scrollTrigger: { trigger: sectionRef.value, start: "top 40%" },
+      scrollTrigger: {
+        trigger: getVisible(badgesEls),
+        start: "top 90%",
+        once: true,
+      },
     });
 
     // === PARALLAX SCROLL ANIMATIONS (3D Depth Effect) ===
@@ -297,10 +321,10 @@ onUnmounted(() => {
     <!-- Big Background Typography - 3D -->
     <div
       ref="bgTextRef"
-      class="absolute inset-x-0 top-[10%] lg:top-[5%] flex flex-col justify-start items-center overflow-hidden pointer-events-none z-0"
+      class="absolute inset-x-0 top-[10%] lg:top-[5%] flex flex-col justify-start items-center overflow-x-clip pointer-events-none z-0"
       style="perspective: 800px">
       <h2
-        class="big-bg-text text-[18vw] font-black font-oswald text-transparent whitespace-nowrap uppercase tracking-tighter leading-[0.85] select-none text-center bg-text-3d"
+        class="big-bg-text text-[18vw] font-black font-oswald text-transparent whitespace-nowrap uppercase tracking-tighter leading-[0.9] select-none text-center bg-text-3d pt-[0.12em]"
         style="
           transform-style: preserve-3d;
           transform: rotateX(15deg) rotateY(-5deg);
@@ -349,12 +373,13 @@ onUnmounted(() => {
           style="transform-style: preserve-3d">
           <p
             class="text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.2em] leading-relaxed mb-8 border-r-2 border-accent/50 pr-6 max-w-[280px] font-oswald">
-            AS A DIGITAL DEVELOPER, I FOCUS ON PRODUCING TOP-NOTCH AND IMPACTFUL
-            DIGITAL EXPERIENCES.
+            FULL-STACK SOFTWARE ENGINEER & CO-FOUNDER OF CLYROVA.ID — BUILDING
+            AI-POWERED PRODUCTS FROM PIPELINE TO PRODUCTION.
           </p>
           <p
             class="text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.2em] leading-relaxed border-r-2 border-accent/50 pr-6 max-w-[280px] font-oswald">
-            RIZKY'S BACKEND ARCHITECTURE & AI EXPERTISE DELIVERED.
+            SPECIALIZED IN COMPUTER-VISION AI (FACE RECOGNITION, ANTI-SPOOFING,
+            IMAGE PROCESSING) AND END-TO-END WEB PLATFORMS.
           </p>
           <a
             href="#contact"
@@ -364,6 +389,12 @@ onUnmounted(() => {
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </a>
+          <div class="mt-10 border-r-2 border-accent/50 pr-6 max-w-[280px]">
+            <h3 class="text-[10px] font-bold font-oswald tracking-[0.3em] text-accent uppercase mb-2">Education</h3>
+            <p class="text-sm font-black font-oswald text-[#F2F2F2] uppercase tracking-wide">Universitas PGRI Madiun</p>
+            <p class="text-[10px] font-oswald tracking-widest text-text-secondary uppercase mt-1">S.Kom. — Informatics Engineering · GPA 3.70/4.00</p>
+            <p class="text-[9px] font-oswald tracking-[0.2em] text-text-secondary uppercase mt-1">SEP 2022 — JUL 2026 · MADIUN, INDONESIA</p>
+          </div>
         </div>
 
         <!-- Center Column: Photo -->
@@ -373,7 +404,7 @@ onUnmounted(() => {
           style="transform-style: preserve-3d">
           <div class="relative w-full h-auto flex justify-center items-end">
             <img
-              src="../assets/HERO-NO-BG.png"
+              src="../assets/HERO-NO-BG.webp"
               alt="Rizky Yuli Andreanto"
               class="w-full h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] relative z-10 -mb-16" />
           </div>
@@ -405,14 +436,14 @@ onUnmounted(() => {
             </div>
           </div>
           <p class="text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.2em] leading-relaxed mt-4 border-l-2 border-accent/50 pl-4 max-w-[280px] font-oswald">
-            A CUTTING-EDGE DIGITAL PLATFORM DESIGNED TO REVOLUTIONIZE THE WAY
-            PEOPLE INTERACT WITH TECHNOLOGY.
+            EXPERIENCED IN BUILDING EDGE-AI SYSTEMS, ESPECIALLY COMPUTER VISION — FACE RECOGNITION, ANTI-SPOOFING, AND REAL-TIME IMAGE PROCESSING.
             <br /><br />
-            EXCEPTIONAL BACKEND ARCHITECTURE AND AI EXPERIENCE.
+            STRONG FULL-STACK FOUNDATION ACROSS FRONTEND, BACKEND, DATABASE, AND DEPLOYMENT — CAPABLE OF DELIVERING PRODUCTS END-TO-END.
           </p>
-          <div :ref="el => pushRef(badgesEls, el)" class="flex gap-3 mt-2">
-            <span class="px-4 py-1.5 rounded-full border border-white/20 text-[9px] font-oswald tracking-widest uppercase text-white/70">BACKEND ENGINEER</span>
-            <span class="px-4 py-1.5 rounded-full border border-white/20 text-[9px] font-oswald tracking-widest uppercase text-white/70">2026</span>
+          <div :ref="el => pushRef(badgesEls, el)" class="flex flex-wrap gap-3 mt-2">
+            <span class="px-4 py-1.5 rounded-full border border-white/20 text-[9px] font-oswald tracking-widest uppercase text-white/70">CO-FOUNDER CLYROVA.ID</span>
+            <span class="px-4 py-1.5 rounded-full border border-white/20 text-[9px] font-oswald tracking-widest uppercase text-white/70">AI ENGINEER</span>
+            <span class="px-4 py-1.5 rounded-full border border-white/20 text-[9px] font-oswald tracking-widest uppercase text-white/70">FULL-STACK DEV</span>
           </div>
         </div>
       </div>
@@ -421,21 +452,27 @@ onUnmounted(() => {
       <div class="lg:hidden flex flex-col items-center gap-10">
         <div :ref="el => pushRef(photoContainerEls, el)" class="flex justify-center relative z-10 w-[280px] sm:w-[350px]">
           <img
-            src="../assets/HERO-NO-BG.png"
+            src="../assets/HERO-NO-BG.webp"
             alt="Rizky Yuli Andreanto"
             class="w-full h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] relative z-10" />
         </div>
         <div :ref="el => pushRef(leftColEls, el)" class="flex flex-col items-center text-center gap-6">
           <p class="text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.2em] leading-relaxed max-w-[280px] font-oswald">
-            AS A DIGITAL DEVELOPER, I FOCUS ON PRODUCING TOP-NOTCH AND IMPACTFUL DIGITAL EXPERIENCES.
+            FULL-STACK SOFTWARE ENGINEER & CO-FOUNDER OF CLYROVA.ID — BUILDING AI-POWERED PRODUCTS FROM PIPELINE TO PRODUCTION.
           </p>
           <p class="text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.2em] leading-relaxed max-w-[280px] font-oswald">
-            RIZKY'S BACKEND ARCHITECTURE & AI EXPERTISE DELIVERED.
+            SPECIALIZED IN COMPUTER-VISION AI (FACE RECOGNITION, ANTI-SPOOFING, IMAGE PROCESSING) AND END-TO-END WEB PLATFORMS.
           </p>
           <a href="#contact" class="flex items-center gap-4 text-white uppercase font-oswald tracking-widest text-xs sm:text-sm border border-white/20 py-3 px-6 hover:bg-white/5 transition-colors">
             <span>Let's talk</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
           </a>
+          <div class="mt-2 border border-white/10 rounded-lg p-4 max-w-[280px]">
+            <h3 class="text-[10px] font-bold font-oswald tracking-[0.3em] text-accent uppercase mb-2">Education</h3>
+            <p class="text-sm font-black font-oswald text-[#F2F2F2] uppercase tracking-wide">Universitas PGRI Madiun</p>
+            <p class="text-[10px] font-oswald tracking-widest text-text-secondary uppercase mt-1">S.Kom. — Informatics Engineering · GPA 3.70/4.00</p>
+            <p class="text-[9px] font-oswald tracking-[0.2em] text-text-secondary uppercase mt-1">SEP 2022 — JUL 2026 · MADIUN, INDONESIA</p>
+          </div>
         </div>
         <div :ref="el => pushRef(rightColEls, el)" class="flex flex-col items-center gap-6">
           <div class="flex flex-col gap-5">
@@ -453,13 +490,14 @@ onUnmounted(() => {
             </div>
           </div>
           <p class="text-[10px] sm:text-xs text-text-secondary uppercase tracking-[0.2em] leading-relaxed max-w-[280px] text-center font-oswald">
-            A CUTTING-EDGE DIGITAL PLATFORM DESIGNED TO REVOLUTIONIZE THE WAY PEOPLE INTERACT WITH TECHNOLOGY.
+            EXPERIENCED IN BUILDING EDGE-AI SYSTEMS, ESPECIALLY COMPUTER VISION — FACE RECOGNITION, ANTI-SPOOFING, AND REAL-TIME IMAGE PROCESSING.
             <br /><br />
-            EXCEPTIONAL BACKEND ARCHITECTURE AND AI EXPERIENCE.
+            STRONG FULL-STACK FOUNDATION ACROSS FRONTEND, BACKEND, DATABASE, AND DEPLOYMENT — CAPABLE OF DELIVERING PRODUCTS END-TO-END.
           </p>
-          <div :ref="el => pushRef(badgesEls, el)" class="flex gap-3">
-            <span class="px-4 py-1.5 rounded-full border border-white/20 text-[9px] font-oswald tracking-widest uppercase text-white/70">BACKEND ENGINEER</span>
-            <span class="px-4 py-1.5 rounded-full border border-white/20 text-[9px] font-oswald tracking-widest uppercase text-white/70">2026</span>
+          <div :ref="el => pushRef(badgesEls, el)" class="flex flex-wrap justify-center gap-3">
+            <span class="px-4 py-1.5 rounded-full border border-white/20 text-[9px] font-oswald tracking-widest uppercase text-white/70">CO-FOUNDER CLYROVA.ID</span>
+            <span class="px-4 py-1.5 rounded-full border border-white/20 text-[9px] font-oswald tracking-widest uppercase text-white/70">AI ENGINEER</span>
+            <span class="px-4 py-1.5 rounded-full border border-white/20 text-[9px] font-oswald tracking-widest uppercase text-white/70">FULL-STACK DEV</span>
           </div>
         </div>
       </div>

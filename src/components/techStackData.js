@@ -1,37 +1,37 @@
 // Import all tech logos
-import jsLogo from "../assets/js.jpg";
-import tsLogo from "../assets/TS.jpg";
-import pythonLogo from "../assets/Stickers sur le thème Python.jpg";
-import phpLogo from "../assets/PHP.jpg";
-import goLogo from "../assets/golang.jpg";
-import dartLogo from "../assets/dart.jpg";
-import vueLogo from "../assets/Vue js Logo.jpg";
-import reactLogo from "../assets/react.jpg";
-import html5Logo from "../assets/html5.jpg";
-import css3Logo from "../assets/css3.jpg";
-import tailwindLogo from "../assets/tailwind.jpg";
-import viteLogo from "../assets/vite.jpg";
-import nodejsLogo from "../assets/nodejs.jpg";
-import expressLogo from "../assets/expressjs.jpg";
-import laravelLogo from "../assets/laravel.jpg";
-import sequelizeLogo from "../assets/Sequelize v6 _ Sequelize.jpg";
-import graphqlLogo from "../assets/GraphQL Logo Vector Files.jpg";
-import mysqlLogo from "../assets/mysql.jpg";
-import postgresLogo from "../assets/PostgreSQL Logo.jpg";
-import dockerLogo from "../assets/docker.jpg";
-import gitLogo from "../assets/Git.jpg";
-import githubLogo from "../assets/github.jpg";
+import jsLogo from "../assets/js.webp";
+import tsLogo from "../assets/TS.webp";
+import pythonLogo from "../assets/Stickers sur le thème Python.webp";
+import phpLogo from "../assets/PHP.webp";
+import goLogo from "../assets/golang.webp";
+import dartLogo from "../assets/dart.webp";
+import vueLogo from "../assets/Vue js Logo.webp";
+import reactLogo from "../assets/react.webp";
+import html5Logo from "../assets/html5.webp";
+import css3Logo from "../assets/css3.webp";
+import tailwindLogo from "../assets/tailwind.webp";
+import viteLogo from "../assets/vite.webp";
+import nodejsLogo from "../assets/nodejs.webp";
+import expressLogo from "../assets/expressjs.webp";
+import laravelLogo from "../assets/laravel.webp";
+import sequelizeLogo from "../assets/Sequelize v6 _ Sequelize.webp";
+import graphqlLogo from "../assets/GraphQL Logo Vector Files.webp";
+import mysqlLogo from "../assets/mysql.webp";
+import postgresLogo from "../assets/PostgreSQL Logo.webp";
+import dockerLogo from "../assets/docker.webp";
+import gitLogo from "../assets/Git.webp";
+import githubLogo from "../assets/github.webp";
 
 // New tech logos
-import fastApiLogo from "../assets/new/FastApi.jpg";
-import firebaseLogo from "../assets/new/firebase.jpg";
-import flaskLogo from "../assets/new/flaskpython.jpg";
-import mongodbLogo from "../assets/new/mongodb.jpg";
-import nextjsLogo from "../assets/new/nextjs.jpg";
-import nuxtjsLogo from "../assets/new/nuxtjs.jpg";
-import postmanLogo from "../assets/new/postman.jpg";
-import sqliteLogo from "../assets/new/sqlite.jpg";
-import vscodeLogo from "../assets/new/vscode.jpg";
+import fastApiLogo from "../assets/new/FastApi.webp";
+import firebaseLogo from "../assets/new/firebase.webp";
+import flaskLogo from "../assets/new/flaskpython.webp";
+import mongodbLogo from "../assets/new/mongodb.webp";
+import nextjsLogo from "../assets/new/nextjs.webp";
+import nuxtjsLogo from "../assets/new/nuxtjs.webp";
+import postmanLogo from "../assets/new/postman.webp";
+import sqliteLogo from "../assets/new/sqlite.webp";
+import vscodeLogo from "../assets/new/vscode.webp";
 
 // Data tech stack Rizky Yuli Andreanto - dipakai oleh TechStackFoundry.vue
 export const techCategories = [

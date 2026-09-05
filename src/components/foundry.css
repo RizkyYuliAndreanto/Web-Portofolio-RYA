@@ -13,9 +13,9 @@
    PENTING - LETAK ASET
    Semua url() di file ini memakai path absolut "/foundry/...", jadi
    folder aset WAJIB berada di:
-       public/foundry/assets/ui/*.png
-       public/foundry/assets/fx/*.png
-       public/foundry/assets-2x/ui/*.png
+       public/foundry/assets/ui/*.webp
+       public/foundry/assets/fx/*.webp
+       public/foundry/assets-2x/ui/*.webp
    Kalau kamu menaruhnya di tempat lain, cari-ganti "/foundry/" di
    file ini dengan path kamu.
    ===================================================================== */
@@ -57,8 +57,8 @@
 	border-color: transparent;
 	background: transparent;
 	border-image-source: image-set(
-		url("/foundry/assets/ui/panel-frame-wide.png") 1x,
-		url("/foundry/assets-2x/ui/panel-frame-wide.png") 2x
+		url("/foundry/assets/ui/panel-frame-wide.webp") 1x,
+		url("/foundry/assets-2x/ui/panel-frame-wide.webp") 2x
 	);
 	border-image-slice: 98 78 107 78;
 	border-image-repeat: stretch;
@@ -90,8 +90,8 @@
 	height: 56px;
 	z-index: 4;
 	background: image-set(
-		url("/foundry/assets/ui/corner-bracket.png") 1x,
-		url("/foundry/assets-2x/ui/corner-bracket.png") 2x
+		url("/foundry/assets/ui/corner-bracket.webp") 1x,
+		url("/foundry/assets-2x/ui/corner-bracket.webp") 2x
 	) center/contain no-repeat;
 	pointer-events: none;
 	opacity: 0.95;
@@ -117,8 +117,8 @@
 	border-color: transparent;
 	background: transparent;
 	border-image-source: image-set(
-		url("/foundry/assets/ui/header-plate.png") 1x,
-		url("/foundry/assets-2x/ui/header-plate.png") 2x
+		url("/foundry/assets/ui/header-plate.webp") 1x,
+		url("/foundry/assets-2x/ui/header-plate.webp") 2x
 	);
 	border-image-slice: 0 60 0 100 fill;
 	border-image-repeat: stretch;
@@ -152,8 +152,8 @@
 	border-color: transparent;
 	background: transparent;
 	border-image-source: image-set(
-		url("/foundry/assets/ui/divider-rail.png") 1x,
-		url("/foundry/assets-2x/ui/divider-rail.png") 2x
+		url("/foundry/assets/ui/divider-rail.webp") 1x,
+		url("/foundry/assets-2x/ui/divider-rail.webp") 2x
 	);
 	border-image-slice: 0 40 0 40 fill;
 	border-image-repeat: stretch;
@@ -180,8 +180,8 @@
 	outline: none;
 	box-shadow: none;
 	border-image-source: image-set(
-		url("/foundry/assets/ui/slot-chip.png") 1x,
-		url("/foundry/assets-2x/ui/slot-chip.png") 2x
+		url("/foundry/assets/ui/slot-chip.webp") 1x,
+		url("/foundry/assets-2x/ui/slot-chip.webp") 2x
 	);
 	border-image-slice: 0 60 0 170 fill;
 	border-image-repeat: stretch;
@@ -223,7 +223,7 @@
 .chip__sheen {
 	position: absolute;
 	inset: -6px -40px;
-	background: url("/foundry/assets/fx/sheen-diagonal.png") center/cover no-repeat;
+	background: url("/foundry/assets/fx/sheen-diagonal.webp") center/cover no-repeat;
 	mix-blend-mode: screen;
 	opacity: 0;
 	transform: translateX(-60%);
@@ -233,8 +233,8 @@
 .chip:hover,
 .chip.is-active {
 	border-image-source: image-set(
-		url("/foundry/assets/ui/slot-chip-active.png") 1x,
-		url("/foundry/assets-2x/ui/slot-chip-active.png") 2x
+		url("/foundry/assets/ui/slot-chip-active.webp") 1x,
+		url("/foundry/assets-2x/ui/slot-chip-active.webp") 2x
 	);
 	border-image-slice: 0 60 0 130 fill;
 	border-width: 0 16px 0 33px;
@@ -277,8 +277,8 @@
 	align-items: center;
 	justify-content: center;
 	background: image-set(
-		url("/foundry/assets/ui/hex-socket.png") 1x,
-		url("/foundry/assets-2x/ui/hex-socket.png") 2x
+		url("/foundry/assets/ui/hex-socket.webp") 1x,
+		url("/foundry/assets-2x/ui/hex-socket.webp") 2x
 	) center/contain no-repeat;
 	transition: transform 0.4s var(--ease);
 	will-change: transform;
@@ -319,8 +319,8 @@
 	display: grid;
 	place-items: center;
 	background: image-set(
-		url("/foundry/assets/ui/icon-plinth.png") 1x,
-		url("/foundry/assets-2x/ui/icon-plinth.png") 2x
+		url("/foundry/assets/ui/icon-plinth.webp") 1x,
+		url("/foundry/assets-2x/ui/icon-plinth.webp") 2x
 	) center/contain no-repeat;
 	font: 700 12px/1 ui-monospace, Menlo, monospace;
 	color: #c8d6ec;
@@ -345,8 +345,8 @@
 	height: 300px;
 	top: -34px;
 	background: image-set(
-		url("/foundry/assets/ui/orbit-ring.png") 1x,
-		url("/foundry/assets-2x/ui/orbit-ring.png") 2x
+		url("/foundry/assets/ui/orbit-ring.webp") 1x,
+		url("/foundry/assets-2x/ui/orbit-ring.webp") 2x
 	) center/contain no-repeat;
 	opacity: 0.75;
 	transform-style: preserve-3d;
@@ -359,8 +359,8 @@
 	width: 560px;
 	height: 200px;
 	background: image-set(
-		url("/foundry/assets/ui/pedestal.png") 1x,
-		url("/foundry/assets-2x/ui/pedestal.png") 2x
+		url("/foundry/assets/ui/pedestal.webp") 1x,
+		url("/foundry/assets-2x/ui/pedestal.webp") 2x
 	) center bottom/contain no-repeat;
 }
 
@@ -454,7 +454,7 @@
 
 /* ----------------------------------------------------------------
    SQUARE chip  (Tools & DevOps)
-   Uses icon-plinth.png (kotak) as background socket.
+   Uses icon-plinth.webp (kotak) as background socket.
    Content: icon centered in the hole + short abbreviation below.
 ---------------------------------------------------------------- */
 .grid--square {
@@ -468,7 +468,7 @@
 	border-width: 0;
 	border-style: none;
 
-	background: url("/foundry/assets/ui/icon-plinth.png") center/contain no-repeat;
+	background: url("/foundry/assets/ui/icon-plinth.webp") center/contain no-repeat;
 	background-color: transparent;
 
 	/* Square dimensions matching plinth proportions */
@@ -515,7 +515,7 @@
 .foundry .chip--square:hover,
 .foundry .chip--square.is-active {
 	border-width: 0;
-	background: url("/foundry/assets/ui/icon-plinth.png") center/contain no-repeat;
+	background: url("/foundry/assets/ui/icon-plinth.webp") center/contain no-repeat;
 	background-color: transparent;
 	color: #fff;
 	transform: translateY(-5px) scale(1.06);

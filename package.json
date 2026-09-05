@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "webp": "node scripts/to-webp.mjs",
+    "webp:replace": "node scripts/to-webp.mjs -w --replace",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -23,6 +25,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.6",
+    "sharp": "^0.35.4",
     "vite": "^8.0.12"
   }
 }

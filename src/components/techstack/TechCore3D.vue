@@ -2,11 +2,11 @@
   <div ref="containerRef" class="tech-core-wrapper">
     <!-- CSS 3D Cube -->
     <div class="cube-scene" ref="sceneRef">
-      <div class="cube" :class="{ 'is-spinning': isAutoRotating }" :style="cubeTransform">
+      <div class="cube" :style="cubeTransform">
         <!-- Face 0: Core Languages -->
         <div class="cube__face cube__face--front">
           <div class="face-header" :style="{ borderColor: categories[0].color }">
-            <span class="face-title" :style="{ color: categories[0].color }">CORE LANGUAGES</span>
+            <span class="face-title" :style="{ color: categories[0].color }">{{ categories[0].label.toUpperCase() }}</span>
           </div>
           <div class="face-grid">
             <div v-for="item in categories[0].items" :key="item.name" class="face-chip">
@@ -19,7 +19,7 @@
         <!-- Face 1: Frontend & UI -->
         <div class="cube__face cube__face--back">
           <div class="face-header" :style="{ borderColor: categories[1].color }">
-            <span class="face-title" :style="{ color: categories[1].color }">FRONTEND & UI</span>
+            <span class="face-title" :style="{ color: categories[1].color }">{{ categories[1].label.toUpperCase() }}</span>
           </div>
           <div class="face-grid">
             <div v-for="item in categories[1].items" :key="item.name" class="face-chip">
@@ -32,7 +32,7 @@
         <!-- Face 2: Backend & API -->
         <div class="cube__face cube__face--right">
           <div class="face-header" :style="{ borderColor: categories[2].color }">
-            <span class="face-title" :style="{ color: categories[2].color }">BACKEND & API</span>
+            <span class="face-title" :style="{ color: categories[2].color }">{{ categories[2].label.toUpperCase() }}</span>
           </div>
           <div class="face-grid">
             <div v-for="item in categories[2].items" :key="item.name" class="face-chip">
@@ -42,14 +42,13 @@
           </div>
         </div>
 
-        <!-- Face 3: Database -->
+        <!-- Face 3: AI & Computer Vision — ponytail: text-only chips, add icon branch when model logos exist -->
         <div class="cube__face cube__face--left">
           <div class="face-header" :style="{ borderColor: categories[3].color }">
-            <span class="face-title" :style="{ color: categories[3].color }">DATABASE</span>
+            <span class="face-title" :style="{ color: categories[3].color }">{{ categories[3].label.toUpperCase() }}</span>
           </div>
           <div class="face-grid">
             <div v-for="item in categories[3].items" :key="item.name" class="face-chip">
-              <img :src="item.icon" :alt="item.name" class="face-chip__icon" />
               <span class="face-chip__name" :style="{ color: item.color }">{{ item.short }}</span>
             </div>
           </div>
@@ -58,7 +57,7 @@
         <!-- Face 4: Tools & DevOps -->
         <div class="cube__face cube__face--top">
           <div class="face-header" :style="{ borderColor: categories[4].color }">
-            <span class="face-title" :style="{ color: categories[4].color }">TOOLS & DEVOPS</span>
+            <span class="face-title" :style="{ color: categories[4].color }">{{ categories[4].label.toUpperCase() }}</span>
           </div>
           <div class="face-grid">
             <div v-for="item in categories[4].items" :key="item.name" class="face-chip">
@@ -96,6 +95,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue"
+import gsap from "gsap"
 import { categories, identityFace, totalTechnologies, totalCategories } from "./techStackData.js"
 
 const props = defineProps({
@@ -122,8 +122,20 @@ let startY = 0
 let currentRotateX = -15
 let currentRotateY = 25
 
-// Face mapping
-const faceMap = [0, 180, -90, 90, -90, 90]
+// Face mapping — yaw per face; top/bottom MUST be 0 or their content spins sideways
+const faceMap = [0, 180, -90, 90, 0, 0]
+
+// Ambient spin — steps the same refs the drag/GSAP use, so no transform fights
+function startSpin() {
+  stopSpin()
+  autoRotateInterval = setInterval(() => {
+    if (!isDragging.value) rotateY.value += 0.15
+  }, 50)
+}
+function stopSpin() {
+  if (autoRotateInterval) { clearInterval(autoRotateInterval); autoRotateInterval = null }
+}
+watch(isAutoRotating, (on) => (on ? startSpin() : stopSpin()))
 
 // Computed cube transform
 const cubeTransform = computed(() => ({
@@ -153,27 +165,20 @@ function rotateToFace(faceIndex) {
   isAutoRotating.value = false
   lastInteraction = Date.now()
 
-  const targetY = faceMap[faceIndex]
   const targetX = faceIndex === 4 ? -90 : faceIndex === 5 ? 90 : -15
+  // shortest yaw path (rotateY grows unbounded while ambient-spinning)
+  const delta = ((faceMap[faceIndex] - rotateY.value) % 360 + 540) % 360 - 180
 
-  // Animate with GSAP
-  if (window.gsap) {
-    window.gsap.to(rotateX, { value: targetX, duration: 0.9, ease: "power3.inOut" })
-    window.gsap.to(rotateY, {
-      value: targetY,
-      duration: 0.9,
-      ease: "power3.inOut",
-      onComplete: () => {
-        emit("face-change", faceIndex)
-        setTimeout(() => { isAutoRotating.value = true }, 3000)
-      },
-    })
-  } else {
-    rotateX.value = targetX
-    rotateY.value = targetY
-    emit("face-change", faceIndex)
-    setTimeout(() => { isAutoRotating.value = true }, 3000)
-  }
+  gsap.to(rotateX, { value: targetX, duration: 0.9, ease: "power3.inOut" })
+  gsap.to(rotateY, {
+    value: rotateY.value + delta,
+    duration: 0.9,
+    ease: "power3.inOut",
+    onComplete: () => {
+      emit("face-change", faceIndex)
+      setTimeout(() => { isAutoRotating.value = true }, 3000)
+    },
+  })
 }
 
 // Drag handlers
@@ -227,9 +232,9 @@ function getCurrentFace() {
   // Determine which face is most visible based on rotation
   const y = ((rotateY.value % 360) + 360) % 360
   if (y >= 315 || y < 45) return 0
-  if (y >= 45 && y < 135) return 2
+  if (y >= 45 && y < 135) return 3
   if (y >= 135 && y < 225) return 1
-  return 3
+  return 2
 }
 
 // Watch activeIndex
@@ -250,10 +255,12 @@ onMounted(() => {
   window.addEventListener("touchend", onPointerUp)
   window.addEventListener("keydown", onKeyDown)
 
+  startSpin()
   emit("ready")
 })
 
 onBeforeUnmount(() => {
+  stopSpin()
   const el = containerRef.value
   if (el) {
     el.removeEventListener("pointerdown", onPointerDown)
@@ -304,13 +311,10 @@ defineExpose({ rotateToFace })
   transition: transform 0.05s linear;
 }
 
-.cube.is-spinning {
-  animation: cube-auto-rotate 20s linear infinite;
-}
-
-@keyframes cube-auto-rotate {
-  from { transform: rotateX(-15deg) rotateY(0deg); }
-  to { transform: rotateX(-15deg) rotateY(360deg); }
+/* AI face — text-only chips, longer names */
+.cube__face--left .face-chip__name {
+  font-size: 7px;
+  letter-spacing: 0.04em;
 }
 
 .cube__face {
@@ -377,6 +381,14 @@ defineExpose({ rotateToFace })
   height: 28px;
   object-fit: contain;
   border-radius: 4px;
+}
+.face-chip__icon--text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 9px/1 monospace;
+  border: 1px solid currentColor;
+  opacity: 0.9;
 }
 
 .face-chip__name {

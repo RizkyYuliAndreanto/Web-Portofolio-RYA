@@ -1,8 +1,12 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { Github, Linkedin, Instagram, Mail } from "lucide-vue-next";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ParallaxStage from "./ParallaxStage.vue";
 import { useParallax } from "../utils/useParallax.js";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const footerRef = ref(null);
 
@@ -15,15 +19,53 @@ const socials = [
 
 // v2 08-footer layers (3 layers as per manifest)
 const pxLayers = [
-  { file: "/parallax-v2/08-footer/footer-l1-backdrop.jpg", mobile: "/parallax-v2/08-footer/footer-l1-backdrop.png", speed: 0.03, scale: 1.02 },
-  { file: "/parallax-v2/08-footer/footer-l2-far.png",       mobile: "/parallax-v2/08-footer/footer-l2-far.png",       speed: 0.10, scale: 1.03 },
-  { file: "/parallax-v2/08-footer/footer-l3-near.png",      mobile: "/parallax-v2/08-footer/footer-l3-near.png",      speed: 0.34, scale: 1.08 },
-  { file: "/parallax-v2/shared/overlay-vignette-navy.png",  speed: 0, blend: "is-grade" },
-  { file: "/parallax-v2/shared/overlay-grain.png",           speed: 0, blend: "is-grain" },
-  { file: "/parallax-v2/shared/overlay-fade-top.png",        speed: 0, blend: "is-grade" },
+  { file: "/parallax-v2/08-footer/footer-l1-backdrop.webp", mobile: "/parallax-v2/08-footer/footer-l1-backdrop.webp", speed: 0.03, scale: 1.02 },
+  { file: "/parallax-v2/08-footer/footer-l2-far.webp",       mobile: "/parallax-v2/08-footer/footer-l2-far.webp",       speed: 0.10, scale: 1.03 },
+  { file: "/parallax-v2/08-footer/footer-l3-near.webp",      mobile: "/parallax-v2/08-footer/footer-l3-near.webp",      speed: 0.34, scale: 1.08 },
+  { file: "/parallax-v2/shared/overlay-vignette-navy.webp",  speed: 0, blend: "is-grade" },
+  { file: "/parallax-v2/shared/overlay-grain.webp",           speed: 0, blend: "is-grain" },
+  { file: "/parallax-v2/shared/overlay-fade-top.webp",        speed: 0, blend: "is-grade" },
 ];
 
 useParallax(footerRef, { scrub: 2, travelMul: 38, zoomMul: 0.12 });
+
+let ctx = null;
+
+onMounted(() => {
+  if (!footerRef.value) return;
+
+  ctx = gsap.context(() => {
+    gsap.from(".footer-social-icon", {
+      scale: 0,
+      rotation: -180,
+      opacity: 0,
+      duration: 0.6,
+      stagger: 0.1,
+      ease: "back.out(2)",
+      scrollTrigger: {
+        trigger: ".footer-social-icon",
+        start: "top 90%",
+        once: true,
+      },
+    });
+
+    gsap.from(".footer-copy", {
+      y: 20,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".footer-copy",
+        start: "top 90%",
+        once: true,
+      },
+    });
+  }, footerRef.value);
+});
+
+onUnmounted(() => {
+  if (ctx) ctx.revert();
+});
 </script>
 
 <template>
@@ -42,11 +84,11 @@ useParallax(footerRef, { scrub: 2, travelMul: 38, zoomMul: 0.12 });
             :aria-label="social.label"
             target="_blank"
             rel="noopener noreferrer"
-            class="w-10 h-10 rounded-lg bg-surface/80 border border-white/10 flex items-center justify-center text-text-secondary hover:text-accent hover:border-accent/30 hover:shadow-[0_0_15px_rgba(78,134,200,0.2)] transition-all duration-300">
+            class="footer-social-icon w-10 h-10 rounded-lg bg-surface/80 border border-white/10 flex items-center justify-center text-text-secondary hover:text-accent hover:border-accent/30 hover:shadow-[0_0_15px_rgba(78,134,200,0.2)] transition-all duration-300">
             <component :is="social.icon" class="w-5 h-5" />
           </a>
         </div>
-        <p class="text-sm text-text-secondary">
+        <p class="footer-copy text-sm text-text-secondary">
           &copy; {{ new Date().getFullYear() }} Rizky Yuli Andreanto. Built with
           Vue &amp; passion.
         </p>

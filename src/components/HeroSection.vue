@@ -13,18 +13,42 @@ const typoRef = ref(null);
 const sidebarRef = ref(null);
 const descRef = ref(null);
 
+// Sidebar mini-nav — panah + garis jadi navigasi section fungsional
+const navSections = [
+  { id: "about", label: "About Me" },
+  { id: "services", label: "Services" },
+  { id: "projects", label: "Projects" },
+];
+const activeSection = ref("about");
+
+function jumpSection(dir) {
+  const idx = navSections.findIndex((s) => s.id === activeSection.value);
+  const next = navSections[Math.min(navSections.length - 1, Math.max(0, idx + dir))];
+  document.getElementById(next.id)?.scrollIntoView({ behavior: "smooth" });
+}
+
+function goToSection(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+}
+
+let sectionObserver = null;
+
+onUnmounted(() => {
+  sectionObserver?.disconnect();
+});
+
 // v2 layer config — max 2 overlays per section
 const layers = [
-  { file: "/parallax-v2/01-hero/hero-l1-backdrop.jpg",  mobile: "/parallax-v2/01-hero/hero-l1-backdrop.png", speed: 0.03, scale: 1.02 },
-  { file: "/parallax-v2/01-hero/hero-l2-far.png",        mobile: "/parallax-v2/01-hero/hero-l2-far.png",        speed: 0.10, scale: 1.03 },
-  { file: "/parallax-v2/01-hero/hero-l3-mid.png",        mobile: "/parallax-v2/01-hero/hero-l3-mid.png",        speed: 0.20, scale: 1.05, blend: "is-overlay" },
-  { file: "/parallax-v2/01-hero/hero-l4-near.png",       mobile: "/parallax-v2/01-hero/hero-l4-near.png",       speed: 0.34, scale: 1.08 },
-  { file: "/parallax-v2/01-hero/hero-l5-foreground.png", mobile: "/parallax-v2/01-hero/hero-l5-foreground.png", speed: 0.55, scale: 1.12 },
+  { file: "/parallax-v2/01-hero/hero-l1-backdrop.webp",  mobile: "/parallax/assets-mobile/01-hero/hero-l1-backdrop.webp", speed: 0.03, scale: 1.02 },
+  { file: "/parallax-v2/01-hero/hero-l2-far.webp",        mobile: "/parallax/assets-mobile/01-hero/hero-l2-far.webp",        speed: 0.10, scale: 1.03 },
+  { file: "/parallax-v2/01-hero/hero-l3-mid.webp",        mobile: "/parallax/assets-mobile/01-hero/hero-l3-mid.webp",        speed: 0.20, scale: 1.05, blend: "is-overlay" },
+  { file: "/parallax-v2/01-hero/hero-l4-near.webp",       mobile: "/parallax/assets-mobile/01-hero/hero-l4-near.webp",       speed: 0.34, scale: 1.08 },
+  { file: "/parallax-v2/01-hero/hero-l5-foreground.webp", mobile: "/parallax/assets-mobile/01-hero/hero-l5-foreground.webp", speed: 0.55, scale: 1.12 },
   // Overlays — max 2 per v2 spec
-  { file: "/parallax-v2/shared/overlay-light-rays.png",  speed: 0.05, blend: "is-overlay" },
-  { file: "/parallax-v2/shared/overlay-vignette-navy.png", speed: 0, blend: "is-grade" },
-  { file: "/parallax-v2/shared/overlay-grain.png",         speed: 0, blend: "is-grain"  },
-  { file: "/parallax-v2/shared/overlay-fade-bottom.png",   speed: 0, blend: "is-grade"  },
+  { file: "/parallax-v2/shared/overlay-light-rays.webp",  speed: 0.05, blend: "is-overlay" },
+  { file: "/parallax-v2/shared/overlay-vignette-navy.webp", speed: 0, blend: "is-grade" },
+  { file: "/parallax-v2/shared/overlay-grain.webp",         speed: 0, blend: "is-grain"  },
+  { file: "/parallax-v2/shared/overlay-fade-bottom.webp",   speed: 0, blend: "is-grade"  },
 ];
 
 // Hero uses Firewatch-style PINNING — section stays while layers animate
@@ -46,6 +70,20 @@ onUnmounted(() => {
 
 onMounted(() => {
   if (!heroRef.value) return;
+
+  // Track scroll position untuk indikator garis (About / Services / Projects)
+  sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) activeSection.value = entry.target.id;
+      });
+    },
+    { rootMargin: "-40% 0px -40% 0px" }
+  );
+  navSections.forEach(({ id }) => {
+    const el = document.getElementById(id);
+    if (el) sectionObserver.observe(el);
+  });
 
   ctx = gsap.context(() => {
     const tl = gsap.timeline();
@@ -81,6 +119,10 @@ onMounted(() => {
     gsap.to(descRef.value, {
       yPercent: -18, opacity: 0, ease: "none",
       scrollTrigger: { trigger: heroRef.value, start: "top top", end: "+=70%", scrub: 1.2 },
+    });
+    gsap.to(sidebarRef.value, {
+      yPercent: -20, opacity: 0, ease: "none",
+      scrollTrigger: { trigger: heroRef.value, start: "top top", end: "+=80%", scrub: 1.2 },
     });
   }, heroRef.value);
 });
@@ -120,19 +162,33 @@ onMounted(() => {
           </div>
         </nav>
         <div class="hero-controls flex gap-2 mt-20 items-center">
-          <button class="p-1 hover:text-accent transition-colors">
+          <button
+            @click="jumpSection(-1)"
+            :disabled="activeSection === 'about'"
+            aria-label="Previous section"
+            class="p-1 text-text hover:text-accent disabled:opacity-20 disabled:hover:text-text transition-colors">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M15 18l-6-6 6-6" />
             </svg>
           </button>
-          <button class="p-1 hover:text-accent transition-colors">
+          <button
+            @click="jumpSection(1)"
+            :disabled="activeSection === 'projects'"
+            aria-label="Next section"
+            class="p-1 text-text hover:text-accent disabled:opacity-20 disabled:hover:text-text transition-colors">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M9 18l6-6-6-6" />
             </svg>
           </button>
-          <div class="w-8 h-0.5 bg-text opacity-50 ml-2"></div>
-          <div class="w-8 h-0.5 bg-text opacity-20 hover:opacity-100 transition-opacity cursor-pointer"></div>
-          <div class="w-8 h-0.5 bg-text opacity-20 hover:opacity-100 transition-opacity cursor-pointer"></div>
+          <button
+            v-for="section in navSections"
+            :key="section.id"
+            @click="goToSection(section.id)"
+            :aria-label="`Go to ${section.label}`"
+            :title="section.label"
+            class="ml-2 first:ml-2 w-8 h-0.5 transition-all duration-300 cursor-pointer"
+            :class="activeSection === section.id ? 'bg-accent opacity-100 scale-x-110' : 'bg-text opacity-20 hover:opacity-60'">
+          </button>
         </div>
       </div>
 
@@ -158,7 +214,7 @@ onMounted(() => {
           ref="photoRef"
           class="absolute bottom-0 left-1/2 lg:left-[45%] -translate-x-1/2 lg:-translate-x-1/2 w-[90%] sm:w-[70%] md:w-[60%] lg:w-[65%] xl:w-[55%] h-[75vh] lg:h-[95vh] z-20">
           <img
-            src="../assets/HERO-NO-BG.png"
+            src="../assets/HERO-NO-BG.webp"
             alt="Rizky Yuli Andreanto"
             class="w-full h-full object-cover object-top lg:object-contain lg:object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)]" />
         </div>
