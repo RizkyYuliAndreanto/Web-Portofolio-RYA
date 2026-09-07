@@ -59,6 +59,15 @@ export function useParallax(sectionRef, {
     // entrance animation (once:true) menyala sebelum section masuk viewport,
     // jadi animasinya selesai duluan dan "tidak pernah terlihat".
     // Hero mount pertama → pin-nya wajib terpasang sebelum section lain ukur.
+
+    // MOBILE: pin hero adalah sumber glitch terbesar di ponsel asli —
+    // URL bar show/hide mengubah tinggi viewport → pin-spacer reposition →
+    // background lompat ("kelap-kelip"), plus pinning+scrub menambah jank.
+    // DevTools emulation tidak mereplikasi URL bar dinamis, jadi tampak normal.
+    const IS_TOUCH = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    // Touch devices: matikan pin + scroll parallax layer, cukup static stage.
+    // (Overlay/grain sudah disembunyikan via CSS <720px)
+    const SKIP_SCROLL_PARALLAX = IS_TOUCH;
     ctx = gsap.context(() => {
         const layerEls = [...section.querySelectorAll('.px-layer')];
         const stage    = section.querySelector('.px-stage');
@@ -73,7 +82,9 @@ export function useParallax(sectionRef, {
         }
 
         // ─── 2. SCROLL PARALLAX (Firewatch core) ───────────────────────────
-        if (!REDUCED) {
+        // MOBILE: dilewati — scroll native + URL bar dinamis membuat layer
+        // bergerak tak sinkron dengan konten → glitch. Static stage tetap tampil.
+        if (!REDUCED && !SKIP_SCROLL_PARALLAX) {
           const stConfig = pin
             ? {
                 trigger: section,
