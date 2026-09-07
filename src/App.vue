@@ -16,6 +16,11 @@ import CursorGlow from "./components/CursorGlow.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// MOBILE FIX: hide/show URL bar memicu event resize → ScrollTrigger.refresh()
+// berulang saat scroll → posisi layer dihitung ulang → background kelap-kelip.
+// ignoreMobileResize mematikan refresh yang dipicu resize address bar mobile.
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 let lenis = null;
 
 onMounted(() => {

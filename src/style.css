@@ -125,6 +125,11 @@ body {
   .px-layer.is-overlay:not(.keep-mobile) {
     display: none;
   }
+  /* Grain pakai soft-light blend di area penuh layar — mahal untuk GPU ponsel
+     dan jadi salah satu sumber jank/flicker. Matikan di mobile. */
+  .px-layer.is-grain {
+    display: none;
+  }
   /* Swap to mobile assets via custom property */
   .px-layer[data-mobile] {
     background-image: var(--bg-mobile) !important;
