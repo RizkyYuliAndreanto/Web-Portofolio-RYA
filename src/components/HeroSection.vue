@@ -116,14 +116,25 @@ onMounted(() => {
       yPercent: -15, opacity: 0.3, ease: "none",
       scrollTrigger: { trigger: heroRef.value, start: "top top", end: "+=110%", scrub: 1.4 },
     });
-    gsap.to(descRef.value, {
-      yPercent: -18, opacity: 0, ease: "none",
-      scrollTrigger: { trigger: heroRef.value, start: "top top", end: "+=70%", scrub: 1.2 },
-    });
-    gsap.to(sidebarRef.value, {
-      yPercent: -20, opacity: 0, ease: "none",
-      scrollTrigger: { trigger: heroRef.value, start: "top top", end: "+=80%", scrub: 1.2 },
-    });
+    // Drift pakai fromTo + immediateRender:false — start value EKSPLISIT (opacity 1),
+    // bukan direkam saat refresh yang bisa jatuh di tengah entrance (opacity < 1).
+    // Tanpa ini, scroll balik ke atas hanya pulih ke opacity yang terekam (mis. 0.1).
+    gsap.fromTo(
+      descRef.value,
+      { yPercent: 0, opacity: 1 },
+      {
+        yPercent: -18, opacity: 0, ease: "none", immediateRender: false,
+        scrollTrigger: { trigger: heroRef.value, start: "top top", end: "+=70%", scrub: 1.2 },
+      },
+    );
+    gsap.fromTo(
+      sidebarRef.value,
+      { yPercent: 0, opacity: 1 },
+      {
+        yPercent: -20, opacity: 0, ease: "none", immediateRender: false,
+        scrollTrigger: { trigger: heroRef.value, start: "top top", end: "+=80%", scrub: 1.2 },
+      },
+    );
   }, heroRef.value);
 });
 </script>
@@ -144,8 +155,14 @@ onMounted(() => {
       <div
         ref="sidebarRef"
         class="hidden lg:flex flex-col justify-center w-1/4 pl-12 gap-6 z-30">
-        <div class="hero-label text-xs tracking-widest font-bold text-text-secondary mb-8">
-          RIZKY YULI ANDREANTO
+        <div class="mb-10">
+          <!-- SEO: H1 nama — identitas utama di area kiri yang lega (desktop only) -->
+          <h1 class="hidden lg:block text-4xl xl:text-[3.4rem] font-black font-oswald text-text leading-[0.95] tracking-tight uppercase drop-shadow-2xl">
+            Rizky Yuli<br /><span class="text-accent">Andreanto</span>
+          </h1>
+          <p class="text-[10px] tracking-[0.3em] font-oswald text-text-secondary uppercase mt-4">
+            Software Engineer &amp; AI Engineer
+          </p>
         </div>
         <nav class="flex flex-col gap-12 relative mt-4">
           <a
@@ -200,12 +217,15 @@ onMounted(() => {
           ref="typoRef"
           class="absolute top-1/2 lg:top-1/3 -translate-y-1/2 left-0 right-0 lg:left-auto lg:-translate-y-0 flex flex-col justify-center items-center lg:items-end lg:pr-12 xl:pr-24 z-30 pointer-events-none">
           <div class="text-center lg:text-right font-oswald drop-shadow-2xl">
-            <h1 class="text-[3.5rem] sm:text-6xl md:text-7xl lg:text-[7rem] xl:text-[8rem] font-bold text-text leading-[0.9] tracking-tighter uppercase">
+            <!-- SEO fallback (mobile): H1 nama tetap ada karena sidebar kiri hidden —
+                 disembunyikan secara visual via sr-only agar layout desktop tidak ganda. -->
+            <h1 class="sr-only lg:hidden">Rizky Yuli Andreanto</h1>
+            <p class="text-[3.5rem] sm:text-6xl md:text-7xl lg:text-[7rem] xl:text-[8rem] font-bold text-text leading-[0.9] tracking-tighter uppercase m-0">
               <span class="block overflow-hidden"><span class="block text-line">THE BEST FOR</span></span>
               <span class="block overflow-hidden"><span class="block text-line">ALL YOUR</span></span>
               <span class="block overflow-hidden"><span class="block text-line text-accent">SOFTWARE</span></span>
               <span class="block overflow-hidden"><span class="block text-line">NEEDS</span></span>
-            </h1>
+            </p>
           </div>
         </div>
 
@@ -224,8 +244,9 @@ onMounted(() => {
           ref="descRef"
           class="absolute bottom-8 lg:bottom-16 right-6 lg:right-12 xl:right-24 max-w-[280px] lg:max-w-sm text-right z-30">
           <p class="text-xs lg:text-sm text-text-secondary uppercase tracking-[0.2em] leading-loose font-oswald">
-            CHOOSE ME TO BUILD YOUR SCALABLE SYSTEMS AND INNOVATIVE DIGITAL
-            SOLUTIONS WITH CUTTING-EDGE AI TECHNOLOGY.
+            RIZKY YULI ANDREANTO — SOFTWARE ENGINEER &amp; AI ENGINEER. BUILDING
+            SCALABLE SYSTEMS AND INNOVATIVE DIGITAL SOLUTIONS WITH CUTTING-EDGE
+            AI TECHNOLOGY.
           </p>
         </div>
       </div>

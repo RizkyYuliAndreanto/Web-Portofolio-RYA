@@ -52,11 +52,14 @@ export function useParallax(sectionRef, {
       ? window.matchMedia('(hover: hover) and (pointer: fine)').matches
       : false;
 
-    // Delay minimal agar DOM + Lenis + CSS background-image sudah siap
-    // Double rAF: frame ke-1 = DOM painted, frame ke-2 = layout stabil
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        ctx = gsap.context(() => {
+    // PENTING: dibuat SINKRON di onMounted — tanpa defer double-rAF.
+    // Hero di-PIN dengan pinSpacing (+110vh tinggi dokumen via pin-spacer).
+    // Kalau pin baru terpasang beberapa frame kemudian, semua ScrollTrigger
+    // yang mengukur posisi sebelum itu dapat start ~110vh terlalu kecil →
+    // entrance animation (once:true) menyala sebelum section masuk viewport,
+    // jadi animasinya selesai duluan dan "tidak pernah terlihat".
+    // Hero mount pertama → pin-nya wajib terpasang sebelum section lain ukur.
+    ctx = gsap.context(() => {
         const layerEls = [...section.querySelectorAll('.px-layer')];
         const stage    = section.querySelector('.px-stage');
 
@@ -134,8 +137,6 @@ export function useParallax(sectionRef, {
         }
 
         }, section);
-      }); // end inner rAF
-    }); // end outer rAF
   });
 
   onUnmounted(() => {
