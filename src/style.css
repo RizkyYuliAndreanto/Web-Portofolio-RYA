@@ -56,8 +56,9 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   pointer-events: none;
-  /* JANGAN set transform di CSS — GSAP butuh kontrol penuh atas transform */
-  will-change: transform;   /* GPU compositing tetap aktif */
+  /* will-change DIHAPUS: ~70 layer × will-change permanen = 70 GPU layer
+     permanen → memori GPU ponsel meledak → jank/glitch. GSAP tetap mempromosikan
+     layer saat animasi jalan; setelah idle browser boleh mereklamasi memori. */
   backface-visibility: hidden;
   transform-origin: center center;
 }

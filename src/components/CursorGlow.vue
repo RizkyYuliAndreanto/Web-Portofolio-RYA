@@ -1,19 +1,24 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 
-const x = ref(-100);
-const y = ref(-100);
+const dot = ref(null);
 let rafId = null;
+let enabled = false;
 
 function handleMouseMove(e) {
-  if (rafId) cancelAnimationFrame(rafId);
+  if (!enabled || rafId) return;
   rafId = requestAnimationFrame(() => {
-    x.value = e.clientX;
-    y.value = e.clientY;
+    rafId = null;
+    // transform = compositor-only, tidak memicu layout (beda dengan left/top)
+    dot.value.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
   });
 }
 
-onMounted(() => window.addEventListener("mousemove", handleMouseMove));
+onMounted(() => {
+  enabled = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (enabled) window.addEventListener("mousemove", handleMouseMove, { passive: true });
+});
+
 onUnmounted(() => {
   window.removeEventListener("mousemove", handleMouseMove);
   if (rafId) cancelAnimationFrame(rafId);
@@ -22,6 +27,7 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="hidden lg:block fixed pointer-events-none z-[9999] w-8 h-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/30 blur-sm transition-[left,top] duration-75 ease-out"
-    :style="{ left: x + 'px', top: y + 'px' }" />
+    ref="dot"
+    class="hidden lg:block fixed top-0 left-0 pointer-events-none z-[9999] w-8 h-8 rounded-full bg-accent/30 blur-sm will-change-transform"
+    style="transform: translate(-100px, -100px)" />
 </template>
